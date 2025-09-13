@@ -66,7 +66,9 @@ Design tokens: customize in :root (colors, spacing, radius, font).
     .topbar-left { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 
     .pill {
-      appearance: none;
+      /* Works for <a> and <button> */
+      display: inline-block;
+      text-decoration: none;
       border: 0;
       border-radius: 9999px;
       padding: 12px 22px;
@@ -143,9 +145,10 @@ Design tokens: customize in :root (colors, spacing, radius, font).
   <header class="container">
     <div class="topbar" role="navigation" aria-label="Primary">
       <div class="topbar-left">
-        <button class="pill" type="button">Your Care Team</button>
-        <button class="pill" type="button">Helpful Information</button>
-        <button class="pill" type="button">Clinical Trials</button>
+        <!-- Updated: buttons are now anchors linking to the requested pages -->
+        <a class="pill" href="https://ilonafridman.github.io/careteam.html" data-asset="Slide4.JPG" title="Slide4.JPG" aria-label="Your Care Team">Your Care Team</a>
+        <a class="pill" href="https://ilonafridman.github.io/information" data-asset="Slide5.JPG" title="Slide5.JPG" aria-label="Helpful Information">Helpful Information</a>
+        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials" data-asset="Slide6.JPG" title="Slide6.JPG" aria-label="Clinical Trials">Clinical Trials</a>
       </div>
       <div>
         <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
