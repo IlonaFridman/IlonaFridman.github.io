@@ -1,61 +1,198 @@
-<!DOCTYPE html>
+<!-- File: /public/care-pathway-landing.html -->
+<!--
+Title: Care Pathway Landing Page
+Why: Matches the provided JPEG layout with accessible, responsive HTML/CSS.
+How:
+  - Top bar: three primary pill buttons + En/Sp toggle aligned right.
+  - Main: 3-column grid (desktop), 2-column (tablet), 1-column (mobile) with five tiles.
+  - Each tile has a body area and a footer caption bar.
+Design tokens: customize in :root (colors, spacing, radius, font).
+-->
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Homepage</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Pathway</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #111111;
+      --primary-500: #6aa7d6; /* mid blue */
+      --primary-600: #4e90c7;
+      --primary-700: #3e7fb6;
+      --primary-pill-shadow: rgba(0,0,0,0.15);
+      --radius-xl: 16px;
+      --radius-2xl: 20px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --maxw: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: lightblue;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
     }
-    header {
-      text-align: center;
-      background-color: #cce7ff;
-      padding: 20px;
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: clamp(var(--space-4), 2vw, var(--space-8));
     }
-    header img {
-      max-width: 100%;
-      height: auto;
-    }
-    nav {
-      background-color: #007acc;
+
+    /* Top navigation */
+    .topbar {
       display: flex;
-      justify-content: center;
-      padding: 10px 0;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: clamp(20px, 3vw, 32px);
     }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 20px;
+    .topbar-left { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+
+    .pill {
+      appearance: none;
+      border: 0;
+      border-radius: 9999px;
+      padding: 12px 22px;
+      font-weight: 700;
       font-size: 18px;
+      color: #fff;
+      cursor: pointer;
+      background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700));
+      box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--primary-pill-shadow);
+      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
     }
-    nav a:hover {
-      text-decoration: underline;
+    .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
+    .pill:hover { filter: brightness(1.05); }
+    .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
+
+    .lang-toggle {
+      background: #ffffff;
+      color: #111827;
+      border: 2px solid #7fb5dd;
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.08);
     }
-    main {
-      padding: 20px;
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: clamp(16px, 2.4vw, 28px);
+    }
+    @media (min-width: 700px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1024px) {
+      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    /* Tile */
+    .tile {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      min-height: 220px;
+      background: #fff;
+    }
+    .tile-link { text-decoration: none; color: inherit; display: contents; }
+    .tile-body {
+      background: #f8fafc; /* placeholder area */
+    }
+    .tile-footer {
+      border-top: 2px solid var(--border);
+      padding: 18px 16px;
+      font-weight: 800;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+    }
+
+    /* Utilities */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <img src="Hello.jpg" alt="Header Image">
+  <header class="container">
+    <div class="topbar" role="navigation" aria-label="Primary">
+      <div class="topbar-left">
+        <button class="pill" type="button">Your Care team</button>
+        <button class="pill" type="button">Helpful Information</button>
+        <button class="pill" type="button">Clinical Trials</button>
+      </div>
+      <div>
+        <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
+      </div>
+    </div>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <main class="container">
+    <h1 class="sr-only">Care Pathway</h1>
 
-  <main>
-    <h1>Welcome to My Website!</h1>
-    <p>This is the homepage. Feel free to explore and connect with me.</p>
+    <section class="grid" aria-label="Topics">
+      <a class="tile-link" href="#being-diagnosed" aria-label="Being Diagnosed">
+        <article class="tile">
+          <div class="tile-body" aria-hidden="true"></div>
+          <footer class="tile-footer">Being Diagnosed</footer>
+        </article>
+      </a>
+
+      <a class="tile-link" href="#choosing-treatment" aria-label="Choosing Treatment">
+        <article class="tile">
+          <div class="tile-body" aria-hidden="true"></div>
+          <footer class="tile-footer">Choosing Treatment</footer>
+        </article>
+      </a>
+
+      <a class="tile-link" href="#going-through-treatment" aria-label="Going Through Treatment">
+        <article class="tile">
+          <div class="tile-body" aria-hidden="true"></div>
+          <footer class="tile-footer">Going Through Treatment</footer>
+        </article>
+      </a>
+
+      <a class="tile-link" href="#after-treatment" aria-label="After Treatment">
+        <article class="tile">
+          <div class="tile-body" aria-hidden="true"></div>
+          <footer class="tile-footer">After Treatment</footer>
+        </article>
+      </a>
+
+      <a class="tile-link" href="#complementary-and" aria-label="Complementary and">
+        <article class="tile">
+          <div class="tile-body" aria-hidden="true"></div>
+          <footer class="tile-footer">Complementary and</footer>
+        </article>
+      </a>
+
+    </section>
   </main>
-
 </body>
 </html>
-
