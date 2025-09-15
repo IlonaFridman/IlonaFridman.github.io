@@ -1,5 +1,5 @@
-<!-- File: /public/eligibility-screening-compact.html
-Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
+<!-- File: /public/eligibility-screening-min.html
+Title: Prostate Trial Eligibility Screener (only requested questions)
 -->
 <!doctype html>
 <html lang="en">
@@ -10,20 +10,17 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#f7fafc;--card:#ffffff;--text:#1f2937;--muted:#6b7280;--accent:#0f6fa1;--accent-2:#0b5b84;--border:#d1d5db;--good:#0f766e;--bad:#b91c1c;--focus:#1d4ed8;--shadow:0 8px 24px rgba(0,0,0,.08)
-    }
+    :root{ --bg:#f7fafc; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --accent:#0f6fa1; --accent-2:#0b5b84; --border:#d1d5db; --good:#0f766e; --bad:#b91c1c; --focus:#1d4ed8; --shadow:0 8px 24px rgba(0,0,0,.08); }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .container{max-width:980px;margin-inline:auto;padding:16px}
+    .container{max-width:780px;margin-inline:auto;padding:16px}
     .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:16px}
     h1{margin:0 0 6px;font-size:24px}
     .sub{color:var(--muted);margin:0 0 12px}
 
-    /* grid layout */
+    /* grid */
     .grid{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
 
     /* field */
     .field{display:grid;gap:6px}
@@ -34,17 +31,16 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
     input[type="number"], select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-size:15px;background:#fff}
     input[type="number"]:focus, select:focus{outline:3px solid var(--focus);outline-offset:1px}
 
-    /* segmented radio buttons – equal width across all Yes/No/Male/Female pairs */
+    /* segmented radios (uniform width) */
     .seg{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border:1px solid #cdd6df;border-radius:999px;overflow:hidden}
     .seg input{position:absolute;opacity:0;pointer-events:none}
-    .seg label{padding:8px 14px;cursor:pointer;font-weight:700;text-align:center;font-size:15px;min-width:96px;user-select:none}
+    .seg label{padding:10px 16px;cursor:pointer;font-weight:700;text-align:center;font-size:15px;user-select:none}
     .seg label[data-checked="true"]{background:var(--accent);color:#fff}
     .seg label[data-side="right"]{border-left:1px solid #cdd6df}
 
     /* actions */
     .actions{display:flex;gap:10px;align-items:center}
     .btn{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border:0;border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer}
-    .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     .btn.secondary{background:#fff;color:var(--accent-2);border:1px solid #cbd5e1}
 
     /* result */
@@ -53,58 +49,23 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
     .badge.good{background:#ecfdf5;color:var(--good);border:1px solid #99f6e4}
     .badge.bad{background:#fef2f2;color:var(--bad);border:1px solid #fecaca}
     .reason-list{margin:10px 0 0;padding-left:18px}
-
-    /* header adornments */
-    .header{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px}
-    .tooltip{position:relative;display:inline-flex;align-items:center;gap:8px}
-    .tipdot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:800}
-    .tiptext{position:absolute;left:32px;top:0;z-index:10;min-width:220px;max-width:320px;background:#0f172a;color:#e2e8f0;border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .15s}
-    .tooltip:hover .tiptext,.tooltip:focus-within .tiptext{opacity:1}
-
-    .hidden{display:none}
   </style>
 </head>
 <body>
   <main class="container">
     <div class="card">
-      <div class="header">
-        <div>
-          <h1>Is this patient eligible for screening?</h1>
-          <p class="sub">Checks AUA/NCCN intermediate‑risk focal/hemiablation study rules.</p>
-        </div>
-        <div class="tooltip" tabindex="0" aria-describedby="tt">
-          <div class="tipdot" aria-hidden="true">i</div>
-          <div id="tt" class="tiptext" role="tooltip">This tool enforces inclusion and exclusion criteria you provided. Use the segmented controls for Yes/No answers. Results update automatically.</div>
-        </div>
-      </div>
+      <h1>Is this patient eligible for screening?</h1>
+      <p class="sub">Only the questions you requested are shown.</p>
 
       <form id="form" class="grid" novalidate>
-        <div class="field">
-          <label class="label" for="healthyYes">Is this patient healthy enough for screening?</label>
-          <div class="seg" role="radiogroup" aria-label="Healthy enough?">
-            <input type="radio" name="healthy" id="healthyYes" value="yes" required>
-            <label for="healthyYes" data-side="left">Yes</label>
-            <input type="radio" name="healthy" id="healthyNo" value="no">
-            <label for="healthyNo" data-side="right">No</label>
-          </div>
-        </div>
-
+        <!-- Age -->
         <div class="field">
           <label class="label" for="age">Age</label>
           <input id="age" name="age" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g., 63" required>
           <p class="help">Inclusion: adult male ≥ 18 years old.</p>
         </div>
 
-        <div class="field">
-          <span class="label">Sex</span>
-          <div class="seg" role="radiogroup" aria-label="Sex">
-            <input type="radio" name="sex" id="sexMale" value="male" required>
-            <label for="sexMale" data-side="left">Male</label>
-            <input type="radio" name="sex" id="sexFemale" value="female">
-            <label for="sexFemale" data-side="right">Female</label>
-          </div>
-        </div>
-
+        <!-- Pre-treatment MRI? -->
         <div class="field">
           <span class="label">Pre‑treatment MRI completed?</span>
           <div class="seg" role="radiogroup" aria-label="Pre-treatment MRI">
@@ -115,20 +76,7 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
           </div>
         </div>
 
-        <div class="field">
-          <span class="label">MRI‑visible lesion present?</span>
-          <div class="seg" role="radiogroup" aria-label="MRI-visible lesion present">
-            <input type="radio" name="lesion" id="lesionYes" value="yes" required>
-            <label for="lesionYes" data-side="left">Yes</label>
-            <input type="radio" name="lesion" id="lesionNo" value="no">
-            <label for="lesionNo" data-side="right">No</label>
-          </div>
-          <div id="coresRow" class="field hidden" style="margin-top:4px">
-            <label class="label" for="cores">If present, number of cores into lesion</label>
-            <input id="cores" name="cores" type="number" min="0" step="1" placeholder="≥ 2">
-          </div>
-        </div>
-
+        <!-- SOC focal therapy received -->
         <div class="field">
           <label class="label" for="therapy">SOC focal therapy received</label>
           <select id="therapy" name="therapy" required>
@@ -138,32 +86,18 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
             <option value="whole">Whole gland ablation</option>
             <option value="none">None / Other</option>
           </select>
-          <div class="field" style="margin-top:4px">
-            <label class="label" for="months">Months since therapy</label>
-            <input id="months" name="months" type="number" min="0" step="1" placeholder="e.g., 5" required>
-            <p class="help">Inclusion: focal or hemiablation within the past 9 months. Exclusion: whole gland ablation, or partial gland ablation over 9 months prior.</p>
-          </div>
         </div>
 
+        <!-- Months since therapy -->
         <div class="field">
-          <span class="label">Intermediate risk disease per AUA/NCCN?</span>
-          <div class="seg" role="radiogroup" aria-label="Intermediate risk?">
-            <input type="radio" name="intermediate" id="intermediateYes" value="yes" required>
-            <label for="intermediateYes" data-side="left">Yes</label>
-            <input type="radio" name="intermediate" id="intermediateNo" value="no">
-            <label for="intermediateNo" data-side="right">No</label>
-          </div>
+          <label class="label" for="months">Months since therapy</label>
+          <input id="months" name="months" type="number" min="0" step="1" placeholder="e.g., 5" required>
         </div>
 
-        <div class="field">
-          <label class="label" for="le">Life expectancy (years)</label>
-          <input id="le" name="le" type="number" min="0" step="1" placeholder="e.g., 12" required>
-          <p class="help">Inclusion: ≥ 10 years.</p>
-        </div>
-
+        <!-- Standard template biopsy before treatment? -->
         <div class="field">
           <span class="label">Standard template biopsy before treatment?</span>
-          <div class="seg" role="radiogroup" aria-label="Standard template biopsy">
+          <div class="seg" role="radiogroup" aria-label="Standard template biopsy before treatment">
             <input type="radio" name="biopsy" id="biopsyYes" value="yes" required>
             <label for="biopsyYes" data-side="left">Yes</label>
             <input type="radio" name="biopsy" id="biopsyNo" value="no">
@@ -171,23 +105,14 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
           </div>
         </div>
 
+        <!-- Sex -->
         <div class="field">
-          <span class="label">Can provide informed consent & comply with protocol?</span>
-          <div class="seg" role="radiogroup" aria-label="Consent and compliance">
-            <input type="radio" name="consent" id="consentYes" value="yes" required>
-            <label for="consentYes" data-side="left">Yes</label>
-            <input type="radio" name="consent" id="consentNo" value="no">
-            <label for="consentNo" data-side="right">No</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <span class="label">Able to adhere to visits, imaging & specimens schedule?</span>
-          <div class="seg" role="radiogroup" aria-label="Adherence">
-            <input type="radio" name="adherence" id="adhYes" value="yes" required>
-            <label for="adhYes" data-side="left">Yes</label>
-            <input type="radio" name="adherence" id="adhNo" value="no">
-            <label for="adhNo" data-side="right">No</label>
+          <span class="label">Sex</span>
+          <div class="seg" role="radiogroup" aria-label="Sex">
+            <input type="radio" name="sex" id="sexMale" value="male" required>
+            <label for="sexMale" data-side="left">Male</label>
+            <input type="radio" name="sex" id="sexFemale" value="female">
+            <label for="sexFemale" data-side="right">Female</label>
           </div>
         </div>
 
@@ -218,31 +143,49 @@ Title: Prostate Trial Eligibility Screener (compact, uniform Yes/No buttons)
       });
     }
 
-    function toggleCores(){
-      const show = qs('input[name="lesion"][value="yes"]').checked;
-      const row = qs('#coresRow');
-      row.classList.toggle('hidden', !show);
-      const cores = qs('#cores');
-      if(!show){ cores.value = ''; }
-    }
-
-    function numberOrNull(v){ const n = Number(v); return Number.isFinite(n) ? n : null; }
-
     function evalEligibility(){
       const reasons = [], exclusions = [];
-      const healthy = qs('input[name="healthy"]:checked');
-      const sex = qs('input[name="sex"]:checked');
       const age = Number(qs('#age').value);
       const premri = qs('input[name="premri"]:checked');
-      const lesion = qs('input[name="lesion"]:checked');
-      const cores = Number(qs('#cores').value);
       const therapy = qs('#therapy').value;
       const months = Number(qs('#months').value);
-      const intermediate = qs('input[name="intermediate"]:checked');
-      const le = Number(qs('#le').value);
       const biopsy = qs('input[name="biopsy"]:checked');
-      const consent = qs('input[name="consent"]:checked');
-      const adherence = qs('input[name="adherence"]:checked');
+      const sex = qs('input[name="sex"]:checked');
 
       const missing = [];
-      [[healthy,'Healthy enough'],[sex,'Sex'],[qs('#age').value,'Age'],[prem
+      [[qs('#age').value,'Age'],[premri,'Pre-treatment MRI'],[therapy,'Therapy type'],[qs('#months').value,'Months since therapy'],[biopsy,'Biopsy'],[sex,'Sex']].forEach(([v,label])=>{ if(v===null||v===undefined||v===''||Number.isNaN(v)) missing.push(label); });
+      if(missing.length){ setStatus('Please complete: '+missing.join(', ')+'.'); return; }
+
+      if(!(sex && sex.value==='male')) reasons.push('Inclusion requires males only.');
+      if(age < 18) reasons.push('Age must be ≥ 18.');
+      if(premri.value !== 'yes') reasons.push('Pre-treatment MRI is required.');
+      if(biopsy.value !== 'yes') reasons.push('Standard template biopsy before treatment is required.');
+
+      if(therapy === 'focal' || therapy === 'hemi'){
+        if(!Number.isFinite(months) || months > 9) exclusions.push('Partial gland ablation occurred > 9 months ago.');
+      } else if(therapy === 'whole'){
+        exclusions.push('Previously treated with whole gland ablation.');
+      } else {
+        reasons.push('Requires SOC focal or hemiablation.');
+      }
+
+      const allIssues = exclusions.concat(reasons);
+      const eligible = allIssues.length === 0;
+      const statusEl = qs('#status');
+      statusEl.textContent = eligible ? 'Eligible' : 'Not Eligible';
+      statusEl.className = 'badge ' + (eligible ? 'good' : 'bad');
+      const ul = qs('#reasons');
+      ul.innerHTML = '';
+      if(!eligible){ allIssues.forEach(txt => { const li = document.createElement('li'); li.textContent = txt; ul.appendChild(li); }); }
+    }
+
+    function setStatus(text){ const s = qs('#status'); s.textContent = text; s.className = 'badge'; qs('#reasons').innerHTML = ''; }
+
+    function init(){ refreshSegments(); qsa('input, select').forEach(el=>{ el.addEventListener('change', ()=>{ refreshSegments(); evalEligibility(); }); if(el.type==='number'){ el.addEventListener('input', ()=> evalEligibility()); } }); }
+
+    init();
+    qs('#form').addEventListener('submit', (e)=>{ e.preventDefault(); evalEligibility(); });
+    qs('#resetBtn').addEventListener('click', ()=>{ setTimeout(()=>{ refreshSegments(); setStatus('—'); }, 0); });
+  </script>
+</body>
+</html>
