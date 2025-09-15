@@ -1,13 +1,4 @@
 <!-- File: /public/care-pathway-landing.html -->
-<!--
-Title: Care Pathway Landing Page
-Why: Matches the provided JPEG layout with accessible, responsive HTML/CSS.
-How:
-  - Top bar: three primary pill buttons + En/Sp toggle aligned right.
-  - Main: 3-column grid (desktop), 2-column (tablet), 1-column (mobile) with five tiles.
-  - Each tile has a body area and a footer caption bar.
-Design tokens: customize in :root (colors, spacing, radius, font).
--->
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,21 +11,10 @@ Design tokens: customize in :root (colors, spacing, radius, font).
     :root {
       --bg: #ffffff;
       --text: #111827;
-      --muted: #6b7280;
       --border: #111111;
-      --primary-500: #6aa7d6; /* mid blue */
       --primary-600: #4e90c7;
       --primary-700: #3e7fb6;
-      --primary-pill-shadow: rgba(0,0,0,0.15);
-      --radius-xl: 16px;
-      --radius-2xl: 20px;
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 20px;
-      --space-6: 24px;
-      --space-8: 32px;
+      --pill-shadow: rgba(0,0,0,0.15);
       --maxw: 1200px;
     }
 
@@ -48,107 +28,48 @@ Design tokens: customize in :root (colors, spacing, radius, font).
       line-height: 1.5;
     }
 
-    .container {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: clamp(var(--space-4), 2vw, var(--space-8));
-    }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: clamp(16px, 2vw, 32px); }
 
     /* Top navigation */
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: clamp(20px, 3vw, 32px);
-    }
-    .topbar-left { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+    .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px); }
+    .topbar-left { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .pill {
-      /* Works for <a> and <button> */
-      display: inline-block;
-      text-decoration: none;
-      border: 0;
-      border-radius: 9999px;
-      padding: 12px 22px;
-      font-weight: 700;
-      font-size: 18px;
-      color: #fff;
-      cursor: pointer;
-      background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700));
-      box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--primary-pill-shadow);
-      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
-    }
+    .pill { display: inline-block; text-decoration: none; border: 0; border-radius: 9999px; padding: 12px 22px; font-weight: 700; font-size: 18px; color: #fff; cursor: pointer; background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700)); box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--pill-shadow); transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease; }
     .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
     .pill:hover { filter: brightness(1.05); }
     .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
 
-    .lang-toggle {
-      background: #ffffff;
-      color: #111827;
-      border: 2px solid #7fb5dd;
-      border-radius: 14px;
-      padding: 10px 16px;
-      font-weight: 700;
-      font-size: 16px;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.08);
-    }
+    .lang-toggle { background: #ffffff; color: #111827; border: 2px solid #7fb5dd; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
 
     /* Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      gap: clamp(16px, 2.4vw, 28px);
-    }
-    @media (min-width: 700px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (min-width: 1024px) {
-      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
+    .grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
+    @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
-    /* Tile */
-    .tile {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      border: 2px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      min-height: 220px;
-      background: #fff;
-    }
-    .tile-link { text-decoration: none; color: inherit; display: contents; }
-    .tile-body {
-      background: #f8fafc; /* placeholder area */
-    }
-    .tile-footer {
-      border-top: 2px solid var(--border);
-      padding: 18px 16px;
-      font-weight: 800;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+    /* Tile: make the entire card a link */
+    .tile { display: grid; grid-template-rows: 1fr auto; border: 2px solid var(--border); border-radius: 6px; overflow: hidden; min-height: 220px; background: #fff; text-decoration: none; color: inherit; }
+    .tile:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
 
-    /* Utilities */
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-    }
+    /* Image area: uniform crop */
+    .tile-media { background: #f3f4f6; }
+    .tile-media img { width: 100%; height: clamp(180px, 24vw, 260px); object-fit: cover; display: block; }
+
+    /* Bottom caption image (the “button” strip) */
+    .tile-caption { border-top: 2px solid var(--border); background: #fff; display: grid; place-items: center; }
+    .tile-caption img { width: 100%; height: 60px; object-fit: contain; display: block; background: #fff; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
   </style>
 </head>
 <body>
   <header class="container">
     <div class="topbar" role="navigation" aria-label="Primary">
       <div class="topbar-left">
-        <!-- Updated: buttons are now anchors linking to the requested pages -->
-        <a class="pill" href="https://ilonafridman.github.io/careteam.html" data-asset="Slide4.JPG" title="Slide4.JPG" aria-label="Your Care Team">Your Care Team</a>
-        <a class="pill" href="https://ilonafridman.github.io/information" data-asset="Slide5.JPG" title="Slide5.JPG" aria-label="Helpful Information">Helpful Information</a>
-        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials" data-asset="Slide6.JPG" title="Slide6.JPG" aria-label="Clinical Trials">Clinical Trials</a>
+        <a class="pill" href="https://ilonafridman.github.io/careteam.html" aria-label="Your Care Team">Your Care Team</a>
+        <a class="pill" href="https://ilonafridman.github.io/information" aria-label="Helpful Information">Helpful Information</a>
+        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials" aria-label="Clinical Trials">Clinical Trials</a>
       </div>
       <div>
         <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
@@ -160,39 +81,59 @@ Design tokens: customize in :root (colors, spacing, radius, font).
     <h1 class="sr-only">Care Pathway</h1>
 
     <section class="grid" aria-label="Topics">
-      <a class="tile-link" href="#being-diagnosed" aria-label="Being Diagnosed">
-        <article class="tile">
-          <div class="tile-body" aria-hidden="true"></div>
-          <footer class="tile-footer">Being Diagnosed</footer>
-        </article>
+      <!-- 1) Being Diagnosed -->
+      <a class="tile" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" aria-label="Being Diagnosed">
+        <div class="tile-media">
+          <img src="AtDiagnosisPic.JPG" alt="Couple speaking with a nurse" loading="lazy">
+        </div>
+        <div class="tile-caption">
+          <img src="BeingDiagnosedBotton.JPG" alt="" aria-hidden="true">
+          <span class="sr-only">Being Diagnosed</span>
+        </div>
       </a>
 
-      <a class="tile-link" href="#choosing-treatment" aria-label="Choosing Treatment">
-        <article class="tile">
-          <div class="tile-body" aria-hidden="true"></div>
-          <footer class="tile-footer">Choosing Treatment</footer>
-        </article>
+      <!-- 2) Choosing Treatment -->
+      <a class="tile" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" aria-label="Choosing Treatment">
+        <div class="tile-media">
+          <img src="Slide12.JPG" alt="Patient and doctor discussing treatment options" loading="lazy">
+        </div>
+        <div class="tile-caption">
+          <img src="ChoosingTreatmentBotton.JPG" alt="" aria-hidden="true">
+          <span class="sr-only">Choosing Treatment</span>
+        </div>
       </a>
 
-      <a class="tile-link" href="#going-through-treatment" aria-label="Going Through Treatment">
-        <article class="tile">
-          <div class="tile-body" aria-hidden="true"></div>
-          <footer class="tile-footer">Going Through Treatment</footer>
-        </article>
+      <!-- 3) Going Through Treatment -->
+      <a class="tile" href="https://ilonafridman.github.io/treatment/treatment.html" aria-label="Going Through Treatment">
+        <div class="tile-media">
+          <img src="Treatment Pic.JPG" alt="Technician assisting patient in a scanner" loading="lazy">
+        </div>
+        <div class="tile-caption">
+          <img src="GoingThrotreatmentBotton.JPG" alt="" aria-hidden="true">
+          <span class="sr-only">Going Through Treatment</span>
+        </div>
       </a>
 
-      <a class="tile-link" href="#after-treatment" aria-label="After Treatment">
-        <article class="tile">
-          <div class="tile-body" aria-hidden="true"></div>
-          <footer class="tile-footer">After Treatment</footer>
-        </article>
+      <!-- 4) After Diagnosis -->
+      <a class="tile" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" aria-label="After Diagnosis">
+        <div class="tile-media">
+          <img src="AfterDiagnsis pic.JPG" alt="Two people walking arm in arm outdoors" loading="lazy">
+        </div>
+        <div class="tile-caption">
+          <img src="AfterTreatmentBotton.JPG" alt="" aria-hidden="true">
+          <span class="sr-only">After Diagnosis</span>
+        </div>
       </a>
 
-      <a class="tile-link" href="#complementary-and" aria-label="Complementary Therapy">
-        <article class="tile">
-          <div class="tile-body" aria-hidden="true"></div>
-          <footer class="tile-footer">Complementary and</footer>
-        </article>
+      <!-- 5) Complementary Therapy -->
+      <a class="tile" href="https://ilonafridman.github.io/complementary/complementary.html" aria-label="Complementary Therapy">
+        <div class="tile-media">
+          <img src="Complementary TherapyPic.JPG" alt="Lavender and stacked stones" loading="lazy">
+        </div>
+        <div class="tile-caption">
+          <img src="Complementary TherapyBotton.JPG" alt="" aria-hidden="true">
+          <span class="sr-only">Complementary Therapy</span>
+        </div>
       </a>
 
     </section>
