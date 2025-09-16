@@ -156,5 +156,235 @@
 
     <!-- Radial infographic -->
     <figure class="radial" aria-labelledby="title" aria-describedby="desc">
-      <figcaption id="title" class="visually-hidden">My HealthCare Team – concentric i
+      <figcaption id="title" class="visually-hidden">My HealthCare Team – concentric infographic</figcaption>
+      <p id="desc" class="visually-hidden">Center: Main Treatment Team. Next rings moving outward: Support of the Main Treatment Team, Consultations with Experts, Reach for Additional Support. Each label links to details below.</p>
 
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="ring r3" aria-hidden="true"></div>
+      <div class="ring r4" aria-hidden="true"></div>
+
+      <div class="center" aria-hidden="true">
+        <div>
+          <h2>Main Treatment Team</h2>
+          <span>Start here</span>
+        </div>
+      </div>
+
+      <!-- Inner ring: Main Treatment Team -->
+      <div class="nodes r1">
+        <a class="node" href="#main-team" title="Open details below for the Main Treatment Team">
+          Medical Oncologists<span class="sub">Diagnosis & treatments</span>
+        </a>
+        <a class="node" href="#main-team" title="Open details below for the Main Treatment Team">
+          Breast Surgeons<span class="sub">Biopsy & surgery</span>
+        </a>
+        <a class="node" href="#main-team" title="Open details below for the Main Treatment Team">
+          Radiation Oncologists<span class="sub">Radiation therapy</span>
+        </a>
+      </div>
+
+      <!-- Second ring: Support -->
+      <div class="nodes r2">
+        <a class="node" href="#support-team" title="Open details below for Support of the Main Treatment Team">
+          Advanced Practitioners & Nurses<span class="sub">Assessment, treatment, education</span>
+        </a>
+        <a class="node" href="#support-team" title="Open details below for Support of the Main Treatment Team">
+          Administrators & Reception<span class="sub">Scheduling & coordination</span>
+        </a>
+        <a class="node" href="#support-team" title="Open details below for Support of the Main Treatment Team">
+          Technicians<span class="sub">Scans, tests, safety</span>
+        </a>
+      </div>
+
+      <!-- Third ring: Consultations -->
+      <div class="nodes r3">
+        <a class="node" href="#consultations" title="Open details below for Consultations with Experts">
+          Plastic Surgeon<span class="sub">Breast reconstruction</span>
+        </a>
+        <a class="node" href="#consultations" title="Open details below for Consultations with Experts">
+          Integrative Care Specialists<span class="sub">PT, nutrition, acupuncture</span>
+        </a>
+        <a class="node" href="#consultations" title="Open details below for Consultations with Experts">
+          Genetic Counselors<span class="sub">Hereditary risk & testing</span>
+        </a>
+      </div>
+
+      <!-- Fourth ring: Additional Support -->
+      <div class="nodes r4">
+        <a class="node" href="#additional-support" title="Open details below for Additional Support">
+          Patient Advocates<span class="sub">Education & advocacy</span>
+        </a>
+        <a class="node" href="#additional-support" title="Open details below for Additional Support">
+          Patient Navigators<span class="sub">Coordinate your care</span>
+        </a>
+        <a class="node" href="#additional-support" title="Open details below for Additional Support">
+          Social Workers<span class="sub">Practical help & resources</span>
+        </a>
+      </div>
+    </figure>
+
+    <!-- Small-screen fallback pills (shown only under 560px) -->
+    <div class="fallback" aria-label="Compact list of team roles">
+      <div class="pill"><span class="dot l1"></span>Medical Oncologists</div>
+      <div class="pill"><span class="dot l1"></span>Breast Surgeons</div>
+      <div class="pill"><span class="dot l1"></span>Radiation Oncologists</div>
+      <div class="pill"><span class="dot l2"></span>Advanced Practitioners & Nurses</div>
+      <div class="pill"><span class="dot l2"></span>Administrators & Reception</div>
+      <div class="pill"><span class="dot l2"></span>Technicians</div>
+      <div class="pill"><span class="dot l3"></span>Plastic Surgeon</div>
+      <div class="pill"><span class="dot l3"></span>Integrative Care Specialists</div>
+      <div class="pill"><span class="dot l3"></span>Genetic Counselors</div>
+      <div class="pill"><span class="dot l4"></span>Patient Advocates</div>
+      <div class="pill"><span class="dot l4"></span>Patient Navigators</div>
+      <div class="pill"><span class="dot l4"></span>Social Workers</div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend" aria-hidden="false">
+      <span><i class="dot l1" aria-hidden="true"></i> Main Treatment Team</span>
+      <span><i class="dot l2" aria-hidden="true"></i> Support of Main Team</span>
+      <span><i class="dot l3" aria-hidden="true"></i> Consultations with Experts</span>
+      <span><i class="dot l4" aria-hidden="true"></i> Reach for Additional Support</span>
+    </div>
+
+    <!-- Details -->
+    <section class="details">
+      <div class="group" id="main-team">
+        <h3>Main Treatment Team</h3>
+        <div class="role">
+          <h4>Medical Oncologists</h4>
+          <ul>
+            <li>Diagnosis and tests</li>
+            <li>Chemotherapy</li>
+            <li>Hormone therapy</li>
+            <li>Other therapy</li>
+            <li>Follow-ups</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Breast Surgeons</h4>
+          <ul>
+            <li>Biopsy</li>
+            <li>Lumpectomy</li>
+            <li>Mastectomy</li>
+            <li>Lymph node removal</li>
+            <li>Addressing surgical complications</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Radiation Oncologists</h4>
+          <ul>
+            <li>Delivery of radiation</li>
+            <li>Monitoring side effects</li>
+          </ul>
+        </div>
+        <p class="hint">Tap any ring label above to jump here.</p>
+      </div>
+
+      <div class="group" id="support-team">
+        <h3>Support of the Main Treatment Team</h3>
+        <div class="role">
+          <h4>Advanced Care Practitioners & Nurses</h4>
+          <ul>
+            <li>Comprehensive assessment</li>
+            <li>Administer treatment</li>
+            <li>Manage side effects</li>
+            <li>Educate patients</li>
+            <li>Manage emergencies</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Administrators & Receptionists</h4>
+          <ul>
+            <li>Schedule appointments</li>
+            <li>Check in patients</li>
+            <li>Organize documents</li>
+            <li>Coordinate services</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Technicians</h4>
+          <ul>
+            <li>Perform scans</li>
+            <li>Process samples</li>
+            <li>Run tests</li>
+            <li>Deliver radiation</li>
+            <li>Ensure safety</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="group" id="consultations">
+        <h3>Consider Consultations with the Following Experts</h3>
+        <div class="role">
+          <h4>Plastic Surgeon</h4>
+          <ul>
+            <li>Consults on breast reconstruction</li>
+            <li>Implements the reconstruction</li>
+            <li>Addresses side effects</li>
+            <li>Administers follow-up care</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Integrative Care Specialists</h4>
+          <ul>
+            <li>Physical therapy</li>
+            <li>Dieting, nutrition</li>
+            <li>Acupuncture</li>
+            <li>Integrative cancer care</li>
+            <li>Nonpharmacologic pain management</li>
+            <li>Others as needed</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Genetic Counselors</h4>
+          <ul>
+            <li>Assess hereditary cancer risks</li>
+            <li>Perform testing</li>
+            <li>Provide related counseling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="group" id="additional-support">
+        <h3>Reach for Additional Support</h3>
+        <div class="role">
+          <h4>Patient Advocates</h4>
+          <ul>
+            <li>Emotional support</li>
+            <li>Patient education</li>
+            <li>Resolving issues</li>
+            <li>Identifying connections</li>
+            <li>Patient advocacy</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Patient Navigators</h4>
+          <ul>
+            <li>Coordinate care</li>
+            <li>Identify relevant experts</li>
+            <li>Help patients move efficiently through the complex medical system</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h4>Social Workers</h4>
+          <ul>
+            <li>Connect patients to financial assistance</li>
+            <li>Housing resources</li>
+            <li>Food security resources</li>
+            <li>Transportation services</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Accessibility helpers -->
+  <style>
+    .visually-hidden{
+      position:absolute !important; clip: rect(1px,1px,1px,1px);
+      clip-path: inset(50%); height:1px;width:1px;overflow:hidden;white-space:nowrap;
+    }
+  </style>
+</body>
