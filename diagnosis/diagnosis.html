@@ -1,1 +1,215 @@
+<!-- File: /public/diagnosis-coping-infographic.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>At the Diagnosis: Coping with Information</title>
+<meta name="description" content="Patient-friendly guide to common questions after a breast cancer diagnosis and who to ask first." />
+<style>
+  :root{
+    --bg:#f7f8fb; --fg:#0f172a; --muted:#64748b; --card:#ffffff;
+    --shadow:0 8px 24px rgba(2,6,23,.12); --radius:18px; --max:1100px;
+    --chip:#1f2937; --chip-bg:#e5e7eb;
+    --accent:#2563eb; --accent-2:#10b981; --accent-3:#f59e0b; --accent-4:#ef4444;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0b1220; --fg:#f8fafc; --muted:#94a3b8; --card:#0f172a;
+      --chip-bg:#111827; --shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--fg); background:
+      radial-gradient(1200px 800px at 10% -10%, #e9eefb 0, transparent 60%), var(--bg);
+    font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans";
+  }
+  .wrap{max-width:var(--max); margin-inline:auto; padding:22px}
+  header{display:grid; gap:8px; text-align:center; margin-bottom:14px}
+  h1{margin:0; font-size:clamp(24px,3.3vw,40px)}
+  .lede{margin:0; color:var(--muted); font-size:clamp(14px,1.8vw,18px)}
+  .note{margin:0; color:var(--muted); font-size:14px}
+
+  /* Sticky tools */
+  .tools{position:sticky; top:0; z-index:10; background:color-mix(in oklab, var(--bg), transparent 10%);
+    backdrop-filter:saturate(140%) blur(6px); border-bottom:1px solid rgba(148,163,184,.25);
+    padding:10px 0; margin:16px 0 12px}
+  .tools .inner{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .search{
+    flex:1 1 260px; display:flex; align-items:center; gap:8px; background:var(--card);
+    border:1px solid rgba(148,163,184,.35); border-radius:999px; padding:10px 12px; box-shadow:var(--shadow)
+  }
+  .search input{border:0; outline:0; width:100%; background:transparent; color:var(--fg)}
+  .nav{display:flex; flex-wrap:wrap; gap:8px}
+  .nav a{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+    background:var(--card); border:1px solid rgba(148,163,184,.35); text-decoration:none; color:var(--fg)}
+  .nav a:hover{transform:translateY(-1px)}
+
+  /* Sections */
+  section{scroll-margin-top:72px}
+  .group{
+    background:var(--card); border:1px solid rgba(148,163,184,.25);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:18px 18px 8px; margin:18px 0;
+  }
+  .group h2{margin:0 0 6px; font-size:clamp(18px,2.4vw,26px)}
+  .grid{display:grid; gap:12px; grid-template-columns:repeat(1, minmax(0,1fr))}
+  @media (min-width:700px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr))} }
+  .qa{
+    border:1px dashed rgba(148,163,184,.45); border-radius:14px; padding:12px 14px;
+    display:grid; gap:8px; align-items:start; min-height:72px;
+  }
+  .q{font-weight:600}
+  .a{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:14px}
+  .chip{
+    display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
+    background:var(--chip-bg); color:var(--fg); border:1px solid rgba(148,163,184,.4); font-weight:600
+  }
+  .chip svg{width:16px;height:16px}
+  /* role accents (purely visual) */
+  .onc   { --c: var(--accent) }
+  .nurse { --c: var(--accent-2) }
+  .np    { --c: var(--accent-2) }
+  .gen   { --c: #8b5cf6 }
+  .navg  { --c: #06b6d4 }
+  .soc   { --c: var(--accent-4) }
+  .res   { --c: #f97316 }
+  .fd    { --c: #94a3b8 }
+  .adv   { --c: #0ea5e9 }
+  .chip{ box-shadow: 0 0 0 3px color-mix(in oklab, var(--c), transparent 80%) }
+
+  /* Footer */
+  footer{color:var(--muted); font-size:13px; text-align:center; margin:22px 0}
+
+  /* Print */
+  @media print{
+    .tools{position:static; border:0; background:transparent; backdrop-filter:none}
+    .nav,.search{display:none}
+    .wrap{padding:0}
+    .group{break-inside:avoid}
+    a{color:inherit; text-decoration:none}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>At the Diagnosis: Coping with Information</h1>
+      <p class="lede">Common questions patients ask—and the best person to ask first. Use the quick search or jump to a section below.</p>
+      <p class="note">More than one team member may be able to answer any question.</p>
+    </header>
+
+    <div class="tools">
+      <div class="inner">
+        <div class="search" role="search">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="m21 20.3-4.5-4.5a7.5 7.5 0 1 0-1.3 1.3l4.5 4.5a.9.9 0 0 0 1.3-1.3zM4.8 10.5a5.7 5.7 0 1 1 11.4 0a5.7 5.7 0 0 1-11.4 0z"/></svg>
+          <input id="q" type="search" placeholder="Search questions (e.g., genetic testing, trials, social worker)…" aria-label="Search questions" />
+        </div>
+        <nav class="nav" aria-label="Sections">
+          <a href="#diagnosis">Diagnosis & Testing</a>
+          <a href="#time">Time & Urgency</a>
+          <a href="#coordination">Coordination</a>
+          <a href="#access">Access to Information</a>
+          <a href="#support">Support & Coping</a>
+          <a href="#understanding">General Understanding</a>
+          <a href="#trials">Clinical Trials & Second Opinions</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Diagnosis & Testing -->
+    <section id="diagnosis" class="group" aria-labelledby="h-dx">
+      <h2 id="h-dx">Diagnosis &amp; Testing</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">How quickly does my cancer grow?</div><div class="a"><span class="chip onc" title="Ask first">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">Are there any additional tests or biopsies I need to confirm the diagnosis or understand it better?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">Is it necessary to test for tumor markers in my case?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">Should I be tested for estrogen receptors?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">How was this diagnosis made?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">Do I need to do genetic testing?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">What are the types of breast cancer?</div><div class="a"><span class="chip np">Nurse practitioner</span></div></article>
+        <article class="qa"><div class="q">What do &lsquo;grade&rsquo;, &lsquo;stage&rsquo;, &lsquo;margin&rsquo; mean?</div><div class="a"><span class="chip np">Nurse practitioner</span></div></article>
+        <article class="qa"><div class="q">Am I at increased risk of ovarian cancer or other types of cancer?</div><div class="a"><span class="chip gen">Genetic counselor</span></div></article>
+      </div>
+    </section>
+
+    <!-- Time & Urgency -->
+    <section id="time" class="group" aria-labelledby="h-time">
+      <h2 id="h-time">Time &amp; Urgency</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">How much time do I have to decide about my treatment?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">How long does it take to hear back after I complete my tests?</div><div class="a"><span class="chip np">Nurse practitioner</span></div></article>
+      </div>
+    </section>
+
+    <!-- Coordination -->
+    <section id="coordination" class="group" aria-labelledby="h-coord">
+      <h2 id="h-coord">Coordination</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">Who will be part of my care team, and what is each person’s role?</div><div class="a"><span class="chip nurse">Nurse</span></div></article>
+        <article class="qa"><div class="q">Which doctors should I be seeing and when?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">Is there a patient navigator or social worker I can talk to?</div><div class="a"><span class="chip nurse">Nurse</span><span class="chip navg">Patient navigator</span></div></article>
+        <article class="qa"><div class="q">Who else should I talk to?</div><div class="a"><span class="chip navg">Patient navigator</span></div></article>
+        <article class="qa"><div class="q">What should be my next step?</div><div class="a"><span class="chip navg">Patient navigator</span></div></article>
+      </div>
+    </section>
+
+    <!-- Access to Information -->
+    <section id="access" class="group" aria-labelledby="h-access">
+      <h2 id="h-access">Access to Information</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">How can I access or use “MyChart” (or my patient portal)?</div><div class="a"><span class="chip fd">Front desk</span></div></article>
+        <article class="qa"><div class="q">Where can I get additional information on breast cancer?</div><div class="a"><span class="chip nurse">Nurse</span></div></article>
+      </div>
+    </section>
+
+    <!-- Support & Coping -->
+    <section id="support" class="group" aria-labelledby="h-support">
+      <h2 id="h-support">Support &amp; Coping</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">Are there support groups or counseling services you recommend?</div><div class="a"><span class="chip soc">Social worker</span></div></article>
+        <article class="qa"><div class="q">What should I tell my family and friends about breast cancer?</div><div class="a"><span class="chip gen">Genetic counselor</span></div></article>
+        <article class="qa"><div class="q">How will cancer treatment affect my work, life, and other activities?</div><div class="a"><span class="chip adv">Patient advocate</span></div></article>
+      </div>
+    </section>
+
+    <!-- General Understanding -->
+    <section id="understanding" class="group" aria-labelledby="h-understanding">
+      <h2 id="h-understanding">General Understanding</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">How did I get cancer?</div><div class="a"><span class="chip nurse">Nurse</span></div></article>
+        <article class="qa"><div class="q">What are the risks to my family because of my diagnosis?</div><div class="a"><span class="chip gen">Genetic counselor</span></div></article>
+        <article class="qa"><div class="q">Do I need a reproductive specialist’s consultation?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+      </div>
+    </section>
+
+    <!-- Clinical Trials & Second Opinions -->
+    <section id="trials" class="group" aria-labelledby="h-trials">
+      <h2 id="h-trials">Clinical Trials &amp; Second Opinions</h2>
+      <div class="grid">
+        <article class="qa"><div class="q">What clinical trials are available to me?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+        <article class="qa"><div class="q">I would like to know more about clinical trials—whom should I ask?</div><div class="a"><span class="chip res">Research nurse</span></div></article>
+        <article class="qa"><div class="q">What expenses related to a clinical trial may not be covered by insurance?</div><div class="a"><span class="chip res">Research nurse</span></div></article>
+        <article class="qa"><div class="q">When should I seek a second opinion?</div><div class="a"><span class="chip onc">Oncologist who diagnosed you</span></div></article>
+      </div>
+    </section>
+
+    <footer>
+      This page is for education and support and doesn’t replace medical advice from your care team.
+    </footer>
+  </div>
+
+  <script>
+    // Why: quick client-side filter for readability
+    (function(){
+      const input = document.getElementById('q');
+      const cards = Array.from(document.querySelectorAll('.qa'));
+      const hay = el => (el.textContent || '').toLowerCase();
+      input?.addEventListener('input', e=>{
+        const q = (e.target.value || '').toLowerCase().trim();
+        cards.forEach(c=>{
+          const hit = hay(c).includes(q);
+          c.style.display = q ? (hit ? '' : 'none') : '';
+        });
+      }, {passive:true});
 
