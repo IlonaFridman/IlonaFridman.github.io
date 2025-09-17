@@ -11,7 +11,10 @@
     --panel:#dfdfdf; --panel-hover:#d6d6d6; --ring:0 0 0 3px rgba(59,130,246,.35);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:20px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial; /* larger text */
+  }
   .container{max-width:1100px;margin:42px auto;padding:0 20px}
   .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
@@ -19,7 +22,7 @@
   .toolbar{display:flex;gap:8px;align-items:center;margin:0 0 12px 0}
   .tool-btn{
     padding:8px 12px;border-radius:8px;border:1px solid var(--line);
-    background:#f5f6f8;color:#111;font-weight:600;cursor:pointer;
+    background:#f5f6f8;color:#111;font-weight:700;cursor:pointer;
     transition:transform .06s ease, background-color .15s ease;
   }
   .tool-btn:hover{background:#eef1f5;transform:translateY(-1px)}
@@ -29,41 +32,49 @@
   .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
   .acc-header{
     width:100%;display:flex;align-items:center;gap:10px;
-    padding:16px 18px 16px 44px;border:1px solid var(--line);
-    background:var(--panel);border-radius:6px;font-weight:700;cursor:pointer;
+    padding:18px 20px 18px 46px;border:1px solid var(--line);
+    background:var(--panel);border-radius:6px;font-weight:800;cursor:pointer;
     text-align:left;position:relative;transition:background-color .15s,transform .06s;
+    font-size:22px; /* same visual weight as other page */
   }
   .acc-header::before{
     content:"\2794"; /* ➔ */
-    position:absolute;left:14px;font-size:18px;color:#000;opacity:.8;transform:rotate(180deg);
+    position:absolute;left:14px;font-size:20px;color:#000;opacity:.8;transform:rotate(180deg);
   }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
 
-  /* Panel + bullet list styled like the slide */
-  .acc-panel{margin:6px 0 10px 24px}
+  /* Panel + bullet list */
+  .acc-panel{margin:8px 0 12px 24px}
   .q-list{
-    list-style: square;
+    list-style:square;
     margin:8px 0 0 22px;
     padding:0;
-    font-size:18px;
-    line-height:1.65;
+    font-size:20px;           /* larger bullets */
+    line-height:1.7;
   }
-  .q-list li{ margin:10px 0 }
+  .q-list li{ margin:12px 0 }
   .q-list li::marker{ color:#111; font-size:1.05em }
   .acc-panel[hidden]{display:none}
 
-  /* RIGHT (buttons kept) */
+  /* RIGHT (CTA links styled like previous page) */
   .side{display:flex;flex-direction:column;gap:28px}
   .cta{
-    appearance:none;border:0;color:#fff;font-weight:600;font-size:20px;padding:18px 28px;border-radius:16px;
-    background:linear-gradient(180deg,#6ea2cf,#588fbe);cursor:pointer;min-width:280px;
+    display:inline-block; text-decoration:none;
+    color:#fff;font-weight:700;font-size:20px;padding:18px 28px;border-radius:16px;
+    background:linear-gradient(180deg,#6ea2cf,#588fbe); min-width:280px;
     box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
-    border:3px solid #fff;outline:1px solid #c7d9ea;text-shadow:0 1px 0 rgba(0,0,0,.2);
+    border:3px solid #fff; outline:1px solid #c7d9ea; text-shadow:0 1px 0 rgba(0,0,0,.2);
     transition:transform .06s ease,filter .15s ease;
   }
   .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
-  .cta:focus-visible{box-shadow:var(--ring)}
+  .cta:focus-visible{outline:none;box-shadow:var(--ring)}
+
+  /* Right image block */
+  .pic-wrap{width:100%;max-width:340px}
+  .pic{
+    width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block;
+  }
 
   @media (max-width:760px){
     .layout{grid-template-columns:1fr;gap:28px}
@@ -83,9 +94,17 @@
     </div>
 
     <aside class="side" aria-label="Actions">
-      <button class="cta" type="button">Questions to ask</button>
-      <button class="cta" type="button">Helpful Information</button>
-      <button class="cta" type="button">Resources to explore</button>
+      <!-- same-size CTA links with required destinations -->
+      <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Questions to ask</a>
+      <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisinfo.html">Helpful Information</a>
+      <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisresources.html">Resources to explore</a>
+
+      <!-- Screenshot image -->
+      <div class="pic-wrap">
+        <img class="pic"
+             src="https://ilonafridman.github.io/diagnosis/Patient%20and%20a%20doctor.png"
+             alt="Patient speaking with a doctor" />
+      </div>
     </aside>
   </section>
 </main>
@@ -94,13 +113,12 @@
   // Data
   const DATA = [
     { title: 'Diagnosis and Testing', questions: [
-     
       'How was this diagnosis made?',
       'What do “grade”, “stage”, “margin” mean?',
       'What is my type of breast cancer?',
       'Are there any additional tests or biopsies I need to confirm the diagnosis or understand it better?',
       'Is it necessary to test for tumor markers in my case?',
-      'Should I be tested for estrogen receptors?', 
+      'Should I be tested for estrogen receptors?',
       'Do I need to do genetic testing?',
       'How quickly does my cancer grow?',
       'Am I at an increased risk of ovarian cancer or other types of cancer?'
@@ -138,10 +156,8 @@
     ]}
   ];
 
-  // State: when true, clicking a header closes others; when false, allow multiple opens
   let singleOpen = true;
 
-  // Build accordion
   (function renderAccordion(){
     const stack = document.getElementById('stack');
     DATA.forEach((cat, idx) => {
@@ -186,7 +202,7 @@
     const panel = document.getElementById(`panel-${i}`);
     const open = btn.getAttribute('aria-expanded') === 'true';
 
-    if (singleOpen) collapseAll();                // keep only one open unless in multi-open mode
+    if (singleOpen) collapseAll();
 
     if (open){
       btn.setAttribute('aria-expanded','false');
@@ -199,7 +215,7 @@
   }
 
   function expandAll(){
-    singleOpen = false;                           // allow multiple to stay open
+    singleOpen = false;
     DATA.forEach((_, idx) => {
       const b = document.getElementById(`btn-${idx}`);
       const p = document.getElementById(`panel-${idx}`);
@@ -215,7 +231,7 @@
       if (b) b.setAttribute('aria-expanded','false');
       if (p) p.hidden = true;
     });
-    singleOpen = true;                            // return to single-open behavior
+    singleOpen = true;
   }
 </script>
 </body>
