@@ -8,16 +8,14 @@
 <style>
   :root{
     --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
-    --panel:#dfdfdf; --panel-hover:#d6d6d6;
-    --cta0:#6ea2cf; --cta1:#588fbe; --cta-border:#c7d9ea;
-    --ring:0 0 0 3px rgba(59,130,246,.35);
+    --panel:#dfdfdf; --panel-hover:#d6d6d6; --ring:0 0 0 3px rgba(59,130,246,.35);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
   .container{max-width:1100px;margin:42px auto;padding:0 20px}
   .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
-  /* LEFT – Accordion */
+  /* LEFT */
   .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
   .acc-header{
     width:100%;display:flex;align-items:center;gap:10px;
@@ -31,57 +29,39 @@
   }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
-  .acc-panel{border-left:1px solid #cfcfcf;border-right:1px solid #cfcfcf;border-bottom:1px solid #eeeeee;border-top:4px solid #c0c7ce;margin:-8px 0 6px 24px;border-radius:2px;overflow:hidden}
-  .q-list{list-style:none;margin:0;padding:0}
-  .q-list li{padding:10px 12px;border-bottom:1px solid #dcdcdc;background:#f3f5f7;color:#222}
-  .q-list li:last-child{border-bottom:0}
+
+  /* Panel + bullet list EXACTLY like screenshot */
+  .acc-panel{margin:4px 0 10px 24px}
+  .q-list{
+    list-style:square;
+    margin:8px 0 0 22px; /* indent like slide */
+    padding:0;
+    font-size:18px;      /* readable like slide */
+    line-height:1.6;
+  }
+  .q-list li{
+    margin:10px 0;      /* vertical spacing between bullets */
+  }
+  .q-list li::marker{
+    color:#111;         /* dark square bullet */
+    font-size:1.1em;
+  }
   .acc-panel[hidden]{display:none}
 
-  /* LEFT – Info cards (Helpful/Resources) */
-  .info-card{
-    border:2px solid #2c3e50; border-radius:4px; background:#e6e7e9; color:#1f2937;
-    padding:18px; line-height:1.55;
-  }
-  .info-card h3{margin:0 0 10px 0; font-size:18px}
-  .info-card p{margin:10px 0}
-  .info-card ul{margin:8px 0 0 18px}
-  .info-card li{margin:6px 0}
-  .info-card a{color:#0b67a3; text-decoration:underline; word-break:break-all}
-
-  /* RIGHT – Blue buttons */
+  /* RIGHT (placeholder column – keep empty / your buttons if any) */
   .side{display:flex;flex-direction:column;gap:28px}
-  .cta{
-    appearance:none;border:0;color:#fff;font-weight:600;font-size:20px;padding:18px 28px;border-radius:16px;
-    background:linear-gradient(180deg,var(--cta0),var(--cta1));cursor:pointer;min-width:280px;
-    box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
-    border:3px solid #fff;outline:1px solid var(--cta-border);text-shadow:0 1px 0 rgba(0,0,0,.2);
-    transition:transform .06s ease,filter .15s ease;
-  }
-  .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
-  .cta:focus-visible{box-shadow:var(--ring)}
-  .cta.active{filter:brightness(1.15); outline-width:2px; background:linear-gradient(180deg,#cfe3f7,#e7f1fb); color:#1f2937}
-
-  /* Responsive */
-  @media (max-width:760px){ .layout{grid-template-columns:1fr;gap:28px}.side .cta{width:100%;min-width:unset} }
+  @media (max-width:760px){ .layout{grid-template-columns:1fr;gap:28px} }
 </style>
 </head>
 <body>
 <main class="container" aria-label="Slide-like layout">
   <section class="layout">
-    <!-- LEFT: Dynamic area -->
-    <div id="left" aria-live="polite"></div>
-
-    <!-- RIGHT: Mode switch -->
-    <aside class="side" aria-label="Switch content">
-      <button id="btn-questions"  class="cta" type="button" aria-pressed="false">Questions to ask</button>
-      <button id="btn-helpful"    class="cta" type="button" aria-pressed="false">Helpful Information</button>
-      <button id="btn-resources"  class="cta" type="button" aria-pressed="false">Resources to explore</button>
-    </aside>
+    <div id="stack" class="stack" aria-label="Categories"></div>
+    <aside class="side" aria-label="Actions"></aside>
   </section>
 </main>
 
 <script>
-  /* ---------- Data (from your slides) ---------- */
   const DATA = [
     { title:'Diagnosis and Testing', questions:[
       'How quickly does my cancer grow?',
@@ -127,82 +107,8 @@
     ]}
   ];
 
-  const HELPFUL = {
-    heading: 'Read:',
-    blocks: [
-      {
-        text: 'Read on HMH page about breast cancer –',
-        links: [
-          ['https://www.hackensackmeridianhealth.org/en/services/cancer-care/breast-cancer','hackensackmeridianhealth.org › breast-cancer']
-        ]
-      },
-      {
-        text: 'Learn more basic information about breast cancer:',
-        links: [
-          ['https://www.cancer.org/cancer/types/breast-cancer/about.html','cancer.org › breast-cancer › about']
-        ]
-      },
-      {
-        text: 'Glossary of medical terms:',
-        links: [
-          ['https://www.cancer.org/cancer/understanding-cancer/glossary.html','cancer.org › glossary'],
-          ['https://www.nccih.nih.gov/health/how-to-find-information-about-complementary-health-approaches-on-pubmed','nccih.nih.gov › complementary health on PubMed']
-        ]
-      }
-    ]
-  };
-
-  const RESOURCES = [
-    {
-      title: 'In the clinical office:',
-      items: [
-        'Nurse Practitioner: Marieta Branis',
-        'Advanced Nurse Practitioner: Jennifer Teperino',
-        'Nurse Navigator: Donna McGourty',
-        'Research Nurse: Alexa Zawada',
-        'Clinical Medical Assistant: Paloma Hernandez (x5414)',
-        { label: 'Phone', value: '551-996-58-11', href: 'tel:5519965811' }
-      ]
-    },
-    {
-      title: 'In HMH hospital system',
-      items: [
-        'EMPOWER Virtual Community – Lizzie Martinez, Oncology Nurse Breast Navigator,',
-        { label: 'Phone', value: '732-836-4679', href: 'tel:7328364679' },
-        { label: 'Email', value: 'Elizabeth.Martinez@hmhn.org', href: 'mailto:Elizabeth.Martinez@hmhn.org' }
-      ]
-    },
-    {
-      title: 'Nutritionist',
-      items: [
-        'Kanisha Parikh',
-        { label: 'Phone', value: '551-996-2875', href: 'tel:5519962875' }
-      ]
-    },
-    {
-      title: 'Social work services',
-      items: [
-        'Jane Watson, LCSW',
-        { label: 'Phone', value: '551-996-2599', href: 'tel:5519962599' },
-        { label: 'Email', value: 'Jane.Watson@hmhn.org', href: 'mailto:Jane.Watson@hmhn.org' }
-      ]
-    },
-    {
-      title: 'Financial services',
-      items: [
-        'Kathryn Koch, LSW',
-        { label: 'Phone', value: '551-996-5861', href: 'tel:5519965861' },
-        { label: 'Email', value: 'Kathryn.Koch@hmhn.org', href: 'mailto:Kathryn.Koch@hmhn.org' }
-      ]
-    }
-  ];
-
-  /* ---------- Renderers ---------- */
-  function renderQuestionsAccordion(root){
-    const stack = document.createElement('div');
-    stack.id = 'stack';
-    stack.className = 'stack';
-
+  (function renderAccordion(){
+    const stack = document.getElementById('stack');
     DATA.forEach((cat, idx) => {
       const id = `panel-${idx}`;
       const btn = document.createElement('button');
@@ -234,57 +140,8 @@
       stack.appendChild(panel);
     });
 
-    root.appendChild(stack);
-    document.addEventListener('keydown', escCollapseOnce, { once:true });
-  }
-
-  function escCollapseOnce(e){
-    if (e.key === 'Escape') collapseAll();
-  }
-
-  function renderHelpful(root){
-    const card = document.createElement('div');
-    card.className = 'info-card';
-    const h3 = document.createElement('h3'); h3.textContent = HELPFUL.heading;
-    card.appendChild(h3);
-
-    HELPFUL.blocks.forEach(b=>{
-      const p = document.createElement('p'); p.textContent = b.text; card.appendChild(p);
-      const ul = document.createElement('ul');
-      b.links.forEach(([href,label])=>{
-        const li=document.createElement('li');
-        const a=document.createElement('a');
-        a.href=href; a.target="_blank"; a.rel="noopener noreferrer"; a.textContent=label;
-        li.appendChild(a); ul.appendChild(li);
-      });
-      card.appendChild(ul);
-    });
-
-    root.appendChild(card);
-  }
-
-  function renderResources(root){
-    const card = document.createElement('div');
-    card.className = 'info-card';
-
-    RESOURCES.forEach(group=>{
-      const h3 = document.createElement('h3'); h3.textContent = group.title; card.appendChild(h3);
-      const ul = document.createElement('ul');
-      group.items.forEach(item=>{
-        const li = document.createElement('li');
-        if (typeof item === 'string'){ li.textContent = item; }
-        else {
-          const a = document.createElement('a'); a.href=item.href; a.textContent=item.value;
-          // Why: show label then make value clickable
-          li.append(document.createTextNode(item.label+': '), a);
-        }
-        ul.appendChild(li);
-      });
-      card.appendChild(ul);
-    });
-
-    root.appendChild(card);
-  }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseAll(); });
+  })();
 
   function togglePanel(i){
     const btn = document.getElementById(`btn-${i}`);
@@ -297,7 +154,6 @@
       panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
     }
   }
-
   function collapseAll(){
     DATA.forEach((_, idx) => {
       const b = document.getElementById(`btn-${idx}`);
@@ -306,26 +162,6 @@
       if (p) p.hidden = true;
     });
   }
-
-  /* ---------- Router ---------- */
-  const MODES = { QUESTIONS:'questions', HELPFUL:'helpful', RESOURCES:'resources' };
-  const left = document.getElementById('left');
-  const btnQuestions = document.getElementById('btn-questions');
-  const btnHelpful   = document.getElementById('btn-helpful');
-  const btnResources = document.getElementById('btn-resources');
-
-  btnQuestions.addEventListener('click', ()=> setMode(MODES.QUESTIONS, true));
-  btnHelpful  .addEventListener('click', ()=> setMode(MODES.HELPFUL,   true));
-  btnResources.addEventListener('click', ()=> setMode(MODES.RESOURCES, true));
-  window.addEventListener('hashchange', ()=> setMode(hashToMode(location.hash)));
-
-  function setMode(mode, pushHash=false){
-    // update hash to support back/forward
-    if (pushHash) location.hash = mode;
-    // update active styles
-    [btnQuestions, btnHelpful, btnResources].forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-    if (mode===MODES.QUESTIONS){ btnQuestions.classList.add('active'); btnQuestions.setAttribute('aria-pressed','true'); }
-    if (mode===MODES.HELPFUL){ btnHelpful.classList.add('active'); btnHelpful.setAttribute('aria-pressed','true'); }
-    if (mode===MODES.RESOURCES){ btnResources.classList.add('active'); btnResources.setAttribute('aria-pressed','true'); }
-
-    // rend
+</script>
+</body>
+</html>
