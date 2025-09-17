@@ -16,15 +16,15 @@
 
     #fitRoot{ transform-origin: top left; }
 
-    /* Wider to support ~2× image width */
-    .container{max-width:1400px;margin:42px auto;padding:0 20px}
+    /* Wider container so single-card is large */
+    .container{max-width:1500px;margin:42px auto;padding:0 20px}
     .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
     .info-card{background:var(--panel);border:2px solid var(--panel-border);border-radius:8px;padding:22px;box-shadow:0 1px 0 rgba(0,0,0,.04)}
     .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
 
-    /* 2 columns (was 3) -> ~2× bigger visuals with wider container */
-    .resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    /* >>> BIG CARDS: one per row on desktop (≈2× bigger than previous 2-col) */
+    .resource-grid{display:grid;grid-template-columns:1fr;gap:24px}
     .resource{display:block;text-decoration:none;color:inherit}
     .thumb{
       border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;
@@ -59,6 +59,8 @@
     .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
     .home-link svg{width:22px;height:22px;fill:#374151}
 
+    /* Stack to 2 columns on medium, 1 on small */
+    @media (max-width:1100px){ .resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
     @media (max-width:900px){ .resource-grid{grid-template-columns:1fr} }
     @media (max-width:640px){
       .container{margin:24px auto}
