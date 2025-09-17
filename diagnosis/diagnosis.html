@@ -15,6 +15,16 @@
   .container{max-width:1100px;margin:42px auto;padding:0 20px}
   .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
+  /* Toolbar */
+  .toolbar{display:flex;gap:8px;align-items:center;margin:0 0 12px 0}
+  .tool-btn{
+    padding:8px 12px;border-radius:8px;border:1px solid var(--line);
+    background:#f5f6f8;color:#111;font-weight:600;cursor:pointer;
+    transition:transform .06s ease, background-color .15s ease;
+  }
+  .tool-btn:hover{background:#eef1f5;transform:translateY(-1px)}
+  .tool-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+
   /* LEFT */
   .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
   .acc-header{
@@ -30,40 +40,60 @@
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
 
-  /* Panel + bullet list EXACTLY like screenshot */
-  .acc-panel{margin:4px 0 10px 24px}
+  /* Panel + bullet list styled like the slide */
+  .acc-panel{margin:6px 0 10px 24px}
   .q-list{
-    list-style:square;
-    margin:8px 0 0 22px; /* indent like slide */
+    list-style: square;
+    margin:8px 0 0 22px;
     padding:0;
-    font-size:18px;      /* readable like slide */
-    line-height:1.6;
+    font-size:18px;
+    line-height:1.65;
   }
-  .q-list li{
-    margin:10px 0;      /* vertical spacing between bullets */
-  }
-  .q-list li::marker{
-    color:#111;         /* dark square bullet */
-    font-size:1.1em;
-  }
+  .q-list li{ margin:10px 0 }
+  .q-list li::marker{ color:#111; font-size:1.05em }
   .acc-panel[hidden]{display:none}
 
-  /* RIGHT (placeholder column – keep empty / your buttons if any) */
+  /* RIGHT (buttons kept) */
   .side{display:flex;flex-direction:column;gap:28px}
-  @media (max-width:760px){ .layout{grid-template-columns:1fr;gap:28px} }
+  .cta{
+    appearance:none;border:0;color:#fff;font-weight:600;font-size:20px;padding:18px 28px;border-radius:16px;
+    background:linear-gradient(180deg,#6ea2cf,#588fbe);cursor:pointer;min-width:280px;
+    box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
+    border:3px solid #fff;outline:1px solid #c7d9ea;text-shadow:0 1px 0 rgba(0,0,0,.2);
+    transition:transform .06s ease,filter .15s ease;
+  }
+  .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .cta:focus-visible{box-shadow:var(--ring)}
+
+  @media (max-width:760px){
+    .layout{grid-template-columns:1fr;gap:28px}
+    .side .cta{width:100%;min-width:unset}
+  }
 </style>
 </head>
 <body>
 <main class="container" aria-label="Slide-like layout">
   <section class="layout">
-    <div id="stack" class="stack" aria-label="Categories"></div>
-    <aside class="side" aria-label="Actions"></aside>
+    <div>
+      <div class="toolbar" role="group" aria-label="Expand or collapse all">
+        <button id="expandAllBtn"  class="tool-btn" type="button">Expand all</button>
+        <button id="collapseAllBtn" class="tool-btn" type="button">Collapse all</button>
+      </div>
+      <div id="stack" class="stack" aria-label="Categories"></div>
+    </div>
+
+    <aside class="side" aria-label="Actions">
+      <button class="cta" type="button">Questions to ask</button>
+      <button class="cta" type="button">Helpful Information</button>
+      <button class="cta" type="button">Resources to explore</button>
+    </aside>
   </section>
 </main>
 
 <script>
+  // Data
   const DATA = [
-    { title:'Diagnosis and Testing', questions:[
+    { title: 'Diagnosis and Testing', questions: [
       'How quickly does my cancer grow?',
       'Are there any additional tests or biopsies I need to confirm the diagnosis or understand it better?',
       'Is it necessary to test for tumor markers in my case?',
@@ -74,32 +104,32 @@
       'What do “grade”, “stage”, “margin” mean?',
       'Am I at an increased risk of ovarian cancer or other types of cancer?'
     ]},
-    { title:'Time and Urgency', questions:[
+    { title: 'Time and Urgency', questions: [
       'How much time do I have to decide about my treatment?',
       'How long does it take to hear back after I complete my tests?'
     ]},
-    { title:'Coordination', questions:[
+    { title: 'Coordination', questions: [
       'Who will be part of my care team, and what is each person’s role?',
       'Which doctors should I be seeing and when?',
       'Is there a patient navigator or social worker I can talk to?',
       'Who else should I talk to?',
       'What should be my next step?'
     ]},
-    { title:'Access to Information', questions:[
+    { title: 'Access to Information', questions: [
       'How could I access or use “my chart”?',
       'Where do I get additional information on breast cancer?'
     ]},
-    { title:'Support and Coping', questions:[
+    { title: 'Support and Coping', questions: [
       'Are there support groups or counseling services you recommend?',
       'What should I tell my family and friends about breast cancer?',
       'How will cancer treatment affect my work, life, and other activities?'
     ]},
-    { title:'General Understanding', questions:[
+    { title: 'General Understanding', questions: [
       'How did I get cancer?',
       'What are the risks to my family because of my diagnosis?',
       'Do I need a reproductive specialist’s consultation?'
     ]},
-    { title:'Clinical Trials and Second Opinions', questions:[
+    { title: 'Clinical Trials and Second Opinions', questions: [
       'What are the clinical trials available to me?',
       'I would like to know more about clinical trials, whom should I ask?',
       'What expenses associated with clinical trial may not be covered by insurance?',
@@ -107,6 +137,10 @@
     ]}
   ];
 
+  // State: when true, clicking a header closes others; when false, allow multiple opens
+  let singleOpen = true;
+
+  // Build accordion
   (function renderAccordion(){
     const stack = document.getElementById('stack');
     DATA.forEach((cat, idx) => {
@@ -140,28 +174,7 @@
       stack.appendChild(panel);
     });
 
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseAll(); });
-  })();
+    document.getElementById('expandAllBtn').addEventListener('click', expandAll);
+    document.getElementById('collapseAllBtn').addEventListener('click', collapseAll);
 
-  function togglePanel(i){
-    const btn = document.getElementById(`btn-${i}`);
-    const panel = document.getElementById(`panel-${i}`);
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    collapseAll();
-    if (!open){
-      btn.setAttribute('aria-expanded','true');
-      panel.hidden = false;
-      panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
-    }
-  }
-  function collapseAll(){
-    DATA.forEach((_, idx) => {
-      const b = document.getElementById(`btn-${idx}`);
-      const p = document.getElementById(`panel-${idx}`);
-      if (b) b.setAttribute('aria-expanded','false');
-      if (p) p.hidden = true;
-    });
-  }
-</script>
-</body>
-</html>
+    document.addEventListener('keydow
