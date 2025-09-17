@@ -13,10 +13,14 @@
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+
+    /* Fit-to-screen wrapper (scaled when content is taller than viewport) */
+    #fitRoot{ transform-origin: top left; }
+
     .container{max-width:1100px;margin:42px auto;padding:0 20px}
     .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
-    /* Left card — now WHITE */
+    /* Left card — WHITE */
     .info-card{
       background:var(--panel);
       border:2px solid var(--panel-border);
@@ -25,137 +29,162 @@
       box-shadow:0 1px 0 rgba(0,0,0,.04);
     }
     .section-title{font-weight:700;margin:0 0 14px 0}
-    .resource-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
-    }
-    .resource{
-      display:block;
-      text-decoration:none;
-      color:inherit;
-    }
-    .thumb{
-      border:1px solid var(--line);
-      border-radius:10px;
-      overflow:hidden;
-      background:#f3f4f6;
-      aspect-ratio:1/1;               /* perfect square */
-      display:flex;align-items:center;justify-content:center;
-    }
-    .thumb img{
-      width:100%;height:100%;object-fit:cover;display:block;
-    }
-    .caption{
-      text-align:center;
-      font-weight:600;
-      margin-top:8px;
-    }
+    .resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .resource{display:block;text-decoration:none;color:inherit}
+    .thumb{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .caption{text-align:center;font-weight:600;margin-top:8px}
     .divider{height:1px;background:repeating-linear-gradient(to right, #cfd5dd 0 6px, transparent 6px 12px);opacity:.9;margin:18px 0}
 
-    /* Right column (buttons kept) */
+    /* Right column (CTA links styled like buttons) */
     .side{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
     .cta{
-      appearance:none;border:0;color:#fff;font-weight:700;font-size:20px;padding:18px 28px;border-radius:16px;
-      background:linear-gradient(180deg,var(--cta0),var(--cta1));cursor:pointer;min-width:280px;
+      display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;padding:18px 28px;border-radius:16px;
+      background:linear-gradient(180deg,var(--cta0),var(--cta1));min-width:280px;
       box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
       border:3px solid #fff;outline:1px solid var(--cta-outline);text-shadow:0 1px 0 rgba(0,0,0,.2);
       transition:transform .06s ease,filter .15s ease;
     }
     .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
-    .cta:focus-visible{box-shadow:var(--ring)}
+    .cta:focus-visible{outline:none;box-shadow:var(--ring)}
 
-    /* Right image -> clickable square + caption */
+    /* Right image -> clickable square + caption (NO CROP) */
     .pic-wrap{width:100%;max-width:340px}
-    .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1}
-    .pic{width:100%;height:100%;object-fit:cover;display:block}
+    .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#f3f4f6}
+    .pic{width:100%;height:100%;object-fit:contain;display:block} /* contain -> no cropping */
     .pic-cap{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
+    /* Home (little house) */
+    .home-link{
+      position:fixed; inset:14px auto auto 14px; z-index:50;
+      display:inline-flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:10px;
+      background:#fff; border:1px solid var(--line); box-shadow:0 6px 16px rgba(0,0,0,.12);
+      text-decoration:none;
+    }
+    .home-link:hover{transform:translateY(-1px)}
+    .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
+    .home-link svg{width:22px;height:22px;fill:#374151}
+
     @media (max-width:760px){
+      .container{margin:24px auto}
       .layout{grid-template-columns:1fr;gap:24px}
       .side .cta{width:100%;min-width:unset}
       .pic-wrap{max-width:100%}
       .resource-grid{grid-template-columns:1fr 1fr}
     }
-    @media (max-width:520px){
-      .resource-grid{grid-template-columns:1fr}
-    }
+    @media (max-width:520px){ .resource-grid{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="layout">
-      <!-- LEFT: content -->
-      <article class="info-card" aria-label="Helpful information links">
-        <h3 class="section-title">Helpful Information</h3>
+  <!-- Home icon -->
+  <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
+    <!-- inline SVG house -->
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/>
+    </svg>
+  </a>
 
-        <div class="resource-grid">
-          <!-- HMH -->
-          <a class="resource" target="_blank" rel="noopener noreferrer"
-             href="https://www.hackensackmeridianhealth.org/en/services/cancer-care/breast-cancer"
-             aria-label="Open Hackensack Meridian Health breast cancer page">
-            <div class="thumb">
-              <img alt="HMH preview"
-                   src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.hackensackmeridianhealth.org%2Fen%2Fservices%2Fcancer-care%2Fbreast-cancer?w=800" />
-            </div>
-            <div class="caption">HMH — Breast Cancer</div>
+  <!-- Fit root scales the whole page if needed -->
+  <div id="fitRoot">
+    <main class="container">
+      <section class="layout">
+        <!-- LEFT: content -->
+        <article class="info-card" aria-label="Helpful information links">
+          <h3 class="section-title">Helpful Information</h3>
+
+          <div class="resource-grid">
+            <!-- HMH -->
+            <a class="resource" target="_blank" rel="noopener noreferrer"
+              href="https://www.hackensackmeridianhealth.org/en/services/cancer-care/breast-cancer"
+              aria-label="Open Hackensack Meridian Health breast cancer page">
+              <div class="thumb">
+                <img alt="HMH preview"
+                  src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.hackensackmeridianhealth.org%2Fen%2Fservices%2Fcancer-care%2Fbreast-cancer?w=800" />
+              </div>
+              <div class="caption">HMH — Breast Cancer</div>
+            </a>
+
+            <!-- ACS: Breast cancer basics -->
+            <a class="resource" target="_blank" rel="noopener noreferrer"
+              href="https://www.cancer.org/cancer/types/breast-cancer/about.html"
+              aria-label="Open American Cancer Society basics page for breast cancer">
+              <div class="thumb">
+                <img alt="ACS basics preview"
+                  src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.cancer.org%2Fcancer%2Ftypes%2Fbreast-cancer%2Fabout.html?w=800" />
+              </div>
+              <div class="caption">ACS — Basics</div>
+            </a>
+
+            <!-- ACS: Glossary -->
+            <a class="resource" target="_blank" rel="noopener noreferrer"
+              href="https://www.cancer.org/cancer/understanding-cancer/glossary.html"
+              aria-label="Open American Cancer Society cancer glossary">
+              <div class="thumb">
+                <img alt="ACS glossary preview"
+                  src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.cancer.org%2Fcancer%2Funderstanding-cancer%2Fglossary.html?w=800" />
+              </div>
+              <div class="caption">ACS — Glossary</div>
+            </a>
+
+            <!-- NCCIH: PubMed help -->
+            <a class="resource" target="_blank" rel="noopener noreferrer"
+              href="https://www.nccih.nih.gov/health/how-to-find-information-about-complementary-health-approaches-on-pubmed"
+              aria-label="Open NCCIH guide to finding information on PubMed">
+              <div class="thumb">
+                <img alt="NCCIH PubMed preview"
+                  src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.nccih.nih.gov%2Fhealth%2Fhow-to-find-information-about-complementary-health-approaches-on-pubmed?w=800" />
+              </div>
+              <div class="caption">NCCIH — PubMed Guide</div>
+            </a>
+          </div>
+
+          <div class="divider" role="presentation"></div>
+        </article>
+
+        <!-- RIGHT: BLUE CTA LINKS + image (no crop) -->
+        <aside class="side">
+          <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" aria-label="Go to Questions to ask">
+            Questions to ask
+          </a>
+          <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisinfo.html" aria-label="Go to Helpful Information">
+            Helpful Information
+          </a>
+          <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisresources.html" aria-label="Go to Resources to explore">
+            Resources to explore
           </a>
 
-          <!-- ACS: Breast cancer basics -->
-          <a class="resource" target="_blank" rel="noopener noreferrer"
-             href="https://www.cancer.org/cancer/types/breast-cancer/about.html"
-             aria-label="Open American Cancer Society basics page for breast cancer">
-            <div class="thumb">
-              <img alt="ACS basics preview"
-                   src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.cancer.org%2Fcancer%2Ftypes%2Fbreast-cancer%2Fabout.html?w=800" />
-            </div>
-            <div class="caption">ACS — Basics</div>
-          </a>
+          <div class="pic-wrap">
+            <a class="pic-link" target="_blank" rel="noopener noreferrer"
+              href="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg"
+              aria-label="Open larger view of patient with computer image">
+              <img class="pic"
+                src="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg"
+                alt="Patient at a computer" />
+            </a>
+            <div class="pic-cap">Patient reading trusted information</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
 
-          <!-- ACS: Glossary -->
-          <a class="resource" target="_blank" rel="noopener noreferrer"
-             href="https://www.cancer.org/cancer/understanding-cancer/glossary.html"
-             aria-label="Open American Cancer Society cancer glossary">
-            <div class="thumb">
-              <img alt="ACS glossary preview"
-                   src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.cancer.org%2Fcancer%2Funderstanding-cancer%2Fglossary.html?w=800" />
-            </div>
-            <div class="caption">ACS — Glossary</div>
-          </a>
-
-          <!-- NCCIH: PubMed help -->
-          <a class="resource" target="_blank" rel="noopener noreferrer"
-             href="https://www.nccih.nih.gov/health/how-to-find-information-about-complementary-health-approaches-on-pubmed"
-             aria-label="Open NCCIH guide to finding information on PubMed">
-            <div class="thumb">
-              <img alt="NCCIH PubMed preview"
-                   src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.nccih.nih.gov%2Fhealth%2Fhow-to-find-information-about-complementary-health-approaches-on-pubmed?w=800" />
-            </div>
-            <div class="caption">NCCIH — PubMed Guide</div>
-          </a>
-        </div>
-
-        <div class="divider" role="presentation"></div>
-      </article>
-
-      <!-- RIGHT: actions + square image -->
-      <aside class="side">
-        <button class="cta" type="button">Questions to ask</button>
-        <button class="cta" type="button">Helpful Information</button>
-        <button class="cta" type="button">Resources to explore</button>
-
-        <div class="pic-wrap">
-          <a class="pic-link" target="_blank" rel="noopener noreferrer"
-             href="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg"
-             aria-label="Open larger view of patient with computer image">
-            <img class="pic"
-                 src="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg"
-                 alt="Patient at a computer" />
-          </a>
-          <div class="pic-cap">Patient reading trusted information</div>
-        </div>
-      </aside>
-    </section>
-  </main>
+  <script>
+    // Fit the entire page into the viewport height without cropping content.
+    function fitToViewport(){
+      const root = document.getElementById('fitRoot');
+      if(!root) return;
+      // reset before measuring
+      root.style.transform = '';
+      root.style.width = '';
+      const h = root.scrollHeight;
+      const scale = Math.min(1, window.innerHeight / h);
+      root.style.transform = `scale(${scale})`;
+      // expand width so scaled content still fills horizontally
+      if (scale < 1) root.style.width = `${100/scale}%`;
+    }
+    window.addEventListener('load', fitToViewport);
+    window.addEventListener('resize', fitToViewport);
+  </script>
 </body>
 </html>
