@@ -1,161 +1,207 @@
-<!-- File: /public/slide-like-page.html -->
+<!-- File: /public/slide-accordion.html -->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Slide-Style Page</title>
-  <style>
-    :root{
-      --bg:#ffffff;
-      --ink:#0b0c10;
-      --muted:#52525b;
-      --panel:#e5e7eb;                 /* grey blocks (left) */
-      --panel-hover:#d9dce2;
-      --line:#d1d5db;
-      --cta0:#6ea2cf;                  /* blue gradient start */
-      --cta1:#588fbe;                  /* blue gradient end   */
-      --cta-border:#c7d9ea;            /* light bevel border  */
-      --shadow:0 10px 25px rgba(0,0,0,.10);
-      --ring: 0 0 0 3px rgba(79,70,229,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
-    }
-
-    .container{
-      max-width:1100px;
-      margin:48px auto;
-      padding:0 20px;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:48px;
-      align-items:start;
-    }
-
-    /* LEFT: stacked categories */
-    .stack{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      min-width:300px;
-    }
-    .category{
-      display:flex;
-      align-items:center;
-      width:100%;
-      border:1px solid var(--line);
-      background:var(--panel);
-      color:var(--ink);
-      border-radius:6px;
-      padding:16px 18px 16px 44px;
-      font-weight:600;
-      text-align:left;
-      cursor:pointer;
-      transition:transform .06s ease, background-color .15s ease;
-      position:relative;
-    }
-    .category::before{
-      content:"\2794"; /* ➔ */
-      position:absolute;
-      left:14px;
-      font-size:18px;
-      color:#000000cc;
-      transform: rotate(180deg); /* looks like the slide’s chevron */
-    }
-    .category:hover{ background:var(--panel-hover); transform:translateY(-1px); }
-    .category:active{ transform:translateY(0); }
-    .category:focus-visible{ outline:none; box-shadow:var(--ring); }
-
-    /* RIGHT: big pill buttons */
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:32px;
-      align-items:flex-start;
-    }
-    .cta{
-      appearance:none;
-      border:0;
-      color:#fff;
-      font-weight:600;
-      font-size:20px;
-      padding:18px 28px;
-      border-radius:16px;
-      background:linear-gradient(180deg,var(--cta0),var(--cta1));
-      box-shadow:
-        0 4px 0 0 rgba(0,0,0,.12) inset,   /* subtle inner depth */
-        0 8px 24px rgba(0,0,0,.18);        /* drop shadow */
-      border:3px solid #ffffff;            /* white outline like slide */
-      outline:1px solid var(--cta-border); /* soft outer highlight */
-      cursor:pointer;
-      min-width:280px;
-      text-shadow:0 1px 0 rgba(0,0,0,.2);
-      transition:transform .06s ease, filter .15s ease;
-    }
-    .cta:hover{ filter:brightness(1.05); transform:translateY(-1px); }
-    .cta:active{ transform:translateY(0); }
-    .cta:focus-visible{ box-shadow:var(--ring); outline-offset:2px; }
-
-    /* Header (optional – keeps page tidy) */
-    .header{
-      display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;
-    }
-    .title{ font-size:22px; margin:0; }
-    .hint{ color:var(--muted); font-size:14px; }
-
-    /* Responsive */
-    @media (max-width: 760px){
-      .layout{ grid-template-columns:1fr; gap:28px; }
-      .side{ align-items:stretch }
-      .cta{ width:100%; min-width:unset; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Questions to Ask – Slide Layout</title>
+<style>
+  :root{
+    --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
+    --panel:#dfdfdf; --panel-hover:#d6d6d6;
+    --cta0:#6ea2cf; --cta1:#588fbe; --cta-border:#c7d9ea;
+    --ring:0 0 0 3px rgba(59,130,246,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  .container{max-width:1100px;margin:42px auto;padding:0 20px}
+  .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
+  /* LEFT */
+  .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
+  .acc-header{
+    width:100%;display:flex;align-items:center;gap:10px;
+    padding:16px 18px 16px 44px;border:1px solid var(--line);
+    background:var(--panel);border-radius:6px;font-weight:700;cursor:pointer;
+    text-align:left;position:relative;transition:background-color .15s,transform .06s;
+  }
+  .acc-header::before{
+    content:"\2794"; /* ➔ */
+    position:absolute;left:14px;font-size:18px;color:#000;opacity:.8;transform:rotate(180deg);
+  }
+  .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
+  .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
+  .acc-panel{border-left:1px solid #cfcfcf;border-right:1px solid #cfcfcf;border-bottom:1px solid #eeeeee;border-top:4px solid #c0c7ce;margin:-8px 0 6px 24px;border-radius:2px;overflow:hidden}
+  .q-list{list-style:none;margin:0;padding:0}
+  .q-list li{
+    padding:10px 12px;border-bottom:1px solid #dcdcdc;background:#f3f5f7;color:#222;
+  }
+  .q-list li:last-child{border-bottom:0}
+  .acc-panel[hidden]{display:none}
+  /* RIGHT */
+  .side{display:flex;flex-direction:column;gap:28px}
+  .cta{
+    appearance:none;border:0;color:#fff;font-weight:600;font-size:20px;padding:18px 28px;border-radius:16px;
+    background:linear-gradient(180deg,var(--cta0),var(--cta1));cursor:pointer;min-width:280px;
+    box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
+    border:3px solid #fff;outline:1px solid var(--cta-border);text-shadow:0 1px 0 rgba(0,0,0,.2);
+    transition:transform .06s ease,filter .15s ease;
+  }
+  .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .cta:focus-visible{box-shadow:var(--ring)}
+  /* Responsive */
+  @media (max-width:760px){ .layout{grid-template-columns:1fr;gap:28px}.side .cta{width:100%;min-width:unset} }
+</style>
 </head>
 <body>
-  <main class="container" aria-label="Slide-like layout">
-    <div class="header">
-      <h1 class="title">Patient Navigator</h1>
-      <span class="hint">Static mockup · no data required</span>
-    </div>
+<main class="container" aria-label="Slide-like layout">
+  <section class="layout">
+    <!-- LEFT: Accordion gets injected here -->
+    <div id="stack" class="stack" aria-label="Categories"></div>
 
-    <section class="layout">
-      <!-- LEFT: Categories -->
-      <div class="stack" role="list" aria-label="Categories">
-        <button class="category" role="listitem" aria-label="Diagnosis and Testing">Diagnosis and Testing</button>
-        <button class="category" role="listitem" aria-label="Time and Urgency">Time and Urgency</button>
-        <button class="category" role="listitem" aria-label="Coordination">Coordination</button>
-        <button class="category" role="listitem" aria-label="Access to Information">Access to Information</button>
-        <button class="category" role="listitem" aria-label="Support and Coping">Support and Coping</button>
-        <button class="category" role="listitem" aria-label="General Understanding">General Understanding</button>
-        <button class="category" role="listitem" aria-label="Clinical Trials and Second Opinions">Clinical Trials and Second Opinions</button>
-      </div>
+    <!-- RIGHT: Blue buttons -->
+    <aside class="side" aria-label="Actions">
+      <button class="cta" type="button">Questions to ask</button>
+      <button class="cta" type="button">Helpful Information</button>
+      <button class="cta" type="button">Resources to explore</button>
+    </aside>
+  </section>
+</main>
 
-      <!-- RIGHT: Blue buttons -->
-      <div class="side" aria-label="Actions">
-        <button class="cta" type="button" aria-label="Questions to ask">Questions to ask</button>
-        <button class="cta" type="button" aria-label="Helpful Information">Helpful Information</button>
-        <button class="cta" type="button" aria-label="Resources to explore">Resources to explore</button>
-      </div>
-    </section>
-  </main>
+<script>
+  /**
+   * Data transcribed from your slides.
+   * Note: Wording preserved; adjust freely.
+   */
+  const DATA = [
+    {
+      title: 'Diagnosis and Testing',
+      questions: [
+        'How quickly does my cancer grow?',
+        'Are there any additional tests or biopsies I need to confirm the diagnosis or understand it better?',
+        'Is it necessary to test for tumor markers in my case?',
+        'Should I be tested for estrogen receptors?',
+        'How was this diagnosis made?',
+        'Do I need to do genetic testing?',
+        'What are the types of breast cancer?',
+        'What do “grade”, “stage”, “margin” mean?',
+        'Am I at an increased risk of ovarian cancer or other types of cancer?'
+      ]
+    },
+    {
+      title: 'Time and Urgency',
+      questions: [
+        'How much time do I have to decide about my treatment?',
+        'How long does it take to hear back after I complete my tests?'
+      ]
+    },
+    {
+      title: 'Coordination',
+      questions: [
+        'Who will be part of my care team, and what is each person’s role?',
+        'Which doctors should I be seeing and when?',
+        'Is there a patient navigator or social worker I can talk to?',
+        'Who else should I talk to?',
+        'What should be my next step?'
+      ]
+    },
+    {
+      title: 'Access to Information',
+      questions: [
+        'How could I access or use “my chart”?',
+        'Where do I get additional information on breast cancer?'
+      ]
+    },
+    {
+      title: 'Support and Coping',
+      questions: [
+        'Are there support groups or counseling services you recommend?',
+        'What should I tell my family and friends about breast cancer?',
+        'How will cancer treatment affect my work, life, and other activities?'
+      ]
+    },
+    {
+      title: 'General Understanding',
+      questions: [
+        'How did I get cancer?',
+        'What are the risks to my family because of my diagnosis?',
+        'Do I need a reproductive specialist’s consultation?'
+      ]
+    },
+    {
+      title: 'Clinical Trials and Second Opinions',
+      questions: [
+        'What are the clinical trials available to me?',
+        'I would like to know more about clinical trials, whom should I ask?',
+        'What expenses associated with clinical trial may not be covered by insurance?',
+        'When should I search for second opinion?'
+      ]
+    }
+  ];
 
-  <script>
-    // Only wiring basic clicks so you can hook content later.
-    document.querySelectorAll('.category').forEach((el)=>{
-      el.addEventListener('click',()=>console.log('Category:', el.textContent.trim()));
+  // Renders accordion; single-open behavior to match slide narrative.
+  (function renderAccordion(){
+    const stack = document.getElementById('stack');
+    DATA.forEach((cat, idx) => {
+      const id = `panel-${idx}`;
+      const btn = document.createElement('button');
+      btn.className = 'acc-header';
+      btn.type = 'button';
+      btn.id = `btn-${idx}`;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      btn.textContent = ` ${cat.title}`; // leading space keeps arrow readable
+
+      const panel = document.createElement('div');
+      panel.className = 'acc-panel';
+      panel.id = id;
+      panel.setAttribute('role','region');
+      panel.setAttribute('aria-labelledby', btn.id);
+      panel.hidden = true;
+
+      const ul = document.createElement('ul');
+      ul.className = 'q-list';
+      cat.questions.forEach(q => {
+        const li = document.createElement('li');
+        li.textContent = q;
+        ul.appendChild(li);
+      });
+      panel.appendChild(ul);
+
+      btn.addEventListener('click', () => togglePanel(idx));
+      stack.appendChild(btn);
+      stack.appendChild(panel);
     });
-    document.querySelectorAll('.cta').forEach((el)=>{
-      el.addEventListener('click',()=>console.log('CTA:', el.textContent.trim()));
+
+    document.addEventListener('keydown', (e) => {
+      // Why: quick a11y shortcut to collapse all.
+      if (e.key === 'Escape') collapseAll();
     });
-  </script>
+  })();
+
+  function togglePanel(i){
+    const btn = document.getElementById(`btn-${i}`);
+    const panel = document.getElementById(`panel-${i}`);
+    const open = btn.getAttribute('aria-expanded') === 'true';
+
+    // close others to mimic slide behavior
+    collapseAll();
+
+    if (!open){
+      btn.setAttribute('aria-expanded','true');
+      panel.hidden = false;
+      // scroll into view for long pages
+      panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
+  }
+
+  function collapseAll(){
+    DATA.forEach((_, idx) => {
+      const b = document.getElementById(`btn-${idx}`);
+      const p = document.getElementById(`panel-${idx}`);
+      if (b) b.setAttribute('aria-expanded','false');
+      if (p) p.hidden = true;
+    });
+  }
+</script>
 </body>
 </html>
