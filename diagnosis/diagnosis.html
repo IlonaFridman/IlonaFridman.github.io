@@ -177,4 +177,45 @@
     document.getElementById('expandAllBtn').addEventListener('click', expandAll);
     document.getElementById('collapseAllBtn').addEventListener('click', collapseAll);
 
-    document.addEventListener('keydow
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseAll(); });
+  })();
+
+  function togglePanel(i){
+    const btn = document.getElementById(`btn-${i}`);
+    const panel = document.getElementById(`panel-${i}`);
+    const open = btn.getAttribute('aria-expanded') === 'true';
+
+    if (singleOpen) collapseAll();                // keep only one open unless in multi-open mode
+
+    if (open){
+      btn.setAttribute('aria-expanded','false');
+      panel.hidden = true;
+    }else{
+      btn.setAttribute('aria-expanded','true');
+      panel.hidden = false;
+      panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
+  }
+
+  function expandAll(){
+    singleOpen = false;                           // allow multiple to stay open
+    DATA.forEach((_, idx) => {
+      const b = document.getElementById(`btn-${idx}`);
+      const p = document.getElementById(`panel-${idx}`);
+      if (b && p){ b.setAttribute('aria-expanded','true'); p.hidden = false; }
+    });
+    document.getElementById('stack').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  function collapseAll(){
+    DATA.forEach((_, idx) => {
+      const b = document.getElementById(`btn-${idx}`);
+      const p = document.getElementById(`panel-${idx}`);
+      if (b) b.setAttribute('aria-expanded','false');
+      if (p) p.hidden = true;
+    });
+    singleOpen = true;                            // return to single-open behavior
+  }
+</script>
+</body>
+</html>
