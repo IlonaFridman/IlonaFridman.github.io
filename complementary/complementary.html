@@ -186,29 +186,42 @@
 
 <script>
   const DATA = [
-    { title: 'To Ask Provider: Evidence and Safety', questions: [
-  'If I am using something in addition to my treatment, who do I know that it works?',
-  'If I am using something in addition to my treatment, could it make my side effects worse?',
-  'If I am using something in addition to my treatment, could it make cancer treatment not work?',
-  'Where can I find good, true info about other cancer therapies?'
-]},
-{ title: 'To Ask Nurse Navigator: Find Integrative Care', questions: [
-  'Who can I talk to about other helpful care?',
-  'Where can I find a doctor who does this kind of care?',
-  'What other helpful care can I get?'
-]},
-{ title: 'To Ask Financial Advisor: Access & Coverage', questions: [
-  'Will my insurance pay for this other care?',
-  'If I want therapy, acupuncture, Reiki, or more, do I need a note from a doctor?'
-]},
-{ title: 'To Ask Integrative Care Specialist: Lifestyle & Nutrition', questions: [
-  'What should I eat or drink to feel better in treatment?',
-  'How do I change my life when I get chemo, radiation, or hormone therapy?',
-  'What do I need to do before treatment?',
-  'What can I do to feel less pain?',
-  'What can I do to help with throwing up?',
-  'What can I do to have more energy?'
-]}
+    {
+      title: 'To Ask Provider: Evidence and Safety',
+      questions: [
+        'If I am using something in addition to my treatment, who do I know that it works?',
+        'If I am using something in addition to my treatment, could it make my side effects worse?',
+        'If I am using something in addition to my treatment, could it make cancer treatment not work?',
+        'Where can I find good, true info about other cancer therapies?'
+      ]
+    },
+    {
+      title: 'To Ask Nurse Navigator: Find Integrative Care',
+      questions: [
+        'Who can I talk to about other helpful care?',
+        'Where can I find a doctor who does this kind of care?',
+        'What other helpful care can I get?'
+      ]
+    },
+    {
+      title: 'To Ask Financial Advisor: Access & Coverage',
+      questions: [
+        'Will my insurance pay for this other care?',
+        'If I want therapy, acupuncture, Reiki, or more, do I need a note from a doctor?'
+      ]
+    },
+    {
+      title: 'To Ask Integrative Care Specialist: Lifestyle & Nutrition',
+      questions: [
+        'What should I eat or drink to feel better in treatment?',
+        'How do I change my life when I get chemo, radiation, or hormone therapy?',
+        'What do I need to do before treatment?',
+        'What can I do to feel less pain?',
+        'What can I do to help with throwing up?',
+        'What can I do to have more energy?'
+      ]
+    }
+  ]; // <-- important
 
   let singleOpen = true;
 
@@ -295,224 +308,4 @@
       panel.className = 'acc-panel';
       panel.id = id;
       panel.setAttribute('role','region');
-      panel.setAttribute('aria-labelledby', btn.id);
-      panel.hidden = true;
-
-      const ul = document.createElement('ul');
-      ul.className = 'q-list';
-      cat.questions.forEach(q => {
-        const li = document.createElement('li');
-        li.textContent = q;
-        ul.appendChild(li);
-      });
-      panel.appendChild(ul);
-
-      btn.addEventListener('click', () => { togglePanel(idx); });
-      stack.appendChild(btn);
-      stack.appendChild(panel);
-    });
-
-    document.getElementById('expandAllBtn').addEventListener('click', expandAll);
-    document.getElementById('collapseAllBtn').addEventListener('click', collapseAll);
-    document.getElementById('backToTop').addEventListener('click', () => {
-      document.getElementById('page-top').scrollIntoView({behavior:'smooth'});
-    });
-
-    // Utilities
-    document.getElementById('printBtn').addEventListener('click', downloadPageAsPDF);
-    document.getElementById('emailBtn').addEventListener('click', handleEmail);
-    document.getElementById('sectionPdfBtn').addEventListener('click', downloadSectionAsPDF);
-
-    setActiveCTA();
-    updateBackToTop();
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseAll(); });
-  })();
-
-  function togglePanel(i){
-    const btn = document.getElementById(`btn-${i}`);
-    const panel = document.getElementById(`panel-${i}`);
-    const open = btn.getAttribute('aria-expanded') === 'true';
-
-    if (singleOpen) collapseAll();
-
-    if (open){
-      btn.setAttribute('aria-expanded','false');
-      panel.hidden = true;
-    }else{
-      btn.setAttribute('aria-expanded','true');
-      panel.hidden = false;
-      panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
-    }
-    updateBackToTop();
-  }
-
-  function expandAll(){
-    singleOpen = false;
-    DATA.forEach((_, idx) => {
-      const b = document.getElementById(`btn-${idx}`);
-      const p = document.getElementById(`panel-${idx}`);
-      if (b && p){ b.setAttribute('aria-expanded','true'); p.hidden = false; }
-    });
-    document.getElementById('stack').scrollIntoView({ behavior:'smooth', block:'nearest' });
-    updateBackToTop();
-  }
-
-  function collapseAll(){
-    DATA.forEach((_, idx) => {
-      const b = document.getElementById(`btn-${idx}`);
-      const p = document.getElementById(`panel-${idx}`);
-      if (b) b.setAttribute('aria-expanded','false');
-      if (p) p.hidden = true;
-    });
-    singleOpen = true;
-    updateBackToTop();
-  }
-
-  function openPanelsCount(){
-    return document.querySelectorAll('.acc-panel:not([hidden])').length;
-  }
-
-  function updateBackToTop(){
-    const btn = document.getElementById('backToTop');
-    btn.hidden = openPanelsCount() < 2;
-  }
-
-  function setActiveCTA(){
-    const href = location.href.toLowerCase();
-    const q = document.getElementById('cta-questions');
-    const h = document.getElementById('cta-helpful');
-    const r = document.getElementById('cta-resources');
-    [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
-
-    if (href.includes('complementaryresources.html')) {
-      r.classList.add('active'); r.setAttribute('aria-current','page');
-    } else if (href.includes('complementaryinfo.html') || href.includes('daignosisinfo.html')) {
-      h.classList.add('active'); h.setAttribute('aria-current','page');
-    } else {
-      q.classList.add('active'); q.setAttribute('aria-current','page');
-    }
-  }
-
-  // --- Email composition ---
-  function collectPageInfo(){
-    const title = document.title || 'Page';
-    const url = location.href;
-    const sections = [];
-    document.querySelectorAll('.acc-header').forEach((btn, i) => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      if (!open) return;
-      const headerText = btn.textContent.trim();
-      const qs = Array.from(document.querySelectorAll(`#panel-${i} .q-list li`)).map(li => `- ${li.textContent.trim()}`);
-      sections.push(`## ${headerText}\n${qs.join('\n')}`);
-    });
-    const body =
-`${title}
-${url}
-
-${sections.length ? sections.join('\n\n') : '(No sections expanded — expand sections to include their questions.)'}
-`;
-    return { subject: `Notes: ${title}`, body };
-  }
-
-  function handleEmail(){
-    const { subject, body } = collectPageInfo();
-    const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-  }
-
-  // --- PDF helpers (html2canvas + jsPDF) ---
-  async function downloadPageAsPDF(){
-    const el = document.querySelector('main');
-    await exportElementToPDF(el, `integrative-questions-page.pdf`);
-  }
-
-  async function downloadSectionAsPDF(){
-    const idx = findFirstOpenIndex() ?? 0;
-    const header = document.getElementById(`btn-${idx}`);
-    const panel  = document.getElementById(`panel-${idx}`);
-
-    const wrap = document.createElement('div');
-    wrap.style.padding = '12px';
-    wrap.style.background = '#fff';
-    wrap.style.color = '#000';
-    wrap.style.maxWidth = '800px';
-    wrap.style.font = getComputedStyle(document.body).font;
-
-    const headerClone = header.cloneNode(true);
-    headerClone.style.boxShadow = 'none';
-    headerClone.style.background = '#f0f0f0';
-    headerClone.style.border = '1px solid #ccc';
-
-    const panelClone = panel.cloneNode(true);
-    panelClone.hidden = false;
-    panelClone.style.margin = '12px 0 0 0';
-
-    wrap.appendChild(headerClone);
-    wrap.appendChild(panelClone);
-
-    document.body.appendChild(wrap);
-    try{
-      await exportElementToPDF(wrap, sanitizeFileName(`${header.textContent.trim()}.pdf`));
-    } finally {
-      document.body.removeChild(wrap);
-    }
-  }
-
-  function findFirstOpenIndex(){
-    const headers = Array.from(document.querySelectorAll('.acc-header'));
-    const openIdx = headers.findIndex(b => b.getAttribute('aria-expanded') === 'true');
-    return openIdx >= 0 ? openIdx : null;
-  }
-
-  function sanitizeFileName(name){
-    return name.replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').trim() || 'section.pdf';
-  }
-
-  async function exportElementToPDF(element, filename){
-    await document.fonts?.ready?.catch(()=>{});
-    const canvas = await html2canvas(element, {
-      backgroundColor: '#ffffff',
-      scale: Math.min(2, window.devicePixelRatio || 1.5)
-    });
-    const imgData = canvas.toDataURL('image/png');
-
-    const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress: true });
-    const pageWidth  = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-
-    const imgWidth = pageWidth;
-    const imgHeight = canvas.height * (imgWidth / canvas.width);
-
-    if (imgHeight <= pageHeight){
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-    } else {
-      let y = 0;
-      const pxPerMm = canvas.width / imgWidth;
-      const pageHeightPx = pageHeight * pxPerMm;
-
-      while (y < canvas.height){
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = canvas.width;
-        pageCanvas.height = Math.min(pageHeightPx, canvas.height - y);
-        const ctx = pageCanvas.getContext('2d');
-        ctx.drawImage(canvas, 0, y, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height);
-        const pageData = pageCanvas.toDataURL('image/png');
-        if (y === 0){
-          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-        } else {
-          pdf.addPage();
-          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-        }
-        y += pageHeightPx;
-      }
-    }
-    pdf.save(filename);
-  }
-</script>
-
-<!-- Lightweight deps for client-side PDF (no build step) -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha256-jvW5C8Y4Xg7q7bQm3mQeZ0xjv4J1x2RQ6dHnZ5q5P1k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha256-6m5o4uiz8v0QpVqQ1m4b1GZ1mJ6X7u7C2m2dRkFq7+0=" crossorigin="anonymous"></script>
-</body>
-</html>
-
+      panel.setAttribute('aria-labelledby
