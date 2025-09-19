@@ -165,7 +165,7 @@
       {
         title: 'Ask Provider about Evidence and Safety',
         questions: [
-          'If I am using something in addition to my treatment, who do I know that it works?',
+          'If I am using something in addition to my treatment, how do I know that it works?',
           'If I am using something in addition to my treatment, could it make my side effects worse?',
           'If I am using something in addition to my treatment, could it make cancer treatment not work?',
           'Where can I find good, true info about other cancer therapies?'
@@ -191,7 +191,7 @@
         questions: [
           'What should I eat or drink to feel better in treatment?',
           'How do I change my life when I get chemo, radiation, or hormone therapy?',
-          'What do I need to do before treatment?'
+          'What do I need to do before treatment?',  /* <- FIX: comma added */
           'What can I do to feel less pain?',
           'What can I do to help with throwing up?',
           'What can I do to have more energy?'
@@ -201,7 +201,6 @@
 
     let singleOpen = true;
 
-    // Plain SVG strings (no JSX)
     const IconSVG = {
       hourglass: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 5 5 5 5 9s-5 4-5 9M17 3c0 5-5 5-5 9s5 4 5 9"/><path d="M9 7h6M9 17h6"/></svg>`,
       hug: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="6.5" r="2.3"/><circle cx="16" cy="6.5" r="2.3"/><path d="M3.5 18c2-4 5-5 8.5-5s6.5 1 8.5 5"/><path d="M6 14l2.5 2.5M18 14l-2.5 2.5"/></svg>`,
@@ -256,7 +255,7 @@
 
         const ul = document.createElement('ul');
         ul.className = 'q-list';
-        cat.questions.forEach(q => {
+        (cat.questions || []).forEach(q => {
           const li = document.createElement('li');
           li.textContent = q;
           ul.appendChild(li);
