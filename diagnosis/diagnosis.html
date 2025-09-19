@@ -27,7 +27,7 @@
   .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
   .home-link svg{width:22px;height:22px;fill:#374151}
 
-  /* Utility icon buttons (Print/Email) — stacked vertically under Home */
+  /* Utility icon buttons — stacked vertically under Home */
   .util-wrap{
     position:fixed; left:14px; top:60px; z-index:50;
     display:flex; flex-direction:column; gap:8px;
@@ -68,12 +68,10 @@
   }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
-  .acc-header .cat-icon{
-    width:26px;height:26px;flex:0 0 26px;
-  }
+  .acc-header .cat-icon{width:26px;height:26px;flex:0 0 26px;}
   .acc-header .cat-icon svg{
     width:100%;height:100%;
-    stroke:#000;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.8;
+    stroke:#000;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.8; /* Sharpie-like */
   }
 
   .acc-panel{margin:8px 0 12px 24px}
@@ -82,7 +80,7 @@
   .q-list li::marker{ color:#111; font-size:1.05em }
   .acc-panel[hidden]{display:none}
 
-  /* RIGHT CTAs (same size as other page) */
+  /* RIGHT CTAs */
   .side{display:flex;flex-direction:column;gap:28px}
   .cta{
     display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;
@@ -100,7 +98,6 @@
     color:#1f2937; text-shadow:none; outline-width:2px;
   }
 
-  /* Right image */
   .pic-wrap{width:100%;max-width:340px}
   .pic{width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block}
 
@@ -118,7 +115,7 @@
   @media (max-width:760px){
     .layout{grid-template-columns:1fr;gap:28px}
     .side .cta{width:100%;min-width:unset}
-    .util-wrap{left:14px; top:60px} /* keep vertical stack on small screens */
+    .util-wrap{left:14px; top:60px}
   }
 </style>
 </head>
@@ -128,21 +125,34 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
 </a>
 
-<!-- Print + Email (Sharpie-style) -->
+<!-- Tools: Page PDF, Email, Section PDF -->
 <div class="util-wrap" role="group" aria-label="Page utilities">
-  <button id="printBtn" class="util-btn" type="button" aria-label="Print this page">
+  <!-- Page → PDF (replaces print) -->
+  <button id="printBtn" class="util-btn" type="button" aria-label="Download whole page as PDF" title="Download page as PDF">
+    <!-- page + down arrow -->
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M7 8V4h10v4" />
-      <rect x="5" y="9" width="14" height="8" rx="2" ry="2" />
-      <path d="M7 17h10v3H7z" />
-      <circle cx="8.5" cy="12.5" r="0.9" />
+      <path d="M7 3h6l4 4v14H7z" />
+      <path d="M13 3v5h5" />
+      <path d="M12 11v7M9.5 15.5L12 18l2.5-2.5" />
     </svg>
   </button>
-  <button id="emailBtn" class="util-btn" type="button" aria-label="Email this page to myself">
+
+  <!-- Email page -->
+  <button id="emailBtn" class="util-btn" type="button" aria-label="Email this page to myself" title="Email notes">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="M3.5 6l8.5 6 8.5-6" />
       <path d="M5 18l4.5-4.5M19 18l-4.5-4.5" />
+    </svg>
+  </button>
+
+  <!-- NEW: Section → PDF -->
+  <button id="sectionPdfBtn" class="util-btn" type="button" aria-label="Download open section as PDF" title="Download this section as PDF">
+    <!-- section card + down arrow -->
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="4" width="16" height="10" rx="2" />
+      <path d="M7 8h10M7 11h6" />
+      <path d="M12 15v5M9.5 18.5L12 21l2.5-2.5" />
     </svg>
   </button>
 </div>
@@ -224,7 +234,7 @@
 
   let singleOpen = true;
 
-  // --- Sharpie-style inline SVGs ---
+  // --- Sharpie-style inline SVGs for categories ---
   const Icons = {
     hourglass: () => `
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -330,8 +340,10 @@
       document.getElementById('page-top').scrollIntoView({behavior:'smooth'});
     });
 
-    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    // Utilities
+    document.getElementById('printBtn').addEventListener('click', downloadPageAsPDF);
     document.getElementById('emailBtn').addEventListener('click', handleEmail);
+    document.getElementById('sectionPdfBtn').addEventListener('click', downloadSectionAsPDF);
 
     setActiveCTA();
     updateBackToTop();
@@ -427,8 +439,104 @@ ${sections.length ? sections.join('\n\n') : '(No sections expanded — expand se
   function handleEmail(){
     const { subject, body } = collectPageInfo();
     const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    window.location.href = mailto; // Why: reliable navigation for keyboard users
+  }
+
+  // --- PDF helpers (html2canvas + jsPDF) ---
+  async function downloadPageAsPDF(){
+    const el = document.querySelector('main'); // focus on the primary content
+    await exportElementToPDF(el, `questions-page.pdf`);
+  }
+
+  async function downloadSectionAsPDF(){
+    const idx = findFirstOpenIndex() ?? 0;
+    const header = document.getElementById(`btn-${idx}`);
+    const panel  = document.getElementById(`panel-${idx}`);
+
+    // Build a lightweight clone (header + panel) for crisp render
+    const wrap = document.createElement('div');
+    wrap.style.padding = '12px';
+    wrap.style.background = '#fff';
+    wrap.style.color = '#000';
+    wrap.style.maxWidth = '800px';
+    wrap.style.font = getComputedStyle(document.body).font;
+
+    const headerClone = header.cloneNode(true);
+    headerClone.style.boxShadow = 'none';
+    headerClone.style.background = '#f0f0f0';
+    headerClone.style.border = '1px solid #ccc';
+
+    const panelClone = panel.cloneNode(true);
+    panelClone.hidden = false;
+    panelClone.style.margin = '12px 0 0 0';
+
+    wrap.appendChild(headerClone);
+    wrap.appendChild(panelClone);
+
+    document.body.appendChild(wrap); // attach temporarily for accurate styles
+    try{
+      await exportElementToPDF(wrap, sanitizeFileName(`${header.textContent.trim()}.pdf`));
+    } finally {
+      document.body.removeChild(wrap);
+    }
+  }
+
+  function findFirstOpenIndex(){
+    const headers = Array.from(document.querySelectorAll('.acc-header'));
+    const openIdx = headers.findIndex(b => b.getAttribute('aria-expanded') === 'true');
+    return openIdx >= 0 ? openIdx : null;
+  }
+
+  function sanitizeFileName(name){
+    return name.replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').trim() || 'section.pdf';
+  }
+
+  async function exportElementToPDF(element, filename){
+    // wait for fonts/images if needed
+    await document.fonts?.ready?.catch(()=>{});
+    const canvas = await html2canvas(element, {
+      backgroundColor: '#ffffff',
+      scale: Math.min(2, window.devicePixelRatio || 1.5)
+    });
+    const imgData = canvas.toDataURL('image/png');
+
+    const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress: true });
+    const pageWidth  = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth;
+    const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+    if (imgHeight <= pageHeight){
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    } else {
+      // slice tall canvas into pages
+      let y = 0;
+      const pxPerMm = canvas.width / imgWidth;
+      const pageHeightPx = pageHeight * pxPerMm;
+
+      while (y < canvas.height){
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = Math.min(pageHeightPx, canvas.height - y);
+        const ctx = pageCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, y, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height);
+        const pageData = pageCanvas.toDataURL('image/png');
+        if (y === 0){
+          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
+        } else {
+          pdf.addPage();
+          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
+        }
+        y += pageHeightPx;
+      }
+    }
+    pdf.save(filename);
   }
 </script>
+
+<!-- Lightweight deps for client-side PDF (no build step) -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha256-jvW5C8Y4Xg7q7bQm3mQeZ0xjv4J1x2RQ6dHnZ5q5P1k=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha256-6m5o4uiz8v0QpVqQ1m4b1GZ1mJ6X7u7C2m2dRkFq7+0=" crossorigin="anonymous"></script>
 </body>
 </html>
