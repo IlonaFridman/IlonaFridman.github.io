@@ -38,10 +38,20 @@
       box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
       border:3px solid #fff;outline:1px solid var(--cta-outline);text-shadow:0 1px 0 rgba(0,0,0,.2);
       transition:transform .06s ease,filter .15s ease;
+      cursor:pointer;
     }
     .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
     .cta:focus-visible{outline:none;box-shadow:var(--ring)}
     .cta.active{filter:brightness(1.15);background:linear-gradient(180deg,#cfe3f7,#e7f1fb);color:#1f2937;text-shadow:none;outline-width:2px}
+
+    /* Disabled CTA */
+    .cta.disabled{
+      pointer-events:none;               /* Why: block mouse */
+      opacity:.55;
+      filter:saturate(.7);
+      cursor:not-allowed;
+    }
+    .cta.disabled:focus{outline:none;box-shadow:none}
 
     /* Right image */
     .pic-wrap{width:100%;max-width:340px}
@@ -92,7 +102,6 @@
   <!-- Utilities: Download Page as PDF + Email -->
   <div class="util-wrap" role="group" aria-label="Page utilities">
     <button id="pdfBtn" class="util-btn" type="button" aria-label="Download page as PDF" title="Download page as PDF">
-      <!-- page + down arrow (Sharpie style) -->
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7 3h6l4 4v14H7z" />
         <path d="M13 3v5h5" />
@@ -100,7 +109,6 @@
       </svg>
     </button>
     <button id="emailBtn" class="util-btn" type="button" aria-label="Email this page to myself" title="Email notes">
-      <!-- envelope -->
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="2" />
         <path d="M3.5 6l8.5 6 8.5-6" />
@@ -115,7 +123,6 @@
       <article class="info-card" aria-label="Integrative Health resources">
         <h3 class="section-title">Resources to explore</h3>
 
-                
         <div class="block">
           <h4><strong>Therapies &amp; services</strong></h4>
           <p>Acupuncture &amp; cupping</p>
@@ -127,7 +134,6 @@
           <p>Nutrition counseling; strategies to improve sleep</p>
           <p>Aromatherapy (inpatient)</p>
         </div>
-    
 
         <div class="block">
           <h4><strong>Meet part of the team</strong></h4>
@@ -140,7 +146,7 @@
           <p>Marissa A. Winters, RD</p>
         </div>
 
-            <div class="block">
+        <div class="block">
           <h4><strong>Locations &amp; phone</strong></h4>
           <p><strong>HMH – Integrative Health &amp; Medicine – Red Bank</strong></p>
           <p>1 Riverview Plaza, Floor 2, Red Bank, NJ 07701</p>
@@ -152,11 +158,13 @@
         </div>
       </article>
 
-      <!-- RIGHT: Nav buttons + image -->
+      <!-- RIGHT: Tabs (top two links, last disabled) -->
       <aside class="side" aria-label="Actions">
-        <a id="cta-questions"  class="cta" href="https://www.hackensackmeridianhealth.org/en/services/integrative-health">Overview &amp; services</a>
-        <a id="cta-helpful"    class="cta" href="https://doctors.hackensackmeridianhealth.org/specialty/Integrative%20Medicine?page=1">Locations &amp; phone</a>
-        <a id="cta-resources"  class="cta" href="https://www.hackensackmeridianhealth.org/en/services/integrative-health/guided-imagery-meditations">Guided Imagery</a>
+        <a id="cta-questions" class="cta" href="https://ilonafridman.github.io/complementary/complementary.html">Questions to ask</a>
+        <a id="cta-helpful" class="cta" href="https://ilonafridman.github.io/complementary/complementaryinfo.html">Helpful Information</a>
+        <button id="cta-resources" class="cta disabled" type="button" aria-disabled="true" title="This tab is disabled on this page">
+          Resources to explore
+        </button>
 
         <div class="pic-wrap">
           <img class="pic" src="https://ilonafridman.github.io/diagnosis/Team.jpg" alt="Integrative Health & Medicine care team" />
@@ -166,23 +174,6 @@
   </main>
 
   <script>
-    // Active CTA highlight.
-    (function setActiveCTA(){
-      const href = location.href.toLowerCase();
-      const q = document.getElementById('cta-questions');
-      const h = document.getElementById('cta-helpful');
-      const r = document.getElementById('cta-resources');
-      [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
-
-      if (href.includes('diagnosisresources.html')) {
-        r.classList.add('active'); r.setAttribute('aria-current','page');
-      } else if (href.includes('diagnosisinfo.html') || href.includes('daignosisinfo.html')) {
-        h.classList.add('active'); h.setAttribute('aria-current','page');
-      } else {
-        q.classList.add('active'); q.setAttribute('aria-current','page');
-      }
-    })();
-
     // Email this page.
     function collectPageInfo(){
       const title = document.title || 'Page';
@@ -198,7 +189,7 @@
     function handleEmail(){
       const { subject, body } = collectPageInfo();
       const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto; // Why: better for keyboard users
+      window.location.href = mailto; /* Why: simpler for keyboard users */
     }
     document.getElementById('emailBtn').addEventListener('click', handleEmail);
 
@@ -211,10 +202,7 @@
 
     async function exportElementToPDF(element, filename){
       await document.fonts?.ready?.catch(()=>{});
-      const canvas = await html2canvas(element, {
-        backgroundColor: '#ffffff',
-        scale: Math.min(2, window.devicePixelRatio || 1.5)
-      });
+      const canvas = await html2canvas(element, { backgroundColor: '#ffffff', scale: Math.min(2, window.devicePixelRatio || 1.5) });
       const imgData = canvas.toDataURL('image/png');
 
       const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress: true });
@@ -230,7 +218,6 @@
         let y = 0;
         const pxPerMm = canvas.width / imgWidth;
         const pageHeightPx = pageHeight * pxPerMm;
-
         while (y < canvas.height){
           const pageCanvas = document.createElement('canvas');
           pageCanvas.width = canvas.width;
@@ -238,12 +225,8 @@
           const ctx = pageCanvas.getContext('2d');
           ctx.drawImage(canvas, 0, y, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height);
           const pageData = pageCanvas.toDataURL('image/png');
-          if (y === 0){
-            pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-          } else {
-            pdf.addPage();
-            pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-          }
+          if (y !== 0) pdf.addPage();
+          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
           y += pageHeightPx;
         }
       }
@@ -256,4 +239,3 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha256-6m5o4uiz8v0QpVqQ1m4b1GZ1mJ6X7u7C2m2dRkFq7+0=" crossorigin="anonymous"></script>
 </body>
 </html>
-
