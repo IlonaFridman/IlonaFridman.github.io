@@ -79,25 +79,67 @@
   .q-list li::marker{ color:#111; font-size:1.05em }
   .acc-panel[hidden]{display:none}
 
-  /* RIGHT CTAs */
-  .side{display:flex;flex-direction:column;gap:28px}
+  /* ================================================= */
+  /* === START: UPDATED BUTTON STYLES TO MATCH IMAGE === */
+  /* ================================================= */
+  .side{display:flex;flex-direction:column;gap:20px} /* Reduced gap slightly */
+
+  /* Default/Inactive Button Style (Muted Blue) */
   .cta{
-    display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;
-    padding:18px 28px;border-radius:16px;min-width:280px;
-    background:linear-gradient(180deg,#6ea2cf,#588fbe);
-    box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
-    border:3px solid #fff;outline:1px solid #c7d9ea;text-shadow:0 1px 0 rgba(0,0,0,.2);
-    transition:transform .06s ease,filter .15s ease;
+    display:inline-block;
+    text-decoration:none;
+    font-weight:700;
+    font-size:20px;
+    padding:18px 28px;
+    border-radius:16px;
+    min-width:280px;
+    text-align: center;
+    transition:transform .06s ease, box-shadow .15s ease;
+    
+    /* Muted blue background */
+    background: #6b8fa9;
+    color: #fff;
+    
+    /* Beveled border effect */
+    border: 2px solid #fff;
+    outline: 1px solid #5282ad;
+    
+    /* Subtle shadows for depth */
+    text-shadow: 0 1px 1px rgba(0,0,0,.25);
+    box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 5px 10px rgba(0,0,0,.15);
   }
-  .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
-  .cta:focus-visible{outline:none;box-shadow:var(--ring)}
-  .cta.active{
-    filter:brightness(1.15);
-    background:linear-gradient(180deg,#cfe3f7,#e7f1fb);
-    color:#1f2937; text-shadow:none; outline-width:2px;
+  .cta:hover{
+    transform:translateY(-2px);
+    box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 8px 15px rgba(0,0,0,.2);
+  }
+  .cta:focus-visible{
+    outline: none;
+    box-shadow: var(--ring);
   }
 
-  .pic-wrap{width:100%;max-width:340px}
+  /* Active/Current Page Button Style (White) */
+  .cta.active{
+    /* Light gradient background */
+    background: linear-gradient(180deg, #fdfefe, #f0f7ff);
+    color: #111827;
+    
+    /* Simple thin border */
+    border: 1px solid #b0c4d8;
+    outline: 1px solid transparent; /* Remove the outer outline */
+    
+    /* Reset text shadow and apply a soft drop shadow */
+    text-shadow: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .cta.active:hover {
+    transform: translateY(-1px); /* Less movement for active button */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  }
+  /* =============================================== */
+  /* === END: UPDATED BUTTON STYLES TO MATCH IMAGE === */
+  /* =============================================== */
+
+  .pic-wrap{width:100%;max-width:340px; margin-top: 8px;} /* Added margin-top */
   .pic{width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block}
 
   /* Back to top */
@@ -149,7 +191,7 @@
     </div>
 
     <aside class="side" aria-label="Actions">
-      <!-- UPDATED CTAs for Survivor context -->
+      <!-- NOTE: The JS will automatically add the '.active' class to the current page -->
       <a id="cta-questions" class="cta" href="survivor-questions.html">Follow-Up Questions</a>
       <a id="cta-side-effects" class="cta" href="survivor-side-effects.html">Managing Side Effects</a>
       <a id="cta-wellness" class="cta" href="survivor-wellness.html">Wellness & Lifestyle</a>
