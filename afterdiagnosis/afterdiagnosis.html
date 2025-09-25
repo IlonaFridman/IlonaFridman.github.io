@@ -1,511 +1,214 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Helpful Information</title>
-<style>
-  :root{
-    --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
-    --panel:#dfdfdf; --panel-hover:#d6d6d6; --ring:0 0 0 3px rgba(59,130,246,.35);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-  .container{max-width:1100px;margin:42px auto;padding:0 20px}
-  .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Helpful Information</title>
+  <style>
+    :root {
+      --bg: #ffffff; --ink: #111827; --muted: #6b7280; --line: #d1d5db;
+      --panel: #dfdfdf; --panel-hover: #d6d6d6; --ring: 0 0 0 3px rgba(59, 130, 246, .35);
+    }
+    * { box-sizing: border-box }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 20px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    }
+    .container { max-width: 1100px; margin: 42px auto; padding: 0 20px }
+    .layout { display: grid; grid-template-columns: 1fr 380px; gap: 42px; align-items: start }
 
-  /* Home (little house) */
-  .home-link{
-    position:fixed; inset:14px auto auto 14px; z-index:50;
-    display:inline-flex; align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:10px;
-    background:#fff; border:1px solid var(--line); box-shadow:0 6px 16px rgba(0,0,0,.12);
-    text-decoration:none;
-  }
-  .home-link:hover{transform:translateY(-1px)}
-  .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
-  .home-link svg{width:22px;height:22px;fill:#374151}
+    .home-link {
+      position: fixed; inset: 14px auto auto 14px; z-index: 50;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #fff; border: 1px solid var(--line); box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      text-decoration: none;
+    }
+    .home-link:hover { transform: translateY(-1px) }
+    .home-link:focus-visible { outline: none; box-shadow: var(--ring) }
+    .home-link svg { width: 22px; height: 22px; fill: #374151 }
 
-  /* Utility icon buttons — stacked vertically under Home */
-  .util-wrap{
-    position:fixed; left:14px; top:60px; z-index:50;
-    display:flex; flex-direction:column; gap:8px;
-  }
-  .util-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:10px;
-    background:#fff; border:1px solid var(--line);
-    box-shadow:0 6px 16px rgba(0,0,0,.12);
-    cursor:pointer;
-  }
-  .util-btn:hover{transform:translateY(-1px)}
-  .util-btn:focus-visible{outline:none;box-shadow:var(--ring)}
-  .util-btn svg{width:22px;height:22px;stroke:#000;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.6}
+    .util-wrap {
+      position: fixed; left: 14px; top: 60px; z-index: 50;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .util-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #fff; border: 1px solid var(--line);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12); cursor: pointer;
+    }
+    .util-btn:hover { transform: translateY(-1px) }
+    .util-btn:focus-visible { outline: none; box-shadow: var(--ring) }
+    .util-btn svg {
+      width: 22px; height: 22px; stroke: #000; fill: none;
+      stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.6;
+    }
 
-  /* Toolbar */
-  .toolbar{display:flex;gap:8px;align-items:center;margin:0 0 12px 0}
-  .tool-btn{
-    padding:8px 12px;border-radius:8px;border:1px solid var(--line);
-    background:#f5f6f8;color:#111;font-weight:700;cursor:pointer;
-    transition:transform .06s ease, background-color .15s ease;
-  }
-  .tool-btn:hover{background:#eef1f5;transform:translateY(-1px)}
-  .tool-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+    .toolbar {
+      display: flex; gap: 8px; align-items: center; margin: 0 0 12px 0;
+    }
+    .tool-btn {
+      padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line);
+      background: #f5f6f8; color: #111; font-weight: 700; cursor: pointer;
+      transition: transform .06s ease, background-color .15s ease;
+    }
+    .tool-btn:hover { background: #eef1f5; transform: translateY(-1px) }
+    .tool-btn:focus-visible { outline: none; box-shadow: var(--ring) }
 
-  /* LEFT */
-  .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
-  .acc-header{
-    width:100%;display:flex;align-items:center;gap:10px;
-    padding:18px 20px 18px 46px;border:1px solid var(--line);
-    background:var(--panel);border-radius:6px;font-weight:800;cursor:pointer;
-    text-align:left;position:relative;transition:background-color .15s,transform .06s;
-    font-size:22px;
-  }
-  .acc-header::before{
-    content:"\2794"; /* ➔ */
-    position:absolute;left:14px;font-size:20px;color:#000;opacity:.8;transform:rotate(180deg);
-  }
-  .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
-  .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
-  .acc-header .cat-icon{width:26px;height:26px;flex:0 0 26px;}
-  .acc-header .cat-icon svg{
-    width:100%;height:100%;
-    stroke:#000;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.8; /* Sharpie-like */
-  }
+    .stack { display: flex; flex-direction: column; gap: 14px; min-width: 300px }
+    .acc-header {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 18px 20px 18px 46px; border: 1px solid var(--line);
+      background: var(--panel); border-radius: 6px; font-weight: 800;
+      cursor: pointer; text-align: left; position: relative;
+      transition: background-color .15s, transform .06s;
+      font-size: 22px;
+    }
+    .acc-header::before {
+      content: "\2794";
+      position: absolute; left: 14px; font-size: 20px; color: #000;
+      opacity: .8; transform: rotate(180deg);
+    }
+    .acc-header:hover { background: var(--panel-hover); transform: translateY(-1px) }
+    .acc-header:focus-visible { outline: none; box-shadow: var(--ring) }
+    .acc-header .cat-icon { width: 26px; height: 26px; flex: 0 0 26px; }
+    .acc-header .cat-icon svg {
+      width: 100%; height: 100%;
+      stroke: #000; fill: none; stroke-linecap: round;
+      stroke-linejoin: round; stroke-width: 2.8;
+    }
 
-  .acc-panel{margin:8px 0 12px 24px}
-  .q-list{list-style:square;margin:8px 0 0 22px;padding:0;font-size:20px;line-height:1.7}
-  .q-list li{ margin:12px 0 }
-  .q-list li::marker{ color:#111; font-size:1.05em }
-  .acc-panel[hidden]{display:none}
+    .acc-panel { margin: 8px 0 12px 24px }
+    .q-list {
+      list-style: square; margin: 8px 0 0 22px; padding: 0;
+      font-size: 20px; line-height: 1.7;
+    }
+    .q-list li { margin: 12px 0 }
+    .q-list li::marker { color: #111; font-size: 1.05em }
+    .acc-panel[hidden] { display: none }
 
-  /* ================================================= */
-  /* === START: UPDATED BUTTON STYLES TO MATCH IMAGE === */
-  /* ================================================= */
-  .side{display:flex;flex-direction:column;gap:20px} /* Reduced gap slightly */
+    .side { display: flex; flex-direction: column; gap: 20px }
 
-  /* Default/Inactive Button Style (Muted Blue) */
-  .cta{
-    display:inline-block;
-    text-decoration:none;
-    font-weight:700;
-    font-size:20px;
-    padding:18px 28px;
-    border-radius:16px;
-    min-width:280px;
-    text-align: center;
-    transition:transform .06s ease, box-shadow .15s ease;
-    
-    /* Muted blue background */
-    background: #6b8fa9;
-    color: #fff;
-    
-    /* Beveled border effect */
-    border: 2px solid #fff;
-    outline: 1px solid #5282ad;
-    
-    /* Subtle shadows for depth */
-    text-shadow: 0 1px 1px rgba(0,0,0,.25);
-    box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 5px 10px rgba(0,0,0,.15);
-  }
-  .cta:hover{
-    transform:translateY(-2px);
-    box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 8px 15px rgba(0,0,0,.2);
-  }
-  .cta:focus-visible{
-    outline: none;
-    box-shadow: var(--ring);
-  }
+    .cta {
+      display: inline-block; text-decoration: none; font-weight: 700;
+      font-size: 20px; padding: 18px 28px; border-radius: 16px;
+      min-width: 280px; text-align: center;
+      background: #6b8fa9; color: #fff;
+      border: 2px solid #fff; outline: 1px solid #5282ad;
+      text-shadow: 0 1px 1px rgba(0,0,0,.25);
+      box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 5px 10px rgba(0,0,0,.15);
+      transition: transform .06s ease, box-shadow .15s ease;
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 0 0 rgba(0,0,0,.15) inset, 0 8px 15px rgba(0,0,0,.2);
+    }
+    .cta:focus-visible { outline: none; box-shadow: var(--ring) }
+    .cta.active {
+      background: linear-gradient(180deg, #fdfefe, #f0f7ff);
+      color: #111827; border: 1px solid #b0c4d8;
+      text-shadow: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .cta.active:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
 
-  /* Active/Current Page Button Style (White) */
-  .cta.active{
-    /* Light gradient background */
-    background: linear-gradient(180deg, #fdfefe, #f0f7ff);
-    color: #111827;
-    
-    /* Simple thin border */
-    border: 1px solid #b0c4d8;
-    outline: 1px solid transparent; /* Remove the outer outline */
-    
-    /* Reset text shadow and apply a soft drop shadow */
-    text-shadow: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  .cta.active:hover {
-    transform: translateY(-1px); /* Less movement for active button */
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-  }
-  /* =============================================== */
-  /* === END: UPDATED BUTTON STYLES TO MATCH IMAGE === */
-  /* =============================================== */
+    .pic-wrap { width: 100%; max-width: 340px; margin-top: 8px; }
+    .pic { width: 100%; height: auto; border: 2px solid #c9ced6; border-radius: 10px; display: block }
 
-  .pic-wrap{width:100%;max-width:340px; margin-top: 8px;} /* Added margin-top */
-  .pic{width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block}
+    .to-top {
+      position: fixed; right: 16px; bottom: 16px; z-index: 40;
+      padding: 10px 14px; border-radius: 9999px; border: 1px solid var(--line);
+      background: #f8fafc; color: #111; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    }
+    .to-top[hidden] { display: none }
+    .to-top:hover { transform: translateY(-1px) }
+    .to-top:focus-visible { outline: none; box-shadow: var(--ring) }
 
-  /* Back to top */
-  .to-top{
-    position:fixed;right:16px;bottom:16px;z-index:40;
-    padding:10px 14px;border-radius:9999px;border:1px solid var(--line);
-    background:#f8fafc;color:#111;font-weight:700;cursor:pointer;
-    box-shadow:0 6px 16px rgba(0,0,0,.12);
-  }
-  .to-top[hidden]{display:none}
-  .to-top:hover{transform:translateY(-1px)}
-  .to-top:focus-visible{outline:none;box-shadow:var(--ring)}
-
-  @media (max-width:760px){
-    .layout{grid-template-columns:1fr;gap:28px}
-    .side .cta{width:100%;min-width:unset}
-    .util-wrap{left:14px; top:60px}
-  }
-</style>
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; gap: 28px }
+      .side .cta { width: 100%; min-width: unset }
+      .util-wrap { left: 14px; top: 60px }
+    }
+  </style>
 </head>
 <body>
-<!-- Home button -->
-<a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
-</a>
+  <!-- Home button -->
+  <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/>
+    </svg>
+  </a>
 
-<!-- Tools: Page PDF, Email, Section PDF -->
-<div class="util-wrap" role="group" aria-label="Page utilities">
-  <button id="printBtn" class="util-btn" type="button" aria-label="Download whole page as PDF" title="Download page as PDF">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h6l4 4v14H7z" /><path d="M13 3v5h5" /><path d="M12 11v7M9.5 15.5L12 18l2.5-2.5" /></svg>
-  </button>
-  <button id="emailBtn" class="util-btn" type="button" aria-label="Email this page to myself" title="Email notes">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6l8.5 6 8.5-6" /><path d="M5 18l4.5-4.5M19 18l-4.5-4.5" /></svg>
-  </button>
-  <button id="sectionPdfBtn" class="util-btn" type="button" aria-label="Download open section as PDF" title="Download this section as PDF">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="10" rx="2" /><path d="M7 8h10M7 11h6" /><path d="M12 15v5M9.5 18.5L12 21l2.5-2.5" /></svg>
-  </button>
-</div>
+  <div class="container">
+    <div class="layout">
+      <!-- Main content -->
+      <main>
+        <!-- Toolbar -->
+        <div class="toolbar" role="group" aria-label="Expand or collapse all">
+          <button id="expandAllBtn" class="tool-btn" type="button">Expand all</button>
+          <button id="collapseAllBtn" class="tool-btn" type="button">Collapse all</button>
 
-<a id="page-top"></a>
-<main class="container" aria-label="Slide-like layout">
-  <section class="layout">
-    <div>
-      <div class="toolbar" role="group" aria-label="Expand or collapse all">
-        <button id="expandAllBtn"  class="tool-btn" type="button">Expand all</button>
-        <button id="collapseAllBtn" class="tool-btn" type="button">Collapse all</button>
-      </div>
-      <div id="stack" class="stack" aria-label="Categories"></div>
+          <!-- Home icon -->
+          <a class="util-btn" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home" title="Go to Home">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/>
+            </svg>
+          </a>
+
+          <!-- Download full PDF icon -->
+          <button id="printBtn" class="util-btn" type="button" aria-label="Download whole page as PDF" title="Download page as PDF">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3h6l4 4v14H7z" />
+              <path d="M13 3v5h5" />
+              <path d="M12 11v7M9.5 15.5L12 18l2.5-2.5" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Content would go here -->
+        <p>Your expandable FAQ or content sections go here...</p>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="side" aria-label="Actions">
+        <a class="cta active" href="#">Action 1</a>
+        <a class="cta" href="#">Action 2</a>
+
+        <div class="pic-wrap">
+          <img src="your-image.jpg" alt="Helpful info" class="pic" />
+        </div>
+
+        <!-- Email + Section PDF at bottom -->
+        <div class="util-wrap" role="group" aria-label="More utilities" style="margin-top: auto;">
+          <button id="emailBtn" class="util-btn" type="button" aria-label="Email this page to myself" title="Email notes">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M3.5 6l8.5 6 8.5-6" />
+              <path d="M5 18l4.5-4.5M19 18l-4.5-4.5" />
+            </svg>
+          </button>
+          <button id="sectionPdfBtn" class="util-btn" type="button" aria-label="Download open section as PDF" title="Download this section as PDF">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="10" rx="2" />
+              <path d="M7 8h10M7 11h6" />
+              <path d="M12 15v5M9.5 18.5L12 21l2.5-2.5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
     </div>
+  </div>
 
-    <aside class="side" aria-label="Actions">
-      <!-- NOTE: The JS will automatically add the '.active' class to the current page -->
-      <a id="cta-questions" class="cta" href="survivor-questions.html">Follow-Up Questions</a>
-      <a id="cta-side-effects" class="cta" href="survivor-side-effects.html">Helpful Information</a>
-      <a id="cta-wellness" class="cta" href="survivor-wellness.html">Resources to Explore</a>
-
-      <div class="pic-wrap">
-        <img class="pic"
-             src="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.png"
-             alt="Patient discussing follow-up care with a doctor" />
-      </div>
-    </aside>
-  </section>
-</main>
-
-<!-- Back to top -->
-<button id="backToTop" class="to-top" type="button" aria-label="Back to top" hidden>Back to top</button>
-
-<script>
-  // --- UPDATED DATA with your new questions ---
-  const DATA = [
-    { 
-      title: 'Follow-Up Care and Monitoring', 
-      questions: [
-        'Which specific tests or screenings will I need during follow-up, and how often?',
-        'How will I be monitored if I’ve had a mastectomy?',
-        'Who will coordinate my follow-up care among my healthcare providers?',
-        'What symptoms should prompt me to contact you between scheduled visits?',
-        'Am I at increased risk for any health conditions because of my treatment?'
-      ]
-    },
-    { 
-      title: 'Recurrence Prevention and Planning', 
-      questions: [
-        'Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?',
-        'What can I do to prevent a recurrence?',
-        'What are the signs of recurrence I should watch for?',
-        'What will we do if the cancer comes back?'
-      ]
-    },
-    { 
-      title: 'Support and Survivor Resources', 
-      questions: [
-        'Can you recommend support groups or counseling services for breast cancer survivors?'
-      ]
-    }
-  ];
-
-  let singleOpen = true;
-
-  // --- Sharpie-style inline SVGs for categories ---
-  const Icons = {
-    hourglass: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12M6 21h12" /><path d="M7 3c0 5 5 5 5 9s-5 4-5 9M17 3c0 5-5 5-5 9s5 4 5 9" /><path d="M9 7h6M9 17h6" /></svg>`,
-    hug: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="6.5" r="2.3" /><circle cx="16" cy="6.5" r="2.3" /><path d="M3.5 18c2-4 5-5 8.5-5s6.5 1 8.5 5" /><path d="M6 14l2.5 2.5M18 14l-2.5 2.5" /></svg>`,
-    microscope: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l3 3" /><rect x="9.5" y="5.5" width="3" height="6" rx="1" /><path d="M7 13h10" /><path d="M5 19h14M7 13c-2 1-3 3-3 6" /></svg>`,
-    stethoscope: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v4a4 4 0 0 0 8 0V3" /><path d="M10 11v2a5 5 0 0 0 10 0v-1" /><circle cx="20" cy="12" r="1.8" /></svg>`,
-    book: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h10a3 3 0 0 1 3 3v11H7a3 3 0 0 0-3 3z" /><path d="M7 5v17" /><path d="M11 9h4M11 12h4" /></svg>`,
-    bulb: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a7 7 0 0 1 5 11c-1 1-2 2-2 3H9c0-1-1-2-2-3A7 7 0 0 1 12 3z" /><path d="M9 20h6M10 22h4" /></svg>`,
-    beaker: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8M10 3v6L5 21h14l-5-12V3" /><path d="M7 16h10" /></svg>`
-  };
-
-  function getCategoryIcon(title){
-    const t = title.toLowerCase();
-    if (t.includes('time')) return Icons.hourglass();
-    if (t.includes('support') || t.includes('coping')) return Icons.hug();
-    if (t.includes('diagnosis') || t.includes('test')) return Icons.microscope();
-    if (t.includes('coordination') || t.includes('care')) return Icons.stethoscope();
-    if (t.includes('access') || t.includes('information')) return Icons.book();
-    if (t.includes('general') || t.includes('recurrence')) return Icons.bulb(); // Added 'recurrence'
-    if (t.includes('trial') || t.includes('opinion')) return Icons.beaker();
-    return Icons.bulb();
-  }
-
-  (function renderAccordion(){
-    const stack = document.getElementById('stack');
-    DATA.forEach((cat, idx) => {
-      const id = `panel-${idx}`;
-      const btn = document.createElement('button');
-      btn.className = 'acc-header';
-      btn.type = 'button';
-      btn.id = `btn-${idx}`;
-      btn.setAttribute('aria-expanded','false');
-      btn.setAttribute('aria-controls', id);
-
-      const iconWrap = document.createElement('span');
-      iconWrap.className = 'cat-icon';
-      iconWrap.innerHTML = getCategoryIcon(cat.title);
-
-      const textNode = document.createElement('span');
-      textNode.textContent = ` ${cat.title}`;
-
-      btn.appendChild(iconWrap);
-      btn.appendChild(textNode);
-
-      const panel = document.createElement('div');
-      panel.className = 'acc-panel';
-      panel.id = id;
-      panel.setAttribute('role','region');
-      panel.setAttribute('aria-labelledby', btn.id);
-      panel.hidden = true;
-
-      const ul = document.createElement('ul');
-      ul.className = 'q-list';
-      cat.questions.forEach(q => {
-        const li = document.createElement('li');
-        li.textContent = q;
-        ul.appendChild(li);
-      });
-      panel.appendChild(ul);
-
-      btn.addEventListener('click', () => { togglePanel(idx); });
-      stack.appendChild(btn);
-      stack.appendChild(panel);
-    });
-
-    document.getElementById('expandAllBtn').addEventListener('click', expandAll);
-    document.getElementById('collapseAllBtn').addEventListener('click', collapseAll);
-    document.getElementById('backToTop').addEventListener('click', () => {
-      document.getElementById('page-top').scrollIntoView({behavior:'smooth'});
-    });
-
-    // Utilities
-    document.getElementById('printBtn').addEventListener('click', downloadPageAsPDF);
-    document.getElementById('emailBtn').addEventListener('click', handleEmail);
-    document.getElementById('sectionPdfBtn').addEventListener('click', downloadSectionAsPDF);
-
-    setActiveCTA();
-    updateBackToTop();
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseAll(); });
-  })();
-
-  function togglePanel(i){
-    const btn = document.getElementById(`btn-${i}`);
-    const panel = document.getElementById(`panel-${i}`);
-    const open = btn.getAttribute('aria-expanded') === 'true';
-
-    if (singleOpen) collapseAll();
-
-    if (open){
-      btn.setAttribute('aria-expanded','false');
-      panel.hidden = true;
-    }else{
-      btn.setAttribute('aria-expanded','true');
-      panel.hidden = false;
-      panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
-    }
-    updateBackToTop();
-  }
-
-  function expandAll(){
-    singleOpen = false;
-    DATA.forEach((_, idx) => {
-      const b = document.getElementById(`btn-${idx}`);
-      const p = document.getElementById(`panel-${idx}`);
-      if (b && p){ b.setAttribute('aria-expanded','true'); p.hidden = false; }
-    });
-    document.getElementById('stack').scrollIntoView({ behavior:'smooth', block:'nearest' });
-    updateBackToTop();
-  }
-
-  function collapseAll(){
-    DATA.forEach((_, idx) => {
-      const b = document.getElementById(`btn-${idx}`);
-      const p = document.getElementById(`panel-${idx}`);
-      if (b) b.setAttribute('aria-expanded','false');
-      if (p) p.hidden = true;
-    });
-    singleOpen = true;
-    updateBackToTop();
-  }
-
-  function openPanelsCount(){
-    return document.querySelectorAll('.acc-panel:not([hidden])').length;
-  }
-
-  function updateBackToTop(){
-    const btn = document.getElementById('backToTop');
-    btn.hidden = openPanelsCount() < 2;
-  }
-
-  // --- UPDATED to match new CTAs ---
-  function setActiveCTA(){
-    const href = location.href.toLowerCase();
-    const q = document.getElementById('cta-questions');
-    const s = document.getElementById('cta-side-effects');
-    const w = document.getElementById('cta-wellness');
-    [q,s,w].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
-
-    if (href.includes('survivor-wellness.html')) {
-      w.classList.add('active'); w.setAttribute('aria-current','page');
-    } else if (href.includes('survivor-side-effects.html')) {
-      s.classList.add('active'); s.setAttribute('aria-current','page');
-    } else { // Default to the questions page
-      q.classList.add('active'); q.setAttribute('aria-current','page');
-    }
-  }
-
-  // --- Email composition ---
-  function collectPageInfo(){
-    const title = document.title || 'Page';
-    const url = location.href;
-    const sections = [];
-    document.querySelectorAll('.acc-header').forEach((btn, i) => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      if (!open) return;
-      const headerText = btn.textContent.trim();
-      const qs = Array.from(document.querySelectorAll(`#panel-${i} .q-list li`)).map(li => `- ${li.textContent.trim()}`);
-      sections.push(`## ${headerText}\n${qs.join('\n')}`);
-    });
-    const body =
-`${title}
-${url}
-
-${sections.length ? sections.join('\n\n') : '(No sections expanded — expand sections to include their questions.)'}
-`;
-    return { subject: `Notes: ${title}`, body };
-  }
-
-  function handleEmail(){
-    const { subject, body } = collectPageInfo();
-    const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-  }
-
-  // --- PDF helpers (html2canvas + jsPDF) ---
-  async function downloadPageAsPDF(){
-    const el = document.querySelector('main');
-    await exportElementToPDF(el, `survivor-questions-page.pdf`);
-  }
-
-  async function downloadSectionAsPDF(){
-    const idx = findFirstOpenIndex() ?? 0;
-    const header = document.getElementById(`btn-${idx}`);
-    const panel  = document.getElementById(`panel-${idx}`);
-
-    const wrap = document.createElement('div');
-    wrap.style.padding = '12px';
-    wrap.style.background = '#fff';
-    wrap.style.color = '#000';
-    wrap.style.maxWidth = '800px';
-    wrap.style.font = getComputedStyle(document.body).font;
-
-    const headerClone = header.cloneNode(true);
-    headerClone.style.boxShadow = 'none';
-    headerClone.style.background = '#f0f0f0';
-    headerClone.style.border = '1px solid #ccc';
-
-    const panelClone = panel.cloneNode(true);
-    panelClone.hidden = false;
-    panelClone.style.margin = '12px 0 0 0';
-
-    wrap.appendChild(headerClone);
-    wrap.appendChild(panelClone);
-
-    document.body.appendChild(wrap);
-    try{
-      await exportElementToPDF(wrap, sanitizeFileName(`${header.textContent.trim()}.pdf`));
-    } finally {
-      document.body.removeChild(wrap);
-    }
-  }
-
-  function findFirstOpenIndex(){
-    const headers = Array.from(document.querySelectorAll('.acc-header'));
-    const openIdx = headers.findIndex(b => b.getAttribute('aria-expanded') === 'true');
-    return openIdx >= 0 ? openIdx : null;
-  }
-
-  function sanitizeFileName(name){
-    return name.replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').trim() || 'section.pdf';
-  }
-
-  async function exportElementToPDF(element, filename){
-    await document.fonts?.ready?.catch(()=>{});
-    const canvas = await html2canvas(element, {
-      backgroundColor: '#ffffff',
-      scale: Math.min(2, window.devicePixelRatio || 1.5)
-    });
-    const imgData = canvas.toDataURL('image/png');
-
-    const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress: true });
-    const pageWidth  = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-
-    const imgWidth = pageWidth;
-    const imgHeight = canvas.height * (imgWidth / canvas.width);
-
-    if (imgHeight <= pageHeight){
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-    } else {
-      let y = 0;
-      const pxPerMm = canvas.width / imgWidth;
-      const pageHeightPx = pageHeight * pxPerMm;
-
-      while (y < canvas.height){
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = canvas.width;
-        pageCanvas.height = Math.min(pageHeightPx, canvas.height - y);
-        const ctx = pageCanvas.getContext('2d');
-        ctx.drawImage(canvas, 0, y, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height);
-        const pageData = pageCanvas.toDataURL('image/png');
-        if (y === 0){
-          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-        } else {
-          pdf.addPage();
-          pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, pageHeight);
-        }
-        y += pageHeightPx;
-      }
-    }
-    pdf.save(filename);
-  }
-</script>
-
-<!-- Lightweight deps for client-side PDF (no build step) -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha256-jvW5C8Y4Xg7q7bQm3mQeZ0xjv4J1x2RQ6dHnZ5q5P1k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha256-6m5o4uiz8v0QpVqQ1m4b1GZ1mJ6X7u7C2m2dRkFq7+0=" crossorigin="anonymous"></script>
+  <!-- JS would go here -->
+  <script>
+    // Add JavaScript functionality if needed
+  </script>
 </body>
 </html>
