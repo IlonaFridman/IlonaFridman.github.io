@@ -1,11 +1,12 @@
+<!-- File: /public/read-more-resources.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Life After Treatment – Read More</title>
+  <title>Helpful Information – Read More</title>
   <style>
-    :root {
+    :root{
       --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
       --panel:#ffffff; --panel-border:#c9ced6;
       --cta0:#6ea2cf; --cta1:#588fbe; --cta-outline:#c7d9ea; --ring:0 0 0 3px rgba(59,130,246,.35);
@@ -16,6 +17,7 @@
     .container{max-width:1100px;margin:42px auto;padding:0 20px}
     .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
+    /* LEFT card */
     .info-card{
       background:var(--panel);
       border:2px solid var(--panel-border);
@@ -25,6 +27,7 @@
     }
     .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
 
+    /* Resource tiles (single column like a long list) */
     .resource-grid{display:grid;grid-template-columns:1fr;gap:24px}
     .resource{display:block;text-decoration:none;color:inherit}
     .thumb{
@@ -35,6 +38,7 @@
     .caption{text-align:center;font-weight:700;margin-top:10px;font-size:18px}
     .divider{height:1px;background:repeating-linear-gradient(to right, #cfd5dd 0 6px, transparent 6px 12px);opacity:.9;margin:22px 0}
 
+    /* RIGHT column (CTA buttons) */
     .side{display:flex;flex-direction:column;gap:28px;align-items:flex-start}
     .cta{
       display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;
@@ -52,11 +56,13 @@
       color:#1f2937; text-shadow:none; outline-width:2px;
     }
 
+    /* Right image */
     .pic-wrap{width:100%;max-width:340px}
     .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#f3f4f6}
     .pic{width:100%;height:100%;object-fit:contain;display:block}
     .pic-cap{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
+    /* Home (same size as other pages) */
     .home-link{
       position:fixed; inset:14px auto auto 14px; z-index:50;
       display:inline-flex; align-items:center; justify-content:center;
@@ -76,6 +82,7 @@
   </style>
 </head>
 <body>
+  <!-- Home button -->
   <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
   </a>
@@ -91,7 +98,7 @@
             <div class="thumb">
               <img alt="Life After Treatment (NCI)" src="https://ilonafridman.github.io/afterdiagnosis/NCI_AfterTreatment.png" />
             </div>
-            <div class="caption">Life After Treatment (NCI)</div>
+            <div class="caption">HMH on Breast Cancer</div>
           </a>
 
           <a class="resource" target="_blank" rel="noopener noreferrer"
@@ -99,17 +106,17 @@
             <div class="thumb">
               <img alt="Survivorship Services (HMH)" src="https://ilonafridman.github.io/afterdiagnosis/HMH_Survivorship.png" />
             </div>
-            <div class="caption">Survivorship Services (HMH)</div>
+            <div class="caption">Breast Cancer Basics</div>
           </a>
-        </div>
 
         <div class="divider" role="presentation"></div>
       </article>
 
       <aside class="side" aria-label="Actions">
-        <a class="cta" href="https://ilonafridman.github.io/after/afterquestions.html">Questions to ask</a>
-        <a class="cta active" id="cta-after-info" href="#">Helpful Information</a>
-        <a class="cta" href="https://ilonafridman.github.io/after/afterresources.html">Resources to explore</a>
+        <a id="cta-questions"  class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Questions to ask</a>
+        <!-- Match link spelling used across site -->
+        <a id="cta-helpful"    class="cta" href="https://ilonafridman.github.io/diagnosis/daignosisinfo.html">Helpful Information</a>
+        <a id="cta-resources"  class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisresources.html">Resources to explore</a>
 
         <div class="pic-wrap">
           <a class="pic-link" target="_blank" rel="noopener noreferrer"
@@ -121,5 +128,24 @@
       </aside>
     </section>
   </main>
+
+  <script>
+    // Active CTA highlight (same as other pages)
+    (function setActiveCTA(){
+      const href = location.href.toLowerCase();
+      const q = document.getElementById('cta-questions');
+      const h = document.getElementById('cta-helpful');
+      const r = document.getElementById('cta-resources');
+      [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
+
+      if (href.includes('diagnosisresources.html')) {
+        r.classList.add('active'); r.setAttribute('aria-current','page');
+      } else if (href.includes('diagnosisinfo.html') || href.includes('daignosisinfo.html')) {
+        h.classList.add('active'); h.setAttribute('aria-current','page');
+      } else {
+        q.classList.add('active'); q.setAttribute('aria-current','page');
+      }
+    })();
+  </script>
 </body>
 </html>
