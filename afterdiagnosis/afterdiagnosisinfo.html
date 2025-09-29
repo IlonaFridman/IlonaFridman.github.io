@@ -113,10 +113,10 @@
       </article>
 
       <aside class="side" aria-label="Actions">
-        <a id="cta-questions"  class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Questions to ask</a>
+        <a id="cta-questions"  class="cta" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html">Questions to ask</a>
         <!-- Match link spelling used across site -->
-        <a id="cta-helpful"    class="cta" href="https://ilonafridman.github.io/diagnosis/daignosisinfo.html">Helpful Information</a>
-        <a id="cta-resources"  class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosisresources.html">Resources to explore</a>
+        <a id="cta-helpful"    class="cta" href="https://ilonafridman.github.io/afterdiagnosis/afterdaignosisinfo.html">Helpful Information</a>
+        <a id="cta-resources"  class="cta" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosisresources.html">Resources to explore</a>
 
         <div class="pic-wrap">
           <a class="pic-link" target="_blank" rel="noopener noreferrer"
@@ -138,9 +138,9 @@
       const r = document.getElementById('cta-resources');
       [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
 
-      if (href.includes('diagnosisresources.html')) {
+      if (href.includes('afterdiagnosisresources.html')) {
         r.classList.add('active'); r.setAttribute('aria-current','page');
-      } else if (href.includes('diagnosisinfo.html') || href.includes('daignosisinfo.html')) {
+      } else if (href.includes('afterdiagnosisinfo.html') || href.includes('afterdaignosisinfo.html')) {
         h.classList.add('active'); h.setAttribute('aria-current','page');
       } else {
         q.classList.add('active'); q.setAttribute('aria-current','page');
