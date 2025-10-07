@@ -112,7 +112,7 @@
           <a class="resource" target="_blank" rel="noopener noreferrer"
              href="https://imconsortium.org/page/member-listing">
             <div class="thumb">
-              <img alt="Member Listing (IM Consortium)" src="https://ilonafridman.github.io/integrativetherapy/IM_Consortium.png.jpg" />
+              <img alt="Member Listing (IM Consortium)" src="https://ilonafridman.github.io/integrativetherapy/IM_Consortium.png" />
             </div>
             <div class="caption">Member Listing (IM Consortium)</div>
           </a>
@@ -144,14 +144,23 @@
       const q = document.getElementById('cta-questions');
       const h = document.getElementById('cta-helpful');
       const r = document.getElementById('cta-resources');
-      [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
+      
+      // First, remove the active state from all buttons
+      [q,h,r].forEach(el => { 
+        el.classList.remove('active'); 
+        el.removeAttribute('aria-current'); 
+      });
 
+      // Now, apply the active state to the correct button based on the URL
       if (href.includes('resources-to-explore.html')) {
-        r.classList.add('active'); r.setAttribute('aria-current','page');
-      } else if (href.includes('helpful-information.html')) {
-        h.classList.add('active'); h.setAttribute('aria-current','page');
+        r.classList.add('active'); 
+        r.setAttribute('aria-current','page');
+      } else if (href.includes('helpful-information.html')) { // <-- CORRECTED
+        h.classList.add('active'); 
+        h.setAttribute('aria-current','page');
       } else { // Default to 'Questions to ask'
-        q.classList.add('active'); q.setAttribute('aria-current','page');
+        q.classList.add('active'); 
+        q.setAttribute('aria-current','page');
       }
     })();
   </script>
