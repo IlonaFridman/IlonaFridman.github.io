@@ -1,1 +1,154 @@
+<!-- File: /public/information.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tips for Navigating Your Journey - Care Pathway</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --border: #111111;
+      --primary-600: #4e90c7;
+      --primary-700: #3e7fb6;
+      --pill-shadow: rgba(0,0,0,0.15);
+      --maxw: 1200px;
+    }
 
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: clamp(16px, 2vw, 32px); }
+
+    /* Top navigation */
+    .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px); }
+    .topbar-left { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .pill { display: inline-block; text-decoration: none; border: 0; border-radius: 9999px; padding: 12px 22px; font-weight: 700; font-size: 18px; color: #fff; cursor: pointer; background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700)); box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--pill-shadow); transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease; }
+    .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
+    .pill:hover { filter: brightness(1.05); }
+    .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
+    
+    /* Style for the active/current page link */
+    .pill.active {
+      background: #e0e7ff;
+      color: #3730a3;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+      transform: translateY(1px);
+    }
+
+    .lang-toggle { background: #ffffff; color: #111827; border: 2px solid #7fb5dd; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+
+    /* Styles for this content page */
+    .page-title {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+    }
+    .info-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: clamp(1.5rem, 4vw, 3rem);
+    }
+    .info-card h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #d1d5db;
+    }
+    .info-card h2:first-of-type {
+      margin-top: 0;
+    }
+    .info-card ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 0;
+    }
+    .info-card li {
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+    .info-card li strong {
+      color: #111827;
+    }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="topbar" role="navigation" aria-label="Primary">
+      <div class="topbar-left">
+        <a class="pill" href="https://ilonafridman.github.io/careteam.html" aria-label="Your Care Team">Your Care Team</a>
+        <a class="pill active" href="https://ilonafridman.github.io/information.html" aria-label="Helpful Information" aria-current="page">Helpful Information</a>
+        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials.html" aria-label="Clinical Trials">Clinical Trials</a>
+      </div>
+      <div>
+        <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Tips for Navigating Your Journey</h1>
+
+    <article class="info-card">
+      
+      <section aria-labelledby="info-load-heading">
+        <h2 id="info-load-heading">How to Deal with an Overwhelming Information Load</h2>
+        <ul>
+          <li><strong>Consider bringing a friend or loved one:</strong> Having someone with you can help you remember all the important information shared during your appointment.</li>
+          <li><strong>Prepare in advance:</strong> Learning about your specific condition from trusted sources beforehand can help you make the most of your appointment time.</li>
+          <li><strong>We welcome your questions:</strong> It's common to find conflicting information. We are here to help you sort through it and understand what applies to you. Don't hesitate to ask to clarify anything you're unsure about.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="expert-opinions-heading">
+        <h2 id="expert-opinions-heading">How to Get Expert Opinions from Your Healthcare Team</h2>
+        <ul>
+          <li><strong>A team of experts is available to you:</strong> Different members of your healthcare team have different areas of expertise. Don't hesitate to ask doctors, nurses, social workers, patient advocates, integrative care specialists and others, <a href="https://ilonafridman.github.io/careteam.html">learn more here</a>.</li>
+          <li><strong>Your questions are important:</strong> Write down your questions for your nurse and doctor. Sharing them at the beginning of the appointment will help ensure they're all addressed.</li>
+          <li><strong>Stay connected between visits:</strong> Remember, you can reach your healthcare team between appointments through MyChart, by phone, or sometimes even by email. Don't hesitate to reach out when questions arise.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="gathering-info-heading">
+        <h2 id="gathering-info-heading">As You Gather Information, Consider:</h2>
+        <p>As you research therapies, medicines, supplements, or procedures, it's important to evaluate their potential benefits and risks. Here's what to consider:</p>
+        <ul>
+          <li><strong>Relevance:</strong> Does this information apply to my specific situation and symptoms?</li>
+          <li><strong>Proven Benefits:</strong> How many people have actually benefited, and is this information from a reliable source (not just testimonials)? Look for numbers and scientific studies.</li>
+          <li><strong>Scientific Backing:</strong> Is this treatment supported by research in reputable medical journals like those found on PubMed? Ask a librarian for help if needed.</li>
+          <li><strong>Credible Source:</strong> Is the author a qualified expert with verifiable credentials?</li>
+          <li><strong>Realistic Claims:</strong> Be wary of promises of quick, easy miracles. Effective treatments rarely sound too good to be true.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="emotional-support-heading">
+        <h2 id="emotional-support-heading">Emotional Support is a Critical Part of Your Care</h2>
+        <ul>
+          <li><strong>Connect with others:</strong> Joining a support group, especially one affiliated with a healthcare center, can be incredibly helpful. Sharing experiences with others facing similar challenges can provide valuable support and insights. Consider joining one early in your journey.</li>
+          <li><strong>Seek emotional support:</strong> Don't hesitate to reach out to social workers or patient advocates. They can connect you with resources that offer emotional support and guidance during this time. They're there to help.</li>
+        </ul>
+      </section>
+
+    </article>
+  </main>
+</body>
+</html>
