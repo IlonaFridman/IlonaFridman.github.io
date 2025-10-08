@@ -1,1 +1,244 @@
+<!-- File: /public/careteam.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Care Team - Care Pathway</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --border: #e5e7eb;
+      --primary-600: #4e90c7;
+      --primary-700: #3e7fb6;
+      --pill-shadow: rgba(0,0,0,0.15);
+      --maxw: 1200px;
+      --section-title-color: #3b82f6;
+    }
 
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: clamp(16px, 2vw, 32px); }
+
+    /* Top navigation */
+    .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px); }
+    .topbar-left { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .pill { display: inline-block; text-decoration: none; border: 0; border-radius: 9999px; padding: 12px 22px; font-weight: 700; font-size: 18px; color: #fff; cursor: pointer; background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700)); box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--pill-shadow); transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease; }
+    .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
+    .pill:hover { filter: brightness(1.05); }
+    .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
+    .pill.active { background: #e0e7ff; color: #3730a3; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); transform: translateY(1px); }
+
+    .lang-toggle { background: #ffffff; color: #111827; border: 2px solid #7fb5dd; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+
+    /* Page-specific styles for Care Team */
+    .page-header { text-align: center; margin-bottom: 3rem; }
+    .page-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin: 0; }
+    .page-subtitle { font-size: clamp(1.1rem, 2vw, 1.25rem); color: #4b5563; margin: 0.5rem 0 0 0; }
+
+    .team-section { margin-bottom: 3.5rem; }
+    .section-heading {
+      font-size: clamp(1.5rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: var(--section-title-color);
+      text-align: center;
+      margin: 0 0 2rem 0;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .member-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      background: #f9fafb;
+    }
+    .member-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .member-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .find-button {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(180deg, #dbeafe, #bfdbfe);
+      color: #1e3a8a;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 6px 18px;
+      border: 1px solid #93c5fd;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+    .find-button:hover { background: linear-gradient(180deg, #e0e7ff, #c7d2fe); }
+
+    .member-duties {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+      font-size: 1rem;
+      color: #374151;
+    }
+    .member-duties li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .member-duties li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #6b7280;
+    }
+
+    @media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="topbar" role="navigation" aria-label="Primary">
+      <div class="topbar-left">
+        <a class="pill active" href="https://ilonafridman.github.io/careteam.html" aria-label="Your Care Team" aria-current="page">Your Care Team</a>
+        <a class="pill" href="https://ilonafridman.github.io/information.html" aria-label="Helpful Information">Helpful Information</a>
+        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials.html" aria-label="Clinical Trials">Clinical Trials</a>
+      </div>
+      <div>
+        <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Healthcare Team: Plan your care together</h1>
+      <p class="page-subtitle">Who should participate in my care?</p>
+    </div>
+
+    <!-- Main Treatment Team -->
+    <section class="team-section" aria-labelledby="main-team-heading">
+      <h2 id="main-team-heading" class="section-heading">Main Treatment Team</h2>
+      <div class="team-grid">
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Oncologists</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Diagnosis and tests</li><li>Chemotherapy</li><li>Hormone therapy</li><li>Other therapy</li><li>Follow-ups</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Breast Surgeons</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Biopsy</li><li>Lumpectomy</li><li>Mastectomy</li><li>Lymph node removal</li><li>Addressing surgical complications</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Radiation Oncologists</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Delivery of radiation</li><li>Monitoring side effects</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support of the Main Treatment Team -->
+    <section class="team-section" aria-labelledby="support-team-heading">
+      <h2 id="support-team-heading" class="section-heading">Support of the Main Treatment Team</h2>
+      <div class="team-grid">
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Advanced Care Practitioners and Nurses</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Comprehensive assessment</li><li>Administer treatment</li><li>Manage side effects</li><li>Educate patients</li><li>Manage Emergencies</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Administrators, receptionists</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Schedule appointments</li><li>Check In patients</li><li>Organize documents</li><li>Coordinate services</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Technicians</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Perform scans</li><li>Process samples</li><li>Run tests</li><li>Deliver radiation</li><li>Ensure safety</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consider Consultations -->
+    <section class="team-section" aria-labelledby="experts-heading">
+      <h2 id="experts-heading" class="section-heading">Consider Consultations with the Following Experts</h2>
+      <div class="team-grid">
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Plastic Surgeon</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Consults on breast reconstructions</li><li>Implement the reconstruction</li><li>Addresses side effects</li><li>Administer follow up care</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Integrative Care Specialists</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Physical therapy</li><li>Dieting, Nutrition</li><li>Acupuncture</li><li>Integrative cancer care</li><li>Nonpharmacologic pain management</li><li>Others</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Genetic counselors</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Assesses hereditary cancer risks</li><li>Perform testing</li><li>Provide related counseling</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Support -->
+    <section class="team-section" aria-labelledby="additional-support-heading">
+      <h2 id="additional-support-heading" class="section-heading">Reach for Additional Support</h2>
+      <div class="team-grid">
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Patient Advocates</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Emotional support</li><li>Patient education</li><li>Resolving issues</li><li>Identifying connections</li><li>Patient advocacy</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Patient Navigators</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Coordinate care</li><li>Identifying relevant experts</li><li>Help patients move efficiently through the complex medical system</li>
+          </ul>
+        </div>
+        <div class="member-card">
+          <div class="member-header"><h3 class="member-title">Social workers</h3><a href="#" class="find-button">Find</a></div>
+          <ul class="member-duties">
+            <li>Connect patients to financial assistance</li><li>Housing</li><li>Food security</li><li>Transportation services</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
