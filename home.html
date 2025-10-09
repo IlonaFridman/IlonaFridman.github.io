@@ -58,6 +58,9 @@
     </nav>
   </header>
 
+  <!-- invisible anchor so #survey has a real target -->
+  <span id="survey" class="sr-only" aria-hidden="true"></span>
+
   <main class="container">
     <h1 class="sr-only">Care Pathway</h1>
 
@@ -78,7 +81,7 @@
         <div class="tile-caption"><h2>Questions to ask after being diagnosed</h2></div>
       </a>
 
-      <!-- 3) Choosing Treatment (ChoosingTreatment.JPG) -->
+      <!-- 3) Choosing Treatment -->
       <a class="tile" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html">
         <div class="tile-media">
           <img src="ChoosingTreatment.jpg" alt="Patient discussing treatment options with a doctor">
@@ -86,7 +89,7 @@
         <div class="tile-caption"><h2>Questions to explore for choosing treatment</h2></div>
       </a>
 
-      <!-- 4) During Treatment (leave as-is unless you have a different filename) -->
+      <!-- 4) During Treatment -->
       <a class="tile" href="https://ilonafridman.github.io/treatment/treatment.html">
         <div class="tile-media">
           <img src="DuringTreatment.jpg" alt="Technician assisting patient in a medical scanner">
@@ -94,7 +97,7 @@
         <div class="tile-caption"><h2>Questions to ask during treatment</h2></div>
       </a>
 
-      <!-- 5) After Treatment (AfterTreatment.JPG) -->
+      <!-- 5) After Treatment -->
       <a class="tile" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html">
         <div class="tile-media">
           <img src="AfterTreatment.JPG" alt="Two people smiling and walking outdoors after treatment">
@@ -102,7 +105,7 @@
         <div class="tile-caption"><h2>Questions after Treatment</h2></div>
       </a>
 
-      <!-- 6) Integrative Therapy (Complementary%20Therapy.jpg) -->
+      <!-- 6) Integrative Therapy -->
       <a class="tile" href="https://ilonafridman.github.io/complementary/complementary.html">
         <div class="tile-media">
           <img src="Complementary%20Therapy.jpg" alt="Lavender and stacked stones representing integrative therapy">
@@ -175,20 +178,38 @@
 
       if(!openBtn || !dialog) return;
 
-      openBtn.addEventListener('click', () => dialog.showModal());
+      function openSurvey(){
+        dialog.showModal();
+        // focus first radio for quick keyboard selection
+        const firstRadio = form.querySelector('input[name="path"]');
+        firstRadio?.focus();
+      }
+
+      openBtn.addEventListener('click', openSurvey);
       closeBtn.addEventListener('click', () => dialog.close());
       cancel.addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
       dialog.addEventListener('cancel', (e)=>{ e.preventDefault(); dialog.close(); });
 
+      // enable Continue when a choice is made
       form.addEventListener('change', (e) => {
         if (e.target && e.target.name === 'path') continueBtn.removeAttribute('disabled');
       });
 
+      // go to selected section
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const selected = form.querySelector('input[name="path"]:checked');
         if (selected) window.location.href = selected.value;
+      });
+
+      // --- NEW: auto-open when arriving with #survey ---
+      if (location.hash === '#survey') {
+        // delay to ensure dialog is ready
+        setTimeout(openSurvey, 0);
+      }
+      window.addEventListener('hashchange', () => {
+        if (location.hash === '#survey') openSurvey();
       });
     })();
   </script>
