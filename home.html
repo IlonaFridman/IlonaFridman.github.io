@@ -8,12 +8,11 @@
 
   <style>
     :root{
-      /* site palette (kept): */
       --text:#0b1220;
-      --border:#0f172a;             /* dark navy outline */
-      --pill-600:#4e90c7;           /* matches site buttons */
+      --border:#0f172a;      /* dark navy outline */
+      --pill-600:#4e90c7;    /* matches site buttons */
       --pill-700:#3e7fb6;
-      --blue-100:#d6eefc;           /* light blue fill as in screenshot */
+      --blue-100:#d6eefc;    /* light blue fill (screenshot) */
       --bg:#fff;
       --maxw:1200px;
     }
@@ -47,7 +46,7 @@
     .tile-caption h2{margin:0;font-size:18px;font-weight:700;text-align:center}
 
     /* pop-up */
-    dialog{border:2px solid var(--border);border-radius:24px;padding:0;max-width:720px;width:min(96vw,720px)}
+    dialog{border:2px solid var(--border);border-radius:28px;padding:0;max-width:720px;width:min(96vw,720px)}
     dialog::backdrop{background:rgba(0,0,0,.35)}
     .modal-header{
       padding:14px 18px;border-bottom:2px solid var(--border);
@@ -57,21 +56,22 @@
     .btn{appearance:none;border:2px solid var(--border);background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
     .btn:focus-visible{outline:3px solid #1e40af;outline-offset:2px}
 
-    .sheet{margin:16px;border:2px solid var(--border);border-radius:28px;padding:18px;background:#fff}
-    .bubble{border:2px solid var(--border);border-radius:24px;padding:18px;background:var(--blue-100)}
-    .bubble h3{margin:0 0 10px;font-size:18px}
+    .sheet{margin:16px;border:2px solid var(--border);border-radius:36px;padding:22px;background:#fff}
+    .bubble{
+      border:2px solid var(--border);border-radius:26px;padding:18px 20px;background:var(--blue-100)
+    }
     .bubble p{margin:0 0 10px}
 
-    .checklist{margin-top:14px;border:2px solid var(--border);border-radius:24px;padding:16px;background:#fff}
-    .legend{font-weight:700;margin:0 0 10px}
-    .list{display:grid;gap:8px;margin:10px 0 2px}
-    .li{display:flex;gap:10px;align-items:flex-start}
-    .arrow{font-weight:900;margin-top:3px} /* why: mimic chevron bullets in screenshot */
-
-    .footer{display:grid;margin-top:14px}
-    .footer .pill{
-      width:100%;text-align:center;border-radius:9999px;padding:12px 18px;font-size:18px
+    .checklist{
+      margin-top:16px;border:2px solid var(--border);border-radius:26px;padding:16px 20px;background:var(--blue-100)
     }
+    .legend{font-weight:700;margin:0 0 10px}
+    .list{display:grid;gap:8px;margin:10px 0 0}
+    .li{display:flex;gap:10px;align-items:flex-start}
+    .arrow{font-weight:900;margin-top:3px} /* why: matches screenshot’s arrow bullets */
+
+    .footer{display:grid;margin-top:16px}
+    .footer .pill{width:100%;text-align:center;border-radius:9999px;padding:12px 18px;font-size:18px}
   </style>
 </head>
 <body>
@@ -116,7 +116,7 @@
     </section>
   </main>
 
-  <!-- Start Here pop-up (matches screenshot) -->
+  <!-- Start Here pop-up -->
   <dialog id="startDialog" aria-labelledby="startTitle">
     <div class="modal-header">
       <h2 class="modal-title" id="startTitle">Guide to Your Care</h2>
@@ -149,19 +149,21 @@
 
   <script>
     (function(){
-      const openBtn = document.getElementById('openStart');
-      const dialog  = document.getElementById('startDialog');
-      const closeBtn= document.getElementById('closeStart');
+      const openBtn  = document.getElementById('openStart');
+      const dialog   = document.getElementById('startDialog');
+      const closeBtn = document.getElementById('closeStart');
 
-      if(!openBtn || !dialog) return;
+      if(!openBtn || !dialog || !closeBtn) return;
 
       function openSurvey(){ dialog.showModal(); }
       openBtn.addEventListener('click', openSurvey);
       closeBtn.addEventListener('click', () => dialog.close());
+
+      // close when clicking the dim backdrop
       dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
       dialog.addEventListener('cancel', (e)=>{ e.preventDefault(); dialog.close(); });
 
-      // optional: open with #survey anchor
+      // optional deep link
       if (location.hash === '#survey') setTimeout(openSurvey, 0);
       window.addEventListener('hashchange', () => { if (location.hash === '#survey') openSurvey(); });
     })();
