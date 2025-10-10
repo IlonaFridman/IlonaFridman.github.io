@@ -73,6 +73,16 @@
   .mini{
     border:1px solid #cbd5e1; background:#fff; border-radius:10px; padding:6px 10px; font-weight:700; cursor:pointer;
   }
+  /* eResources pill — matches screenshot style and placement */
+  .eres-btn{
+    margin-left:auto; /* WHY: right-align button within toolbar */
+    border:1px solid #94a3b8; background:#fff; border-radius:12px;
+    padding:8px 14px; font-weight:800; text-decoration:none; color:#0b2a5d;
+    display:inline-flex; align-items:center; line-height:1;
+  }
+  .eres-btn:hover{ background:#f1f5f9 }
+  .eres-btn:active{ transform:translateY(1px) }
+
   .q-list{ list-style:none; padding:0; margin:0; }
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
   .q-list li:last-child{ border-bottom:none }
@@ -127,7 +137,6 @@
 
     <!-- Choosing Treatment -->
     <div class="card">
-      <!-- FIX: thumb now links to the section page (was JPG) -->
       <a class="thumb" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image">
       </a>
@@ -140,7 +149,6 @@
 
     <!-- During Treatment -->
     <div class="card">
-      <!-- FIX: thumb now links to the section page (was JPG) -->
       <a class="thumb" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/DuringTreatment.jpg" alt="During treatment image">
       </a>
@@ -153,7 +161,6 @@
 
     <!-- After Treatment -->
     <div class="card">
-      <!-- FIX: thumb now links to the section page (was JPG) -->
       <a class="thumb" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterTreatment.JPG" alt="After treatment image">
       </a>
@@ -166,7 +173,6 @@
 
     <!-- Complementary/Integrative -->
     <div class="card">
-      <!-- FIX: thumb now links to the section page (was JPG) -->
       <a class="thumb" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/Complementary Therapy.jpg" alt="Complementary therapy image">
       </a>
@@ -192,15 +198,13 @@
     <div class="modal-card" role="document">
       <button class="icon-btn close" aria-label="Close dialog" data-close="startModal">✕</button>
 
-     
-       <div class="modal-header" aria-describedby="startModalIntro">
-  <h2 id="startModalTitle">Questions to ask your provider</h2>
-  <div id="startModalIntro" class="lede-panel">
-      <p>Many patients wonder what they should ask their provider. 
-        Open one or more sections and check the questions you may want to bring to your care team.</p>
-      <p>You can download chosen questions or explore eResources on your own.</p>
-  </div>
-</div>
+      <div class="modal-header" aria-describedby="startModalIntro">
+        <h2 id="startModalTitle">Questions to ask your provider</h2>
+        <div id="startModalIntro" class="lede-panel">
+          <p>Many patients wonder: What should I ask my provider? How could I move forward?</p>
+          <p>Open one or more sections and check the questions you want to bring to your care team.<br/>You can download chosen questions or explore eResources on your own.</p>
+        </div>
+      </div>
 
       <div class="accordion" id="accordion"><!-- injected by JS --></div>
 
@@ -313,6 +317,15 @@ const TOPICS = {
   }
 };
 
+/* eResources links in the order of sections on the page */
+const ER_LINKS = {
+  diagnosis: "https://ilonafridman.github.io/diagnosis/diagnosisinfo.html",
+  choosing: "https://ilonafridman.github.io/choosingtreatment/choosingtreatmentinfo.html",
+  during:   "https://ilonafridman.github.io/treatment/treatmentinfo.html",
+  after:    "https://ilonafridman.github.io/afterdiagnosis/afterdiagnosisinfo.html",
+  integrative: "https://ilonafridman.github.io/complementary/complementaryinfo.html",
+};
+
 const RECOMMENDATIONS = [
   "<b>Consider bringing a friend or loved one</b> to help you remember information shared during your appointment.",
   "<b>Learn about your specific condition</b> from trusted sources of information.",
@@ -342,7 +355,7 @@ document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("cli
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click",()=>closeModal(bg.getAttribute("data-close"))));
 document.getElementById("startHereBtn").addEventListener("click",()=>openModal("startModal"));
 
-/* ---------- Build sections with Select/Clear ---------- */
+/* ---------- Build sections with Select/Clear + eResources ---------- */
 const container = document.getElementById("accordion");
 function buildSections(){
   container.innerHTML = "";
@@ -359,10 +372,21 @@ function buildSections(){
 
     const toolbar = document.createElement("div");
     toolbar.className = "section-toolbar";
+
     const selectBtn = document.createElement("button");
     selectBtn.className = "mini"; selectBtn.type = "button"; selectBtn.textContent = "Select all";
+
     const clearBtn = document.createElement("button");
     clearBtn.className = "mini"; clearBtn.type = "button"; clearBtn.textContent = "Clear all";
+
+    /* eResources pill — opens your specific info page */
+    const er = document.createElement("a");
+    er.className = "eres-btn";
+    er.href = ER_LINKS[key] || "#";
+    er.target = "_blank";
+    er.rel = "noopener";
+    er.setAttribute("aria-label", `Open eResources to Read for ${topic.title}`);
+    er.textContent = "eResources to Read";
 
     const list = document.createElement("ul");
     list.className = "q-list";
@@ -385,6 +409,8 @@ function buildSections(){
 
     toolbar.appendChild(selectBtn);
     toolbar.appendChild(clearBtn);
+    toolbar.appendChild(er);        // right-aligned via CSS
+
     wrap.appendChild(toolbar);
     wrap.appendChild(list);
 
