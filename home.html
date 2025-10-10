@@ -21,7 +21,7 @@ File: /index.html
       <span class="start-title">Start Here</span>
     </button>
 
-    <!-- Row 1: After Diagnosis / Choosing Treatment -->
+    <!-- Row 1 -->
     <a class="card card-link" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
       <div class="card-img" aria-hidden="true"></div>
       <div class="card-title">Questions to ask after being diagnosed</div>
@@ -31,7 +31,7 @@ File: /index.html
       <div class="card-title">Questions to explore for choosing treatment</div>
     </a>
 
-    <!-- Row 2: During / After / Integrative -->
+    <!-- Row 2 -->
     <a class="card card-link" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
       <div class="card-img" aria-hidden="true"></div>
       <div class="card-title">Questions to ask during treatment</div>
@@ -46,7 +46,7 @@ File: /index.html
     </a>
   </main>
 
-  <!-- ===== Start Here Modal ===== -->
+  <!-- ===== Start Here Modal (multi-section) ===== -->
   <div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startModalTitle" aria-hidden="true">
     <div class="modal-backdrop" data-close="startModal"></div>
     <div class="modal-card" role="document">
@@ -55,25 +55,22 @@ File: /index.html
       <div class="modal-header">
         <h2 id="startModalTitle">Let’s tailor questions for you</h2>
         <p class="lede">
-          Many patients wonder what to ask. Choose a topic below and pick questions to discuss with your care team.
+          Choose one or more sections below and check the questions you want to bring to your care team.
         </p>
       </div>
 
-      <div class="selector">
-        <button class="chip selected" data-topic="during">I am about to or going through treatment</button>
-        <button class="chip" data-topic="integrative">I hope to learn about complementary & integrative therapy</button>
-        <button class="chip" data-topic="after">I completed my treatment. What is next?</button>
-      </div>
-
-      <div class="list-wrap">
-        <ul class="q-list" id="questionList" aria-live="polite"></ul>
-        <div class="empty" id="emptyState" hidden>Select a topic to see questions.</div>
+      <!-- Accordion sections (open > one or many) -->
+      <div class="accordion" id="accordion">
+        <!-- Sections will be injected by JS -->
       </div>
 
       <div class="modal-footer">
         <button class="primary" id="printBtn" disabled>Download / Print PDF</button>
-        <a class="secondary" id="moreBtn" target="_blank" rel="noopener">Explore more questions</a>
-        <a class="secondary" id="resourceBtn" target="_blank" rel="noopener">Read e-resources</a>
+        <div class="links-pack">
+          <a class="secondary" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">During treatment</a>
+          <a class="secondary" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">Integrative therapy</a>
+          <a class="secondary" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">After treatment</a>
+        </div>
       </div>
     </div>
   </div>
@@ -84,7 +81,7 @@ File: /index.html
     <div class="modal-card">
       <button class="icon-btn close" aria-label="Close dialog" data-close="modal-care-team">✕</button>
       <h2>Your Care Team</h2>
-      <p>This section can outline roles (medical oncologist, surgeon, radiation oncologist, nurse navigator, social worker, etc.).</p>
+      <p>Add team roles and contacts here.</p>
     </div>
   </div>
 
@@ -93,7 +90,7 @@ File: /index.html
     <div class="modal-card">
       <button class="icon-btn close" aria-label="Close dialog" data-close="modal-helpful">✕</button>
       <h2>Helpful Information</h2>
-      <p>Add quick links to clinic maps, patient portal, financial counseling, transportation, and support services.</p>
+      <p>Quick links to patient portal, financial counseling, transportation, support, etc.</p>
     </div>
   </div>
 
@@ -109,8 +106,6 @@ File: /styles.css
   --card:#ffffff;
   --ink:#0f172a;
   --muted:#475569;
-  --brand:#3b82f6;
-  --brand-2:#2c5282;
   --ring:rgba(59,130,246,.35);
   --shadow:0 10px 25px rgba(2,8,23,.12), 0 2px 6px rgba(2,8,23,.08);
   --radius:20px;
@@ -120,16 +115,14 @@ File: /styles.css
 html,body{height:100%}
 body{
   margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
+  font-size: 17px; /* slightly larger */
   color:var(--ink);
   background:var(--bg);
 }
 
 .container{max-width:1200px;margin:20px auto;padding:0 16px}
-
-.header{
-  display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px;
-}
+.header{display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px}
 
 .top-button{
   background:linear-gradient(180deg,#e8f0ff,#d5e6ff);
@@ -139,72 +132,49 @@ body{
 }
 .top-button:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
-
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .card{
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
+  background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
   display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;padding:12px;min-height:220px;
-  border:1px solid #e5e7eb;
+  text-align:center;padding:12px;min-height:220px;border:1px solid #e5e7eb;
 }
-
-.card-start{
-  grid-column:1 / span 1; grid-row:1 / span 1;
-  background:#dff0fa;border:2px solid #b6e0fb; position:relative; cursor:pointer;
-}
+.card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer}
 .start-title{font-size:40px;font-weight:800;color:#17324a}
-
 .card-link{ color:inherit; text-decoration:none; }
 .card-link .card-img{ width:100%; height:140px; border-radius:14px; background:#e9eef5; margin-bottom:12px; }
 .card-title{ font-size:20px; font-weight:800; line-height:1.2; }
 
-@media (max-width: 900px){
-  .grid{ grid-template-columns:1fr 1fr; }
-  .card-start .start-title{font-size:34px}
-}
-@media (max-width: 640px){
-  .grid{ grid-template-columns:1fr; }
-  .header{justify-content:center}
-}
+@media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } .card-start .start-title{font-size:34px}}
+@media (max-width: 640px){ .grid{ grid-template-columns:1fr } .header{justify-content:center}}
 
-/* Modal */
 .modal{ position:fixed; inset:0; display:none; }
 .modal[aria-hidden="false"]{ display:block; }
-.modal-backdrop{
-  position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px);
-}
+.modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
 .modal-card{
-  position:relative; max-width:860px; margin:6vh auto; background:var(--card); border-radius:22px;
+  position:relative; max-width:920px; margin:6vh auto; background:var(--card); border-radius:22px;
   box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
 }
 .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
 .modal-header h2{ margin:4px 0 8px; font-size:28px }
 .lede{ color:var(--muted); margin:0 0 14px; font-size:16px }
 
-.selector{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:8px }
-.chip{
-  border:1px solid #cfe0ff; background:#edf4ff; color:#0c2f66;
-  padding:10px 14px; border-radius:999px; cursor:pointer; font-weight:700;
+.accordion{ display:flex; flex-direction:column; gap:12px; }
+.section{
+  border:1px solid #d9e3f5; border-radius:16px; background:#f7fbff; overflow:hidden;
 }
-.chip.selected{ background:#cfe0ff; border-color:#9fc1ff }
-
-.list-wrap{ max-height:50vh; overflow:auto; border:1px solid #e5e7eb; border-radius:16px; padding:8px; background:#f7fbff }
+.section summary{
+  list-style:none; cursor:pointer; padding:12px 16px; font-weight:800; color:#0c2f66;
+  background:#edf4ff; border-bottom:1px solid #d9e3f5;
+}
+.section[open] summary{ background:#dce9ff }
+.section-content{ max-height:60vh; overflow:auto; padding:8px; }
 .q-list{ list-style:none; padding:0; margin:0; }
-.q-list li{
-  display:flex; align-items:flex-start; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35;
-}
+.q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
 .q-list li:last-child{ border-bottom:none }
-.q-list input{ margin-top:3px }
 
-.empty{ text-align:center; color:var(--muted); padding:22px }
-
-.modal-footer{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px }
+.modal-footer{
+  display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap;
+}
 .primary{
   background:linear-gradient(180deg,#60a5fa,#3b82f6);
   color:white; border:none; border-radius:12px; padding:12px 18px; font-weight:800; cursor:pointer;
@@ -213,26 +183,20 @@ body{
 .secondary{
   border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; text-decoration:none; color:#0b2a5d; font-weight:700; background:#f8fafc;
 }
+.links-pack{ display:flex; flex-wrap:wrap; gap:8px }
 
-/* Focus */
-:where(button,a,input):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+:where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
 
-/* Print styles */
-@media print {
-  body{ background:#fff }
-  .modal-card{ box-shadow:none; border:none }
-}
+/* Print preview window (not this page) is styled inline in JS */
 
 <!-- ======================================================================
 File: /app.js
 ====================================================================== -->
-/* Data model: topics with questions and links.
-   NOTE: You can edit questions/links here without touching HTML. */
+// Topics + questions
 const TOPICS = {
   during: {
     title: "I am about to or going through treatment",
     moreLink: "https://ilonafridman.github.io/treatment/treatment.html",
-    resourceLink: "https://ilonafridman.github.io/treatment/treatment.html#resources",
     questions: [
       "Can you walk me through the steps involved in my treatment plan?",
       "What side effects should I expect from my treatment?",
@@ -251,7 +215,6 @@ const TOPICS = {
   integrative: {
     title: "I hope to learn about complementary & integrative therapy",
     moreLink: "https://ilonafridman.github.io/complementary/complementary.html",
-    resourceLink: "https://ilonafridman.github.io/complementary/complementary.html#resources",
     questions: [
       "Which integrative therapies (e.g., acupuncture, massage, mindfulness) are safe with my treatment?",
       "What evidence supports these therapies for people with my diagnosis?",
@@ -268,7 +231,6 @@ const TOPICS = {
   after: {
     title: "I completed my treatment. What is next?",
     moreLink: "https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html",
-    resourceLink: "https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html#resources",
     questions: [
       "What follow-up visits and tests do I need, and how often?",
       "Which symptoms should prompt me to call the clinic between visits?",
@@ -284,21 +246,26 @@ const TOPICS = {
   }
 };
 
+// Fixed recommendations (always shown on the PDF)
+const RECOMMENDATIONS = [
+  "<b>Consider bringing a friend or loved one</b> to help you remember information shared during your appointment.",
+  "<b>Learn about your specific condition</b> from trusted sources of information.",
+  "<b>Your healthcare team welcomes your questions.</b> Don’t hesitate to ask to clarify anything you're unsure about.",
+  "<b>Your questions are important.</b> Sharing your questions at the beginning of the appointment will help address your concerns.",
+  "<b>Stay connected between visits.</b> You can reach your healthcare team between appointments through patient portals, by phone, or email. Reach out when questions arise.",
+  "<b>Connect with others.</b> Many patients find it helpful to join a support group or reach out to social workers or patient advocates who can connect you with resources for emotional support."
+];
+
 /* Elements */
 const startHereBtn = document.getElementById("startHereBtn");
-const startModal = document.getElementById("startModal");
-const questionList = document.getElementById("questionList");
-const emptyState = document.getElementById("emptyState");
+const questionContainer = document.getElementById("accordion");
 const printBtn = document.getElementById("printBtn");
-const moreBtn = document.getElementById("moreBtn");
-const resourceBtn = document.getElementById("resourceBtn");
 
-/* Modal helpers */
+/* Modal lifecycle */
 function openModal(id){
   const el = document.getElementById(id);
   el.setAttribute("aria-hidden","false");
-  // focus first focusable
-  const first = el.querySelector("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+  const first = el.querySelector("button, [href], input, summary");
   if(first) first.focus();
   document.addEventListener("keydown", escClose);
 }
@@ -310,94 +277,137 @@ function closeModal(id){
 function escClose(e){ if(e.key === "Escape"){ document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>m.setAttribute("aria-hidden","true")); } }
 
 document.querySelectorAll("[data-open]").forEach(btn=>{
-  btn.addEventListener("click", e => {
-    e.preventDefault();
-    openModal(btn.getAttribute("data-open"));
-  });
+  btn.addEventListener("click", e => { e.preventDefault(); openModal(btn.getAttribute("data-open")); });
 });
 document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("click", ()=>closeModal(btn.getAttribute("data-close"))));
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click", ()=>closeModal(bg.getAttribute("data-close"))));
-
 startHereBtn.addEventListener("click", ()=>openModal("startModal"));
 
-/* Topic selection */
-const chips = Array.from(document.querySelectorAll(".chip"));
-let currentTopic = "during";
-chips.forEach(chip=>{
-  chip.addEventListener("click", ()=>{
-    chips.forEach(c=>c.classList.remove("selected"));
-    chip.classList.add("selected");
-    currentTopic = chip.dataset.topic;
-    hydrateQuestions(currentTopic);
+/* Build accordion sections (multi-open) */
+function buildSections(){
+  questionContainer.innerHTML = "";
+  Object.entries(TOPICS).forEach(([key, topic])=>{
+    const details = document.createElement("details");
+    details.className = "section";
+    details.open = key === "during"; // open one by default
+
+    const summary = document.createElement("summary");
+    summary.textContent = topic.title;
+
+    const wrap = document.createElement("div");
+    wrap.className = "section-content";
+
+    const list = document.createElement("ul");
+    list.className = "q-list";
+
+    topic.questions.forEach((q, idx)=>{
+      const id = `q-${key}-${idx}`;
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox" id="${id}" /><label for="${id}">${q}</label>`;
+      list.appendChild(li);
+    });
+
+    wrap.appendChild(list);
+
+    // Optional: quick link below each section
+    const link = document.createElement("a");
+    link.href = topic.moreLink;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.className = "secondary";
+    link.style.margin="8px";
+    link.textContent = "Explore more questions";
+    wrap.appendChild(link);
+
+    details.appendChild(summary);
+    details.appendChild(wrap);
+    questionContainer.appendChild(details);
   });
-});
+}
+buildSections();
 
-/* Render questions */
-function hydrateQuestions(topicKey){
-  const topic = TOPICS[topicKey];
-  questionList.innerHTML = "";
-  if(!topic){ emptyState.hidden = false; return; }
-  emptyState.hidden = true;
+/* Enable/disable print */
+function updatePrintEnabled(){
+  const anyChecked = !!document.querySelector(".q-list input[type='checkbox']:checked");
+  printBtn.disabled = !anyChecked;
+}
+questionContainer.addEventListener("change", updatePrintEnabled);
 
-  topic.questions.forEach((q, idx) => {
-    const id = `q-${topicKey}-${idx}`;
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <input type="checkbox" id="${id}" />
-      <label for="${id}">${q}</label>
-    `;
-    questionList.appendChild(li);
-  });
+/* Generate printable HTML using your template */
+function buildPrintHTML(selected){
+  const items = selected.map(s=>`<li>${s}</li>`).join("");
+  const recs = RECOMMENDATIONS.map(r=>`<li>${r}</li>`).join("");
 
-  moreBtn.href = topic.moreLink;
-  resourceBtn.href = topic.resourceLink;
-  setPrintEnabled(false);
+  // Important: Arial + larger font + rounded boxes matching your screenshot
+  return `<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Questions You Chose</title>
+<style>
+  :root{ --ink:#0f172a; --accent:#15466a; --border:#1f5f86; }
+  *{ box-sizing:border-box }
+  body{
+    font-family: Arial, sans-serif;
+    color: var(--ink);
+    margin: 0; padding: 28px;
+    font-size: 18px; line-height: 1.5; /* slightly larger */
+    background: #ffffff;
+  }
+  .frame{
+    border:4px solid var(--border);
+    border-radius:32px;
+    padding: 18px;
+  }
+  .h-chip{
+    display:block; text-align:center; font-weight:700; font-size:22px;
+    color:#1b4e73; background:#e8f3ff; border:3px solid var(--border);
+    padding:12px 16px; border-radius:16px; margin:-8px auto 14px; width:fit-content; min-width:280px;
+  }
+  .rounded-panel{
+    border:5px solid var(--border);
+    border-radius:28px;
+    padding:20px; min-height:220px;
+  }
+  .spacer{ height:18px }
+  ol,ul{ margin:0; padding-left:22px }
+  li{ margin:8px 0 }
+  .small{ font-size:14px; color:#334155; margin-top:16px }
+  @media print { .pagebreak { page-break-before: always; } }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="h-chip">Questions that you chose</div>
+    <div class="rounded-panel">
+      ${selected.length ? `<ul>${items}</ul>` : "<p>(No questions selected)</p>"}
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="h-chip">Recommendations that other patients found helpful</div>
+    <div class="rounded-panel">
+      <ul>${recs}</ul>
+    </div>
+  </div>
+
+  <script>window.addEventListener('load',()=>window.print());<\/script>
+</body>
+</html>`;
 }
 
-function setPrintEnabled(enabled){
-  printBtn.disabled = !enabled;
-}
-
-/* Enable print when any checkbox is selected */
-questionList.addEventListener("change", ()=>{
-  const any = questionList.querySelector("input[type='checkbox']:checked");
-  setPrintEnabled(!!any);
-});
-
-/* Print/Download selected questions */
-printBtn.addEventListener("click", ()=>{
-  const topic = TOPICS[currentTopic];
-  const selected = Array.from(questionList.querySelectorAll("input[type='checkbox']:checked"))
+/* Download/Print */
+document.getElementById("printBtn").addEventListener("click", ()=>{
+  const selected = Array.from(document.querySelectorAll(".q-list input[type='checkbox']:checked"))
     .map(cb => cb.nextElementSibling.textContent.trim());
 
-  if(selected.length === 0) return;
+  if(!selected.length) return;
 
-  // Open a print-friendly window (safer cross-browser than building a Blob PDF without libs).
   const w = window.open("", "_blank");
-  const html = `
-    <!doctype html><html><head>
-      <meta charset="utf-8" />
-      <title>My Questions — ${topic.title}</title>
-      <style>
-        body{font-family: ui-sans-serif, system-ui; padding:28px; line-height:1.45}
-        h1{font-size:22px;margin:0 0 16px}
-        .meta{color:#334155;margin-bottom:16px}
-        ol{padding-left:20px}
-        li{margin:8px 0}
-        .small{font-size:12px;color:#64748b;margin-top:24px}
-      </style>
-    </head><body>
-      <h1>My Questions</h1>
-      <div class="meta">${topic.title}</div>
-      <ol>${selected.map(s=>`<li>${s}</li>`).join("")}</ol>
-      <div class="small">Tip: bring this list to your appointment. Space to write answers:</div>
-      <hr />
-      <p style="min-height:140px"></p>
-      <script>window.addEventListener('load',()=>window.print())<\/script>
-    </body></html>`;
-  w.document.write(html);
+  w.document.open();
+  w.document.write(buildPrintHTML(selected));
   w.document.close();
 });
 
-/* Init default topic */
-hydrateQuestions(currentTopic);
+/* Initialize */
+updatePrintEnabled();
