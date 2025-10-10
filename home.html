@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Care Questions — Home</title>
+
 <style>
   :root{
     --bg:#f6f9fc; --card:#ffffff; --ink:#0f172a; --muted:#475569;
@@ -14,10 +15,11 @@
   html,body{height:100%}
   body{
     margin:0;
-    font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
+    font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial;
     font-size:17px; /* slightly larger */
     color:var(--ink); background:var(--bg);
   }
+
   .container{max-width:1200px;margin:20px auto;padding:0 16px}
   .header{display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px}
   .top-button{
@@ -32,18 +34,11 @@
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
     padding:12px;min-height:220px;border:1px solid #e5e7eb;
   }
-  .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer;position:relative;overflow:hidden}
-  .card-start::before{ /* start image background */
-    content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25;
-  }
-  .start-title{font-size:40px;font-weight:800;color:#17324a;position:relative}
-
-  .card-link{ color:inherit; text-decoration:none; width:100% }
-  .thumb{ width:100%; height:160px; border-radius:14px; background:#e9eef5; margin-bottom:12px; overflow:hidden; display:block }
-  .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
-  .card-title a{ display:inline-block; text-decoration:none; color:inherit; font-weight:800 }
+  .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer}
+  .start-title{font-size:40px;font-weight:800;color:#17324a}
+  .card-link{ color:inherit; text-decoration:none; }
+  .card-link .card-img{ width:100%; height:140px; border-radius:14px; background:#e9eef5; margin-bottom:12px; }
   .card-title{ font-size:20px; font-weight:800; line-height:1.2; }
-
   @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } .card-start .start-title{font-size:34px}}
   @media (max-width: 640px){ .grid{ grid-template-columns:1fr } .header{justify-content:center}}
 
@@ -52,7 +47,7 @@
   .modal[aria-hidden="false"]{ display:block; }
   .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
   .modal-card{
-    position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
+    position:relative; max-width:920px; margin:6vh auto; background:var(--card); border-radius:22px;
     box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
   }
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
@@ -67,10 +62,6 @@
   }
   .section[open] summary{ background:#dce9ff }
   .section-content{ max-height:50vh; overflow:auto; padding:8px; }
-  .section-toolbar{ display:flex; gap:8px; padding:6px 6px 8px 6px; align-items:center; flex-wrap:wrap }
-  .mini{
-    border:1px solid #cbd5e1; background:#fff; border-radius:10px; padding:6px 10px; font-weight:700; cursor:pointer;
-  }
   .q-list{ list-style:none; padding:0; margin:0; }
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
   .q-list li:last-child{ border-bottom:none }
@@ -103,65 +94,27 @@
       <span class="start-title">Start Here</span>
     </button>
 
-    <!-- After Diagnosis -->
-    <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/AfterDiagnosis.JPG" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/AfterDiagnosis.JPG" alt="After diagnosis image">
-      </a>
-      <div class="card-title">
-        <a href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
-          Questions to ask after being diagnosed
-        </a>
-      </div>
-    </div>
-
-    <!-- Choosing Treatment -->
-    <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/ChoosingTreatment.jpg" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image">
-      </a>
-      <div class="card-title">
-        <a href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
-          Questions to explore for choosing treatment
-        </a>
-      </div>
-    </div>
-
-    <!-- During Treatment -->
-    <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/DuringTreatment.JPG" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/DuringTreatment.JPG" alt="During treatment image">
-      </a>
-      <div class="card-title">
-        <a href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
-          Questions to ask during treatment
-        </a>
-      </div>
-    </div>
-
-    <!-- After Treatment -->
-    <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/AfterTreatment.JPG" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/AfterTreatment.JPG" alt="After treatment image">
-      </a>
-      <div class="card-title">
-        <a href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
-          Questions after Treatment
-        </a>
-      </div>
-    </div>
-
-    <!-- Complementary/Integrative -->
-    <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/ComplementaryTherapy.JPG" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/ComplementaryTherapy.JPG" alt="Complementary therapy image">
-      </a>
-      <div class="card-title">
-        <a href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
-          Questions to ask about integrative therapy
-        </a>
-      </div>
-    </div>
+    <!-- Link tiles -->
+    <a class="card card-link" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
+      <div class="card-img" aria-hidden="true"></div>
+      <div class="card-title">Questions to ask after being diagnosed</div>
+    </a>
+    <a class="card card-link" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
+      <div class="card-img" aria-hidden="true"></div>
+      <div class="card-title">Questions to explore for choosing treatment</div>
+    </a>
+    <a class="card card-link" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
+      <div class="card-img" aria-hidden="true"></div>
+      <div class="card-title">Questions to ask during treatment</div>
+    </a>
+    <a class="card card-link" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
+      <div class="card-img" aria-hidden="true"></div>
+      <div class="card-title">Questions after Treatment</div>
+    </a>
+    <a class="card card-link" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
+      <div class="card-img" aria-hidden="true"></div>
+      <div class="card-title">Questions to ask about integrative therapy</div>
+    </a>
   </main>
 
   <!-- ===== Start Here Modal ===== -->
@@ -172,7 +125,7 @@
 
       <div class="modal-header">
         <h2 id="startModalTitle">Let’s tailor questions for you</h2>
-        <p class="lede">Open one or more sections and check the questions you want to bring to your care team.</p>
+        <p class="lede">Choose one or more sections below and check the questions you want to bring to your care team.</p>
       </div>
 
       <div class="accordion" id="accordion"><!-- injected by JS --></div>
@@ -190,7 +143,7 @@
     </div>
   </div>
 
-  <!-- Simple stub modals -->
+  <!-- Stub modals -->
   <div class="modal" id="modal-care-team" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-backdrop" data-close="modal-care-team"></div>
     <div class="modal-card">
@@ -210,7 +163,7 @@
   </div>
 
 <script>
-/* ---------- Data ---------- */
+/* ---------- Content Data ---------- */
 const TOPICS = {
   diagnosis: {
     title: "I would like to understand my diagnosis better",
@@ -286,6 +239,7 @@ const TOPICS = {
   }
 };
 
+// Always-shown recommendations (handout footer)
 const RECOMMENDATIONS = [
   "<b>Consider bringing a friend or loved one</b> to help you remember information shared during your appointment.",
   "<b>Learn about your specific condition</b> from trusted sources of information.",
@@ -295,7 +249,7 @@ const RECOMMENDATIONS = [
   "<b>Connect with others.</b> Support groups, social workers, and patient advocates can provide emotional support and resources."
 ];
 
-/* ---------- Modal helpers ---------- */
+/* ---------- Modal Wiring ---------- */
 function openModal(id){
   const el = document.getElementById(id);
   el.setAttribute("aria-hidden","false");
@@ -315,27 +269,20 @@ document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("cli
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click",()=>closeModal(bg.getAttribute("data-close"))));
 document.getElementById("startHereBtn").addEventListener("click",()=>openModal("startModal"));
 
-/* ---------- Build sections with Select/Clear ---------- */
+/* ---------- Build multi-open accordion ---------- */
 const container = document.getElementById("accordion");
 function buildSections(){
   container.innerHTML = "";
   Object.entries(TOPICS).forEach(([key, topic], idx)=>{
     const details = document.createElement("details");
     details.className = "section";
-    details.open = idx === 0;
+    details.open = idx === 0; // first open by default
 
     const summary = document.createElement("summary");
     summary.textContent = topic.title;
 
     const wrap = document.createElement("div");
     wrap.className = "section-content";
-
-    const toolbar = document.createElement("div");
-    toolbar.className = "section-toolbar";
-    const selectBtn = document.createElement("button");
-    selectBtn.className = "mini"; selectBtn.type = "button"; selectBtn.textContent = "Select all";
-    const clearBtn = document.createElement("button");
-    clearBtn.className = "mini"; clearBtn.type = "button"; clearBtn.textContent = "Clear all";
 
     const list = document.createElement("ul");
     list.className = "q-list";
@@ -346,20 +293,6 @@ function buildSections(){
       li.innerHTML = `<input type="checkbox" id="${id}" /><label for="${id}">${q}</label>`;
       list.appendChild(li);
     });
-
-    // Wire select/clear
-    selectBtn.addEventListener("click", ()=>{
-      list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=true);
-      updatePrintEnabled();
-    });
-    clearBtn.addEventListener("click", ()=>{
-      list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=false);
-      updatePrintEnabled();
-    });
-
-    toolbar.appendChild(selectBtn);
-    toolbar.appendChild(clearBtn);
-    wrap.appendChild(toolbar);
     wrap.appendChild(list);
 
     details.appendChild(summary);
@@ -402,6 +335,7 @@ function buildPrintHTML(selected){
   }
   .panel{ border:5px solid var(--border); border-radius:28px; padding:20px; min-height:220px; }
   ul{ margin:0; padding-left:22px } li{ margin:8px 0 }
+  .small{ font-size:14px; color:#334155; margin-top:16px }
   @media print { .pagebreak { page-break-before: always; } }
 </style>
 </head>
@@ -434,7 +368,7 @@ printBtn.addEventListener("click", ()=>{
   w.document.close();
 });
 
-/* Init state */
+/* Init button state */
 updatePrintEnabled();
 </script>
 </body>
