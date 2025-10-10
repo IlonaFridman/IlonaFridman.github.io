@@ -1,3 +1,4 @@
+<!-- file: care-questions-home-fixed.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
   body{
     margin:0;
     font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
-    font-size:17px; /* slightly larger */
+    font-size:17px;
     color:var(--ink); background:var(--bg);
   }
   .container{max-width:1200px;margin:20px auto;padding:0 16px}
@@ -33,7 +34,8 @@
     padding:12px;min-height:220px;border:1px solid #e5e7eb;
   }
   .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer;position:relative;overflow:hidden}
-  .card-start::before{ /* start image background */
+  .card-start::before{
+    /* WHY: Decorative bg image; not clickable */
     content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25;
   }
   .start-title{font-size:40px;font-weight:800;color:#17324a;position:relative}
@@ -89,6 +91,14 @@
   }
   .links-pack{ display:flex; flex-wrap:wrap; gap:8px }
   :where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+
+  /* Dev-only link audit styles */
+  .audit{margin-top:24px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .audit summary{font-weight:800;padding:12px 16px;cursor:pointer;background:#f3f6fb}
+  .audit table{width:100%;border-collapse:collapse;font-size:14px}
+  .audit th,.audit td{padding:10px;border-top:1px solid #eef2f7;vertical-align:top;word-break:break-all}
+  .audit th{text-align:left;background:#fafcff}
+  .audit code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 </style>
 </head>
 <body>
@@ -106,7 +116,7 @@
     <!-- After Diagnosis -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
-        <img src="https://ilonafridman.github.io/AfterDiagnosis.JPG" alt="After diagnosis image">
+        <img src="https://ilonafridman.github.io/AfterDiagnosis.jpg" alt="After diagnosis image">
       </a>
       <div class="card-title">
         <a href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
@@ -117,6 +127,7 @@
 
     <!-- Choosing Treatment -->
     <div class="card">
+      <!-- FIX: thumb now links to the section page (was JPG) -->
       <a class="thumb" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image">
       </a>
@@ -129,7 +140,8 @@
 
     <!-- During Treatment -->
     <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/DuringTreatment.JPG" target="_blank" rel="noopener">
+      <!-- FIX: thumb now links to the section page (was JPG) -->
+      <a class="thumb" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/DuringTreatment.JPG" alt="During treatment image">
       </a>
       <div class="card-title">
@@ -141,7 +153,8 @@
 
     <!-- After Treatment -->
     <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/AfterTreatment.JPG" target="_blank" rel="noopener">
+      <!-- FIX: thumb now links to the section page (was JPG) -->
+      <a class="thumb" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterTreatment.JPG" alt="After treatment image">
       </a>
       <div class="card-title">
@@ -153,7 +166,8 @@
 
     <!-- Complementary/Integrative -->
     <div class="card">
-      <a class="thumb" href="https://ilonafridman.github.io/ComplementaryTherapy.JPG" target="_blank" rel="noopener">
+      <!-- FIX: thumb now links to the section page (was JPG) -->
+      <a class="thumb" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/ComplementaryTherapy.JPG" alt="Complementary therapy image">
       </a>
       <div class="card-title">
@@ -163,6 +177,14 @@
       </div>
     </div>
   </main>
+
+  <!-- Dev-only: Link Audit (remove in prod) -->
+  <section class="container audit">
+    <details>
+      <summary>🔎 Link Audit (images & targets)</summary>
+      <div id="auditTableWrap"></div>
+    </details>
+  </section>
 
   <!-- ===== Start Here Modal ===== -->
   <div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startModalTitle" aria-hidden="true">
@@ -347,7 +369,6 @@ function buildSections(){
       list.appendChild(li);
     });
 
-    // Wire select/clear
     selectBtn.addEventListener("click", ()=>{
       list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=true);
       updatePrintEnabled();
@@ -434,7 +455,41 @@ printBtn.addEventListener("click", ()=>{
   w.document.close();
 });
 
-/* Init state */
+/* ---------- Dev-only: build Link Audit table (remove in prod) ---------- */
+(function buildAudit(){
+  const rows = [];
+  document.querySelectorAll('.grid .card').forEach(card=>{
+    const img = card.querySelector('img');
+    const thumb = card.querySelector('a.thumb');
+    const title = card.querySelector('.card-title a');
+    if(img && thumb && title){
+      rows.push({
+        label: title.textContent.trim(),
+        img: img.getAttribute('src') || '',
+        thumb: thumb.getAttribute('href') || '',
+        title: title.getAttribute('href') || ''
+      });
+    }
+  });
+
+  const wrap = document.getElementById('auditTableWrap');
+  if(!wrap) return;
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <thead>
+      <tr><th>Card</th><th>Image src</th><th>Thumb link</th><th>Title link</th></tr>
+    </thead>
+    <tbody>
+      ${rows.map(r=>`
+        <tr>
+          <td>${r.label}</td>
+          <td><code>${r.img}</code></td>
+          <td><a href="${r.thumb}" target="_blank" rel="noopener">${r.thumb}</a></td>
+          <td><a href="${r.title}" target="_blank" rel="noopener">${r.title}</a></td>
+        </tr>`).join('')}
+    </tbody>`;
+  wrap.appendChild(table);
+})();
 updatePrintEnabled();
 </script>
 </body>
