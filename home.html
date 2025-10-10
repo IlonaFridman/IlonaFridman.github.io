@@ -5,22 +5,36 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Care Pathway</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Helvetica-first UI -->
   <style>
-    :root{--bg:#fff;--text:#111827;--border:#0f172a;--primary-600:#4e90c7;--primary-700:#3e7fb6;--focus:#1e40af;--maxw:1200px;--blue-100:#d6eefc}
+    :root{
+      --bg:#fff;--text:#0b1220;--border:#0f172a;--primary-600:#4e90c7;--primary-700:#3e7fb6;
+      --focus:#1e40af;--maxw:1200px;--blue-100:#d6eefc;--muted:#475569;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:var(--bg);line-height:1.5}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Helvetica, "Helvetica Neue", Arial, system-ui, -apple-system, Segoe UI, Roboto;
+      color:var(--text);background:var(--bg);line-height:1.55;
+      font-size:16px;
+    }
     .container{max-width:var(--maxw);margin:0 auto;padding:clamp(16px,2vw,32px)}
     .topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vw,32px)}
-    .pill{appearance:none;border:0;border-radius:9999px;padding:12px 22px;font-weight:700;font-size:18px;color:#fff;text-decoration:none;background-image:linear-gradient(180deg,var(--primary-600),var(--primary-700));box-shadow:0 2px 0 var(--primary-700),0 4px 10px rgba(0,0,0,.15);transition:transform .12s ease,filter .12s ease}
+    .pill{
+      appearance:none;border:0;border-radius:9999px;padding:12px 22px;font-weight:700;font-size:18px;
+      color:#fff;text-decoration:none;background-image:linear-gradient(180deg,var(--primary-600),var(--primary-700));
+      box-shadow:0 2px 0 var(--primary-700),0 4px 10px rgba(0,0,0,.15);
+      transition:transform .12s ease,filter .12s ease
+    }
     .pill:hover{filter:brightness(1.05)} .pill:active{transform:translateY(1px)} .pill:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
     .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:clamp(16px,2.4vw,28px)}
     @media (min-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media (min-width:1024px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-    .tile{display:grid;grid-template-rows:1fr auto;border:2px solid var(--border);border-radius:10px;overflow:hidden;min-height:220px;background:#fff;text-decoration:none;color:inherit;transition:transform .14s ease,box-shadow .14s ease}
+    .tile{display:grid;grid-template-rows:1fr auto;border:2px solid var(--border);border-radius:12px;overflow:hidden;min-height:220px;background:#fff;text-decoration:none;color:inherit;transition:transform .14s ease,box-shadow .14s ease}
     .tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
     .tile:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
     .tile-media{background:#f3f4f6;display:grid;place-items:center}
@@ -28,25 +42,45 @@
     .tile-caption{border-top:2px solid var(--border);background:#fff;display:grid;place-items:center;height:74px;padding:8px 10px}
     .tile-caption h2{margin:0;font-size:18px;font-weight:700;text-align:center}
 
-    dialog{border:2px solid var(--border);border-radius:16px;padding:0;max-width:760px;width:min(96vw,760px)}
+    dialog{border:2px solid var(--border);border-radius:16px;padding:0;max-width:820px;width:min(96vw,820px)}
     dialog::backdrop{background:rgba(0,0,0,.35)}
     .modal-header{padding:16px 20px;border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center}
     .modal-title{margin:0;font-size:22px;font-weight:700}
     .modal-body{padding:18px 20px 6px}
-    .modal-actions{display:flex;gap:10px;justify-content:flex-end;padding:16px 20px;border-top:2px solid var(--border)}
-    .btn{appearance:none;border:2px solid var(--border);background:#fff;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+    .modal-actions{
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;
+      padding:16px 20px;border-top:2px solid var(--border);background:#fff;position:relative
+    }
+    .btn{appearance:none;border:2px solid var(--border);background:#fff;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
     .btn[disabled]{opacity:.5;cursor:not-allowed}
     .btn-primary{border:0;background-image:linear-gradient(180deg,var(--primary-600),var(--primary-700));color:#fff}
     .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
-    .bubble-wrap{border:2px solid var(--border);border-radius:28px;padding:18px}
+    .bubble-wrap{border:2px solid var(--border);border-radius:28px;padding:18px;background:#fff}
     .bubble{border:2px solid var(--border);border-radius:24px;padding:16px 18px;margin:0;background:#fff}
     .bubble--blue{background:var(--blue-100)}
     .bubble p{margin:0 0 10px}
-    .choices{display:grid;gap:10px;margin-top:12px}
-    .choice{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #cbd5e1;background:#fff}
-    .choice input{margin-top:2px}
+
+    /* Accordion */
+    .accordion{display:grid;gap:12px;margin-top:14px}
+    details.ac{border:2px solid var(--border);border-radius:14px;background:#fff;overflow:hidden}
+    summary{
+      list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;
+      padding:14px 16px;font-weight:700;font-size:18px;user-select:none
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{width:18px;height:18px;flex:0 0 18px;display:inline-grid;place-items:center;
+      border:2px solid var(--border);border-radius:4px;font-size:12px;line-height:1;background:#fff}
+    details[open] .chev{transform:rotate(90deg)} /* why: points down when open */
+
+    .ac-panel{padding:10px 16px 16px;border-top:2px solid var(--border);background:#fbfdff}
+    .q-list{display:grid;gap:10px;margin-top:6px}
+    .q-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #cbd5e1;background:#fff}
+    .q-item input{margin-top:2px}
+    .muted{color:var(--muted);font-size:14px}
+
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
     @media (prefers-reduced-motion:reduce){.pill,.tile{transition:none}}
   </style>
 </head>
@@ -65,7 +99,7 @@
     <h1 class="sr-only">Care Pathway</h1>
 
     <section class="grid" aria-label="Topics">
-      <!-- 1) Start Here -> modal (uses Starthere.JPG) -->
+      <!-- 1) Start Here -> modal -->
       <button class="tile" id="openStart" type="button" aria-haspopup="dialog" aria-controls="startDialog">
         <div class="tile-media">
           <img src="Starthere.jpg" alt="Start Here">
@@ -122,50 +156,31 @@
       <button class="btn" id="closeStart" type="button" aria-label="Close dialog">Close</button>
     </div>
 
-    <form id="startForm" class="modal-body" method="dialog">
+    <div class="modal-body" id="modalBody">
       <div class="bubble-wrap">
         <div class="bubble bubble--blue" aria-live="polite">
           <p>Some of the information that doctors share might sound confusing.</p>
           <p>Many patients wonder: What should I ask? How could I move forward?</p>
-          <p>To help you answer these questions, we put together suggested questions to explore and some helpful resources to read.</p>
+          <p>To help you, we put together questions that you may explore with your providers.</p>
         </div>
 
-        <div class="bubble" style="margin-top:14px">
-          <fieldset>
-            <legend style="font-weight:700; margin-bottom:8px;">Please let us know what is on your mind now:</legend>
-            <div class="choices" role="radiogroup" aria-describedby="hint">
-              <div class="choice">
-                <input type="radio" id="opt-dx"   name="path" value="https://ilonafridman.github.io/diagnosis/diagnosis.html" required />
-                <label for="opt-dx">I would like to understand my diagnosis better</label>
-              </div>
-              <div class="choice">
-                <input type="radio" id="opt-choose" name="path" value="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" />
-                <label for="opt-choose">I need to choose treatment</label>
-              </div>
-              <div class="choice">
-                <input type="radio" id="opt-during" name="path" value="https://ilonafridman.github.io/treatment/treatment.html" />
-                <label for="opt-during">I am going through treatment</label>
-              </div>
-              <div class="choice">
-                <input type="radio" id="opt-integrative" name="path" value="https://ilonafridman.github.io/complementary/complementary.html" />
-                <label for="opt-integrative">I hope to learn about complementary and integrative therapy</label>
-              </div>
-              <div class="choice">
-                <input type="radio" id="opt-after" name="path" value="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" />
-                <label for="opt-after">I completed my treatment. What is next?</label>
-              </div>
-            </div>
-            <p id="hint" class="sr-only">Choose one option, then press Continue.</p>
-          </fieldset>
+        <!-- Dynamic accordion will be injected here -->
+        <div class="accordion" id="accordionRoot" aria-describedby="hint">
+          <!-- JS renders accordions -->
         </div>
+        <p id="hint" class="muted">Select any questions. Sections stay open. Use the button below to download your list.</p>
       </div>
+    </div>
 
-      <div class="modal-actions">
-        <button class="btn" type="button" id="cancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="continueBtn" type="submit" disabled>Continue</button>
-      </div>
-    </form>
+    <!-- Actions are *after* content so they always move down when content expands -->
+    <div class="modal-actions">
+      <button class="btn" type="button" id="cancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="downloadBtn" type="button">Download PDF of chosen questions</button>
+    </div>
   </dialog>
+
+  <!-- jsPDF (used for client-side PDF generation) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
 
   <script>
     (function(){
@@ -173,44 +188,207 @@
       const dialog  = document.getElementById('startDialog');
       const closeBtn= document.getElementById('closeStart');
       const cancel  = document.getElementById('cancelBtn');
-      const form    = document.getElementById('startForm');
-      const continueBtn = document.getElementById('continueBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const accordionRoot = document.getElementById('accordionRoot');
 
-      if(!openBtn || !dialog) return;
+      if(!openBtn || !dialog || !accordionRoot) return;
 
-      function openSurvey(){
-        dialog.showModal();
-        // focus first radio for quick keyboard selection
-        const firstRadio = form.querySelector('input[name="path"]');
-        firstRadio?.focus();
+      // ---- Data: questions from screenshots ----
+      const sections = [
+        {
+          id: 'diagnosis',
+          title: 'I would like to understand my diagnosis better',
+          questions: [
+            'What type and stage of breast cancer do I have?',
+            'How fast is my cancer growing?',
+            'Do I need any more tests or biopsies to be sure about my diagnosis?',
+            'Do I need any more tests? Which tests?',
+            'How did you find out I have this cancer?',
+            'Do I need to do genetic testing?',
+            'How much time do I have to decide on my treatment?',
+            'Which doctors should I see, and when should I see them?',
+            'Do I need to see a fertility or reproductive doctor?',
+            'Are there any clinical trials I can join?',
+            'When should I think about getting a second opinion?'
+          ]
+        },
+        {
+          id: 'choose',
+          title: 'I need to choose treatment',
+          questions: [
+            'What treatment options do I have?',
+            'Which treatment gives the lowest chance of the cancer coming back?',
+            'If you were in my place, which treatment would you choose?',
+            'What happens if I decide not to have surgery, radiation, or chemotherapy?',
+            'How soon do I need to start treatment? Do I have time to get a second opinion?',
+            'What are my surgery options?',
+            'What problems or risks come with each type of surgery?',
+            'What are the side effects of radiation?',
+            'Will I need chemotherapy?',
+            'Will I need hormone therapy?',
+            'When should I decide about breast reconstruction surgery?'
+          ]
+        },
+        {
+          id: 'during',
+          title: 'I am going through treatment',
+          questions: [
+            'Can you walk me through the steps involved in my treatment plan?',
+            'What side effects should I expect from my treatment?',
+            'Are there any tools or tips you recommend for coping with common side effects?',
+            'When should I contact my healthcare team between visits?',
+            'Whom should I talk to if I need to deal with side effects?',
+            'Who can I reach out to between appointments if I have questions or concerns?',
+            'How long does it take for a doctor to answer my questions that I ask using my chart?',
+            'What should I do if my personal situation makes it hard to get to treatment?',
+            'Are there counselors or support groups available for people in my situation?',
+            'What integrative therapy services are available to support me during treatment?'
+          ]
+        },
+        {
+          id: 'integrative',
+          title: 'I hope to learn about complementary and integrative therapy',
+          questions: [
+            'Can any vitamins, herbs, or lifestyle changes make my treatment less effective or cause side effects?',
+            'How do I know if a supplement or therapy are safe for me?',
+            'Where can I find good information about complementary/non-mainstream therapies for people with cancer?',
+            'What should I eat or drink during treatment to help me stay strong and recover better?',
+            'Where can I find a doctor or specialist who works in integrative medicine?'
+          ]
+        },
+        {
+          id: 'after',
+          title: 'I completed my treatment. What is next?',
+          questions: [
+            'Which specific tests or screenings will I need during follow-up, and how often?',
+            'Who will coordinate my follow-up care among my healthcare providers?',
+            'What symptoms should prompt me to contact you between scheduled visits?',
+            'Am I at increased risk for any health conditions because of my treatment?',
+            'Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?',
+            'What will we do if the cancer comes back?',
+            'What are the signs of recurrence I should watch for?',
+            'Can you recommend support groups or counseling services for breast cancer survivors?'
+          ]
+        }
+      ];
+
+      // ---- Render accordions ----
+      function renderAccordion(){
+        const frag = document.createDocumentFragment();
+        sections.forEach(section => {
+          const details = document.createElement('details');
+          details.className = 'ac';
+          details.id = `ac-${section.id}`;
+
+          const summary = document.createElement('summary');
+          summary.innerHTML = `<span class="chev" aria-hidden="true">▸</span><span>${section.title}</span>`;
+          details.appendChild(summary);
+
+          const panel = document.createElement('div');
+          panel.className = 'ac-panel';
+          const ul = document.createElement('div');
+          ul.className = 'q-list';
+
+          section.questions.forEach((q, idx) => {
+            const id = `${section.id}-${idx}`;
+            const item = document.createElement('label');
+            item.className = 'q-item';
+            item.setAttribute('for', id);
+            item.innerHTML = `
+              <input type="checkbox" id="${id}" data-section="${section.title}" data-q="${q}">
+              <span>${q}</span>
+            `;
+            ul.appendChild(item);
+          });
+
+          panel.appendChild(ul);
+          details.appendChild(panel);
+          frag.appendChild(details);
+        });
+        accordionRoot.appendChild(frag);
+
+        // Open first section by default (why: reduce initial click)
+        const first = accordionRoot.querySelector('details.ac');
+        if (first) first.open = true;
       }
 
+      function openSurvey(){
+        if (!accordionRoot.hasChildNodes()) renderAccordion();
+        dialog.showModal();
+      }
+
+      // --- PDF generation ---
+      async function generatePDF(){
+        const checked = Array.from(accordionRoot.querySelectorAll('input[type="checkbox"]:checked'));
+        if (checked.length === 0){
+          alert('Please select at least one question to download.');
+          return;
+        }
+
+        const grouped = {};
+        for (const el of checked){
+          const sec = el.dataset.section;
+          (grouped[sec] ||= []).push(el.dataset.q);
+        }
+
+        // jsPDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+        const pageW = doc.internal.pageSize.getWidth();
+        const margin = 56;
+        const maxW = pageW - margin*2;
+        let y = margin;
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.text('My Questions for My Care Team', margin, y); y += 20;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(90);
+        doc.text(`Generated on ${new Date().toLocaleString()}`, margin, y);
+        doc.setTextColor(0); y += 18;
+
+        Object.entries(grouped).forEach(([sec, items], sIdx) => {
+          // Section header
+          if (y > 720){ doc.addPage(); y = margin; }
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(14);
+          doc.text(sec, margin, y); y += 12;
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(12);
+
+          items.forEach((q) => {
+            const bullet = '• ';
+            const lines = doc.splitTextToSize(q, maxW-16);
+            const firstLine = bullet + lines[0];
+            if (y > 760 - 24){ doc.addPage(); y = margin; }
+            doc.text(firstLine, margin+8, y); y += 16;
+            for (let i=1;i<lines.length;i++){
+              if (y > 760 - 24){ doc.addPage(); y = margin; }
+              doc.text(lines[i], margin+24, y); y += 16;
+            }
+          });
+
+          y += 8;
+          if (sIdx < Object.keys(grouped).length-1){
+            doc.setDrawColor(180); doc.line(margin, y, pageW - margin, y); y += 14;
+          }
+        });
+
+        doc.save('my-questions.pdf');
+      }
+
+      // --- Events ---
       openBtn.addEventListener('click', openSurvey);
       closeBtn.addEventListener('click', () => dialog.close());
       cancel.addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
       dialog.addEventListener('cancel', (e)=>{ e.preventDefault(); dialog.close(); });
+      downloadBtn.addEventListener('click', generatePDF);
 
-      // enable Continue when a choice is made
-      form.addEventListener('change', (e) => {
-        if (e.target && e.target.name === 'path') continueBtn.removeAttribute('disabled');
-      });
-
-      // go to selected section
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const selected = form.querySelector('input[name="path"]:checked');
-        if (selected) window.location.href = selected.value;
-      });
-
-      // --- NEW: auto-open when arriving with #survey ---
-      if (location.hash === '#survey') {
-        // delay to ensure dialog is ready
-        setTimeout(openSurvey, 0);
-      }
-      window.addEventListener('hashchange', () => {
-        if (location.hash === '#survey') openSurvey();
-      });
+      // Auto-open when arriving with #survey
+      if (location.hash === '#survey') setTimeout(openSurvey, 0);
+      window.addEventListener('hashchange', () => { if (location.hash === '#survey') openSurvey(); });
     })();
   </script>
 </body>
