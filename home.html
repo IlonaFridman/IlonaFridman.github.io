@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <title>Care Pathway</title>
 
   <style>
     :root{
@@ -15,6 +15,8 @@
       --blue-100:#d6eefc;    /* light blue fill (screenshot) */
       --bg:#fff;
       --maxw:1200px;
+      --q-gray:#eef1f5;
+      --q-gray-border:#cfd6e1;
     }
     *{box-sizing:border-box}
     body{
@@ -46,7 +48,7 @@
     .tile-caption h2{margin:0;font-size:18px;font-weight:700;text-align:center}
 
     /* pop-up */
-    dialog{border:2px solid var(--border);border-radius:28px;padding:0;max-width:720px;width:min(96vw,720px)}
+    dialog{border:2px solid var(--border);border-radius:28px;padding:0;max-width:760px;width:min(96vw,760px)}
     dialog::backdrop{background:rgba(0,0,0,.35)}
     .modal-header{
       padding:14px 18px;border-bottom:2px solid var(--border);
@@ -66,12 +68,40 @@
       margin-top:16px;border:2px solid var(--border);border-radius:26px;padding:16px 20px;background:var(--blue-100)
     }
     .legend{font-weight:700;margin:0 0 10px}
-    .list{display:grid;gap:8px;margin:10px 0 0}
-    .li{display:flex;gap:10px;align-items:flex-start}
-    .arrow{font-weight:900;margin-top:3px} /* why: matches screenshot’s arrow bullets */
+    .list{display:grid;gap:10px;margin:10px 0 0}
+    .option{
+      display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+      padding:4px 2px;border-radius:8px;user-select:none
+    }
+    .option:focus-visible{outline:3px solid #1e40af;outline-offset:2px}
+    .arrow{font-weight:900;margin-top:3px}
+    .option.active .arrow{transform:rotate(90deg)} /* why: indicate open state */
 
+    /* questions box under an option */
+    .questions{
+      margin:8px 0 0 24px;
+      display:grid;gap:6px;
+    }
+    .q{
+      background:var(--q-gray);
+      border:1px solid var(--q-gray-border);
+      border-radius:6px;
+      padding:8px 10px;
+      font-size:14px;
+    }
+
+    .cta-row{
+      display:none; /* shown when a section is open */
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;margin-top:14px
+    }
+    .cta{display:block;text-align:center;padding:12px 10px;border-radius:12px;
+         color:#fff;text-decoration:none;font-weight:700;border:2px solid #0e2a4a;
+         background-image:linear-gradient(180deg,var(--pill-600),var(--pill-700))}
     .footer{display:grid;margin-top:16px}
     .footer .pill{width:100%;text-align:center;border-radius:9999px;padding:12px 18px;font-size:18px}
+
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
@@ -125,19 +155,45 @@
 
     <div class="sheet">
       <div class="bubble">
-        <p>Some of the information that doctors share might sound confusing.</p>
-        <p>Many patients wonder: What should I ask? How could I move forward?</p>
-        <p>To help you, we put together questions that you may explore with your providers.</p>
+        <p>To help you answer these questions, we put together suggested questions to explore and some helpful resources to read.</p>
       </div>
 
-      <div class="checklist">
+      <div class="checklist" id="choices">
         <p class="legend">Please let us know what is on your mind now:</p>
-        <div class="list" role="list">
-          <div class="li" role="listitem"><span class="arrow">›</span><span>I would like to understand my diagnosis better</span></div>
-          <div class="li" role="listitem"><span class="arrow">›</span><span>I need to choose treatment</span></div>
-          <div class="li" role="listitem"><span class="arrow">›</span><span>I am about to or going through treatment</span></div>
-          <div class="li" role="listitem"><span class="arrow">›</span><span>I hope to learn about complementary and integrative therapy for patients like me</span></div>
-          <div class="li" role="listitem"><span class="arrow">›</span><span>I completed my treatment. What is next?</span></div>
+
+        <!-- options: click to toggle open questions -->
+        <div class="list">
+          <div class="option" tabindex="0" data-key="diagnosis">
+            <span class="arrow">›</span><span>I would like to understand my diagnosis better</span>
+          </div>
+          <div class="holder" id="holder-diagnosis"></div>
+
+          <div class="option" tabindex="0" data-key="choose">
+            <span class="arrow">›</span><span>I need to choose treatment</span>
+          </div>
+          <div class="holder" id="holder-choose"></div>
+
+          <div class="option" tabindex="0" data-key="during">
+            <span class="arrow">›</span><span>I am about to or going through treatment</span>
+          </div>
+          <div class="holder" id="holder-during"></div>
+
+          <div class="option" tabindex="0" data-key="integrative">
+            <span class="arrow">›</span><span>I hope to learn about complementary and integrative therapy for patients like me</span>
+          </div>
+          <div class="holder" id="holder-integrative"></div>
+
+          <div class="option" tabindex="0" data-key="after">
+            <span class="arrow">›</span><span>I completed my treatment. What is next?</span>
+          </div>
+          <div class="holder" id="holder-after"></div>
+        </div>
+
+        <!-- row of 3 CTAs (shown only when a section is open) -->
+        <div class="cta-row" id="ctaRow">
+          <button class="cta" id="downloadOpen">Download PDF of the chosen questions</button>
+          <a class="cta" id="moreLink" href="#" rel="noopener">Explore more questions</a>
+          <a class="cta" id="resourcesLink" href="#" rel="noopener">Read e-resources</a>
         </div>
       </div>
 
@@ -147,21 +203,174 @@
     </div>
   </dialog>
 
+  <!-- jsPDF for client-side PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
   <script>
     (function(){
       const openBtn  = document.getElementById('openStart');
       const dialog   = document.getElementById('startDialog');
       const closeBtn = document.getElementById('closeStart');
+      const ctaRow   = document.getElementById('ctaRow');
+      const downloadOpenBtn = document.getElementById('downloadOpen');
+      const moreLink = document.getElementById('moreLink');
+      const resourcesLink = document.getElementById('resourcesLink');
 
       if(!openBtn || !dialog || !closeBtn) return;
 
+      // Data for each section + links (used by Explore/Resources)
+      const DATA = {
+        diagnosis: {
+          title: 'I would like to understand my diagnosis better',
+          href: 'https://ilonafridman.github.io/diagnosis/diagnosis.html',
+          resources: 'https://ilonafridman.github.io/information.html',
+          questions: [
+            'What type and stage of breast cancer do I have?',
+            'How fast is my cancer growing?',
+            'Do I need any more tests or biopsies to be sure about my diagnosis?',
+            'Do I need any more tests? Which tests?',
+            'How did you find out I have this cancer?',
+            'Do I need to do genetic testing?',
+            'How much time do I have to decide on my treatment?',
+            'Which doctors should I see, and when should I see them?',
+            'Do I need to see a fertility or reproductive doctor?',
+            'Are there any clinical trials I can join?',
+            'When should I think about getting a second opinion?'
+          ]
+        },
+        choose: {
+          title: 'I need to choose treatment',
+          href: 'https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html',
+          resources: 'https://ilonafridman.github.io/information.html',
+          questions: [
+            'What treatment options do I have?',
+            'Which treatment gives the lowest chance of the cancer coming back?',
+            'If you were in my place, which treatment would you choose?',
+            'What happens if I decide not to have surgery, radiation, or chemotherapy?',
+            'How soon do I need to start treatment? Do I have time to get a second opinion?',
+            'What are my surgery options?',
+            'What problems or risks come with each type of surgery?',
+            'What are the side effects of radiation?',
+            'Will I need chemotherapy?',
+            'Will I need hormone therapy?',
+            'When should I decide about breast reconstruction surgery?'
+          ]
+        },
+        during: {
+          title: 'I am about to or going through treatment',
+          href: 'https://ilonafridman.github.io/treatment/treatment.html',
+          resources: 'https://ilonafridman.github.io/information.html',
+          questions: [
+            'Can you walk me through the steps involved in my treatment plan?',
+            'What side effects should I expect from my treatment?',
+            'Are there any tools or tips you recommend for coping with common side effects?',
+            'When should I contact my healthcare team between visits?',
+            'Whom should I talk to if I need to deal with side effects?',
+            'Who can I reach out to between appointments if I have questions or concerns?',
+            'How long does it take for a doctor to answer my questions that I ask using my chart?',
+            'What should I do if my personal situation makes it hard to get to treatment?',
+            'Are there counselors or support groups available for people in my situation?',
+            'What integrative therapy services are available to support me during treatment?'
+          ]
+        },
+        integrative: {
+          title: 'I hope to learn about complementary and integrative therapy for patients like me',
+          href: 'https://ilonafridman.github.io/complementary/complementary.html',
+          resources: 'https://ilonafridman.github.io/information.html',
+          questions: [
+            'Can any vitamins, herbs, or lifestyle changes make my treatment less effective or cause side effects?',
+            'How do I know if a supplement or therapy are safe for me?',
+            'Where can I find good information about complementary/non-mainstream therapies for people with cancer?',
+            'What should I eat or drink during treatment to help me stay strong and recover better?',
+            'Where can I find a doctor or specialist who works in integrative medicine?'
+          ]
+        },
+        after: {
+          title: 'I completed my treatment. What is next?',
+          href: 'https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html',
+          resources: 'https://ilonafridman.github.io/information.html',
+          questions: [
+            'Which specific tests or screenings will I need during follow-up, and how often?',
+            'Who will coordinate my follow-up care among my healthcare providers?',
+            'What symptoms should prompt me to contact you between scheduled visits?',
+            'Am I at increased risk for any health conditions because of my treatment?',
+            'Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?',
+            'What will we do if the cancer comes back?',
+            'What are the signs of recurrence I should watch for?',
+            'Can you recommend support groups or counseling services for breast cancer survivors?'
+          ]
+        }
+      };
+
+      let openKey = null; // currently opened section key
+
+      function renderQuestions(key){
+        // collapse any existing rendered blocks
+        document.querySelectorAll('.questions').forEach(n => n.remove());
+        document.querySelectorAll('.option').forEach(n => n.classList.remove('active'));
+
+        const data = DATA[key];
+        const holder = document.getElementById(`holder-${key}`);
+        if (!data || !holder) return;
+
+        // build questions block
+        const wrap = document.createElement('div');
+        wrap.className = 'questions';
+        data.questions.forEach(q=>{
+          const div = document.createElement('div');
+          div.className = 'q';
+          div.textContent = q;
+          wrap.appendChild(div);
+        });
+        holder.replaceChildren(wrap);
+
+        // set active state, show ctas
+        document.querySelector(`.option[data-key="${key}"]`)?.classList.add('active');
+        ctaRow.style.display = 'grid';
+        moreLink.href = data.href;
+        resourcesLink.href = data.resources;
+
+        openKey = key;
+      }
+
+      // Events to open/close modal
       function openSurvey(){ dialog.showModal(); }
       openBtn.addEventListener('click', openSurvey);
       closeBtn.addEventListener('click', () => dialog.close());
-
-      // close when clicking the dim backdrop
       dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
       dialog.addEventListener('cancel', (e)=>{ e.preventDefault(); dialog.close(); });
+
+      // Option click / keyboard
+      document.querySelectorAll('.option').forEach(el=>{
+        el.addEventListener('click', ()=> renderQuestions(el.dataset.key));
+        el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); renderQuestions(el.dataset.key); } });
+      });
+
+      // Download only the open section's questions
+      downloadOpenBtn.addEventListener('click', ()=>{
+        if (!openKey) return;
+        const { jsPDF } = window.jspdf;
+        const data = DATA[openKey];
+        const doc = new jsPDF({ unit:'pt', format:'letter' });
+        const margin = 56;
+        let y = margin;
+
+        doc.setFont('helvetica','bold'); doc.setFontSize(18);
+        doc.text(data.title, margin, y); y += 18;
+        doc.setFont('helvetica','normal'); doc.setFontSize(12);
+
+        const pageW = doc.internal.pageSize.getWidth();
+        const maxW = pageW - margin*2;
+
+        data.questions.forEach(q=>{
+          const lines = doc.splitTextToSize(q, maxW-10);
+          if (y > 760 - (lines.length*16)) { doc.addPage(); y = margin; }
+          doc.text('• ' + lines[0], margin, y); y += 16;
+          for (let i=1;i<lines.length;i++){ doc.text(lines[i], margin+14, y); y += 16; }
+        });
+
+        doc.save('questions.pdf');
+      });
 
       // optional deep link
       if (location.hash === '#survey') setTimeout(openSurvey, 0);
