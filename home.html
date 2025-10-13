@@ -52,10 +52,15 @@
   .modal{ position:fixed; inset:0; display:none; }
   .modal[aria-hidden="false"]{ display:block; }
   .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
+  
+  /* --- MODIFIED: Added max-height and overflow-y for the main scrollbar --- */
   .modal-card{
     position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
     box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
+    max-height: 85vh; /* Limit height to prevent growing off-screen */
+    overflow-y: auto; /* Add a scrollbar on the right if content is too tall */
   }
+
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
   .modal-header h2{ margin:4px 0 8px; font-size:28px }
   .lede{ color:var(--muted); margin:0 0 14px; font-size:16px }
@@ -98,6 +103,8 @@
 
   .modal-footer{
     display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap;
+    /* Add a little padding to prevent content from sticking to the bottom edge when scrolling */
+    padding-bottom: 8px;
   }
   .secondary{
     border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; text-decoration:none;
@@ -177,7 +184,6 @@
 
       <div class="accordion" id="accordion"><!-- injected by JS --></div>
 
-      <!-- MODIFIED: Replaced single button with three new action buttons -->
       <div class="modal-footer">
         <div class="action-buttons-group">
           <button id="downloadPdfBtn" class="cta cta-light" type="button" disabled>Download PDF</button>
@@ -246,8 +252,6 @@ function buildSections(){
   });
 }
 buildSections();
-
-/* ---------- MODIFIED: Replaced old print logic with new action handlers ---------- */
 
 // ----- Selection helpers -----
 function getSelectedQuestions(){
