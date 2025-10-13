@@ -27,8 +27,8 @@
     }
     .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
 
-    /* Resource tiles (single column like a long list) */
-    .resource-grid{display:grid;grid-template-columns:1fr;gap:24px}
+    /* Resource tiles (now 3 columns) */
+    .resource-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:24px}
     .resource{display:block;text-decoration:none;color:inherit}
     .thumb{
       border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;
@@ -76,6 +76,7 @@
 
     @media (max-width:760px){
       .layout{grid-template-columns:1fr;gap:28px}
+      .resource-grid{grid-template-columns:1fr} /* Stacks images vertically on small screens */
       .side .cta{width:100%;min-width:unset}
       .pic-wrap{max-width:100%}
     }
@@ -122,10 +123,8 @@
       </article>
 
       <aside class="side" aria-label="Actions">
-        <a id="cta-questions"  class="cta" href="https://ilonafridman.github.io/home.html/diagnosis.html">Go back to the begining</a>
-        <!-- Match link spelling used across site -->
-        <a id="cta-helpful"    class="cta" href="https://ilonafridman.github.io/diagnosis/daignosisinfo.html">Helpful Information</a>
-        <a id="cta-resources"  class="cta" href="https://ilonafridman.github.io/diagnosis/daignosisinfo.html">Online resources to explore</a>
+        <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
+        <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Go back to questions</a>
 
         <div class="pic-wrap">
           <a class="pic-link" target="_blank" rel="noopener noreferrer"
@@ -138,23 +137,5 @@
     </section>
   </main>
 
-  <script>
-    // Active CTA highlight (same as other pages)
-    (function setActiveCTA(){
-      const href = location.href.toLowerCase();
-      const q = document.getElementById('cta-questions');
-      const h = document.getElementById('cta-helpful');
-      const r = document.getElementById('cta-resources');
-      [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
-
-      if (href.includes('diagnosisresources.html')) {
-        r.classList.add('active'); r.setAttribute('aria-current','page');
-      } else if (href.includes('diagnosisinfo.html') || href.includes('daignosisinfo.html')) {
-        h.classList.add('active'); h.setAttribute('aria-current','page');
-      } else {
-        q.classList.add('active'); q.setAttribute('aria-current','page');
-      }
-    })();
-  </script>
 </body>
 </html>
