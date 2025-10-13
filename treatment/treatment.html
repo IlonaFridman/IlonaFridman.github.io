@@ -123,7 +123,6 @@
 
     <aside class="side" aria-label="Actions">
       <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
-      <!-- MODIFIED: Removed target="_blank" to make this internal link open in the same tab -->
       <a class="cta" href="https://ilonafridman.github.io/treatment/treatmentinfo.html">Online sources to explore</a>
 
       <div class="pic-wrap">
@@ -146,22 +145,39 @@
 
 <script>
   // ------- Data -------
+  // MODIFIED: Updated with the new list of questions and categories
   const DATA = [
-    { title: 'Ask about follow-Up Care', questions: [
-      'Which specific tests will I need after treatment and how often?',
-      'How will I be monitored if I’ve had a mastectomy?',
-      'Who will coordinate my follow-up care among my healthcare providers?',
-      'What symptoms should prompt me to contact you between scheduled visits?',
-      'Am I at increased risk for any health conditions because of my treatment?'
+    { title: 'Questions about Treatment', questions: [
+      'Can you walk me through the steps involved in my treatment plan?',
+      'How long does each treatment take?',
+      'What services are available to support me during treatment?',
+      'When should I contact my healthcare team between visits?',
+      'Who can I reach out to between appointments if I have questions or concerns?',
+      'How long does it take for a doctor to answer my questions that I ask using my chart?'
     ]},
-    { title: 'Questions about recurrence and prevention', questions: [
-      'Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?',
-      'What can I do to prevent a recurrence?',
-      'What are the signs of recurrence I should watch for?',
-      'What will we do if the cancer comes back?'
+    { title: 'Side Effects Management', questions: [
+      'What side effects should I expect from my treatment?',
+      'Who should I talk to about side effects?',
+      'Are there any tools or tips you recommend for coping with common side effects?',
+      'How do other patients deal with these side effects?',
+      'Do I need a referral to access integrative care specialists?'
     ]},
-    { title: 'Support & Survivor Resources', questions: [
-      'Can you recommend support groups or counseling services for breast cancer survivors?'
+    { title: 'Emotional & Mental Health Support', questions: [
+      'How can I access mental health support during treatment?',
+      'Are there counselors or support groups available for people in my situation?',
+      'What should I do if I start to feel emotionally overwhelmed?'
+    ]},
+    { title: 'Logistic and Financial support', questions: [
+      'Who can help me with transportation to my treatment appointments?',
+      'What should I do if my personal situation makes it hard to get to treatment?',
+      'Is there any help available for coordinating my appointments and daily life?',
+      'The cost of my treatment is high—what options do I have for financial assistance?',
+      'Can someone help me understand my insurance coverage better?'
+    ]},
+    { title: 'Work Life Balance', questions: [
+      'How much time off work should I take?',
+      'How can I manage work while going through treatment?',
+      'Is there someone I can talk to about balancing caregiving and treatment?'
     ]}
   ];
 
@@ -186,14 +202,14 @@
     beaker: () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8M10 3v6L5 21h14l-5-12V3" /><path d="M7 16h10" /></svg>`
   };
 
+  // MODIFIED: Icon logic updated for new categories
   function iconFor(title){
     const t = title.toLowerCase();
-    if (t.includes('support') || t.includes('survivor')) return Icons.hug();
-    if (t.includes('monitoring') || t.includes('test')) return Icons.microscope();
-    if (t.includes('care')) return Icons.stethoscope();
-    if (t.includes('information')) return Icons.book();
-    if (t.includes('planning')) return Icons.bulb();
-    if (t.includes('prevention') || t.includes('recurrence')) return Icons.beaker();
+    if (t.includes('support')) return Icons.hug();
+    if (t.includes('side effects')) return Icons.stethoscope();
+    if (t.includes('financial')) return Icons.book();
+    if (t.includes('balance')) return Icons.hourglass();
+    if (t.includes('treatment')) return Icons.beaker();
     return Icons.bulb(); // Default
   }
 
