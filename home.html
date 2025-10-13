@@ -57,6 +57,15 @@
     position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
     box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
   }
+
+    /* NEW: modal scroll layout */
+  .modal-card{ display:flex; flex-direction:column; max-height:86vh; }
+  .modal-scroll{ overflow:auto; max-height:calc(86vh - 96px); padding-right:8px; }
+  .modal-scroll::-webkit-scrollbar{ width:12px }
+  .modal-scroll::-webkit-scrollbar-thumb{ background:#cbd5e1; border-radius:10px }
+  .modal-scroll::-webkit-scrollbar-track{ background:#f1f5f9 }
+  .section-content{ max-height:unset; overflow:visible; }
+
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
   .modal-header h2{ margin:4px 0 8px; font-size:28px }
   .lede{ color:var(--muted); margin:0 0 14px; font-size:16px }
@@ -216,8 +225,19 @@
       <!-- ONLY CHANGE: add the “Your Care Team” button inside the modal -->
       <a class="top-button" href="https://ilonafridman.github.io/careteam/careteam.html" target="_blank" rel="noopener"
          style="position:absolute; right:60px; top:10px; padding:10px 16px;">Your Care Team</a>
-      <!-- END ONLY CHANGE -->
+     
+     <!-- NEW: scrollable area -->
+  <div class="modal-scroll">
+    <div class="modal-header" aria-describedby="startModalIntro"> ... </div>
+    <div class="accordion" id="accordion"><!-- injected by JS --></div>
+  </div>
 
+  <!-- footer stays outside so it’s always visible -->
+  <div class="modal-footer"> ... </div>
+</div>
+
+
+      
       <div class="modal-header" aria-describedby="startModalIntro">
         <h2 id="startModalTitle">Questions to ask your provider</h2>
         <div id="startModalIntro" class="lede-panel">
