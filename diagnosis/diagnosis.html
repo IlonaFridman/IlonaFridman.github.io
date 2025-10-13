@@ -23,6 +23,14 @@
   }
   .tool-btn:hover{background:#eef1f5;transform:translateY(-1px)}
   .tool-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+  .tool-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .tool-btn[disabled]:hover {
+    transform: none;
+    background-color: #f5f6f8;
+  }
 
   /* LEFT (Accordion) */
   .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
@@ -61,13 +69,13 @@
   .cta:focus-visible{outline:none;box-shadow:var(--ring)}
   .cta[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(0.35)}
 
-  /* NEW: Light blue variant for secondary actions */
-  .cta-light {
-    background: linear-gradient(180deg, #b3d4fc, #9ac5f7);
-    box-shadow: 0 4px 0 0 rgba(0,0,0,.08) inset, 0 8px 24px rgba(0,0,0,.12);
-    outline: 1px solid #d1e3f8;
+  /* Style for tool buttons in the side panel */
+  .side .tool-btn {
+    width: 100%;
+    font-size: 18px;
+    padding: 14px 18px;
+    text-align: center;
   }
-  /* The hover/disabled states are inherited from the base .cta class */
 
   .pic-wrap{width:100%;max-width:340px;margin-top:6px}
   .pic{width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block}
@@ -114,9 +122,7 @@
     </div>
 
     <aside class="side" aria-label="Actions">
-      <!-- MODIFIED: Top buttons are now both blue using the .cta class -->
       <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
-      <!-- MODIFIED: Link updated as requested -->
       <a class="cta" href="https://ilonafridman.github.io/diagnosis/daignosisinfo.html" target="_blank" rel="noopener">Online sources to explore</a>
 
       <div class="pic-wrap">
@@ -125,10 +131,10 @@
              alt="Patient speaking with a doctor" />
       </div>
       
-      <!-- MODIFIED: Bottom buttons are now light blue using the .cta-light class -->
-      <button id="downloadPdfBtn" class="cta cta-light" type="button" disabled>Download PDF</button>
-      <button id="printBtn"       class="cta cta-light" type="button" disabled>Print</button>
-      <button id="emailBtn"       class="cta cta-light" type="button" disabled>Email PDF</button>
+      <!-- MODIFIED: Buttons now use the .tool-btn style -->
+      <button id="downloadPdfBtn" class="tool-btn" type="button" disabled>Download PDF</button>
+      <button id="printBtn"       class="tool-btn" type="button" disabled>Print</button>
+      <button id="emailBtn"       class="tool-btn" type="button" disabled>Email PDF</button>
     
       <p class="hint">Tip: check any number of questions you want to include in the handout.</p>
     </aside>
@@ -402,7 +408,7 @@
     // Fallback: save and open a mailto with a note
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'questions-handout.pdf'; a.click();
+a.href = url; a.download = 'questions-handout.pdf'; a.click();
     URL.revokeObjectURL(url);
     const body = encodeURIComponent(
       'Attached is my Questions Handout (PDF). If the attachment did not appear, I just downloaded it—please see the downloaded file.'
