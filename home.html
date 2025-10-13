@@ -21,10 +21,22 @@
   }
   .container{max-width:1200px;margin:20px auto;padding:0 16px}
   .header{display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px}
+  
+  /* --- MODIFIED: Updated top buttons to be blue --- */
   .top-button{
-    background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;text-decoration:none;
-    padding:14px 22px;border-radius:14px;border:2px solid #a3c2ff;font-weight:700; box-shadow:var(--shadow);
+    background: linear-gradient(180deg, #6ea2cf, #588fbe);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0,0,0,.2);
+    border: 3px solid #fff;
+    outline: 1px solid #c7d9ea;
+    text-decoration:none;
+    padding:14px 22px;
+    border-radius:14px;
+    font-weight:700; 
+    box-shadow:var(--shadow);
+    transition:transform .06s ease,filter .15s ease;
   }
+  .top-button:hover{filter:brightness(1.05);transform:translateY(-1px)}
   .top-button:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
 
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -53,12 +65,11 @@
   .modal[aria-hidden="false"]{ display:block; }
   .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
   
-  /* --- MODIFIED: Added max-height and overflow-y for the main scrollbar --- */
   .modal-card{
     position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
     box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
-    max-height: 85vh; /* Limit height to prevent growing off-screen */
-    overflow-y: auto; /* Add a scrollbar on the right if content is too tall */
+    max-height: 85vh;
+    overflow-y: auto;
   }
 
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
@@ -103,17 +114,27 @@
 
   .modal-footer{
     display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap;
-    /* Add a little padding to prevent content from sticking to the bottom edge when scrolling */
     padding-bottom: 8px;
   }
+  
+  /* --- MODIFIED: Updated secondary buttons to be blue --- */
   .secondary{
-    border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; text-decoration:none;
-    color:#0b2a5d; font-weight:700; background:#f8fafc;
+    background: linear-gradient(180deg, #6ea2cf, #588fbe);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0,0,0,.2);
+    border: 2px solid #fff;
+    outline: 1px solid #c7d9ea;
+    border-radius:12px; 
+    padding:10px 14px; 
+    text-decoration:none;
+    font-weight:700;
+    transition:transform .06s ease,filter .15s ease;
   }
+  .secondary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
   .links-pack{ display:flex; flex-wrap:wrap; gap:8px; margin-left: auto; }
   :where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
 
-  /* --- ADDED: Styles for new action buttons --- */
   .cta{
     display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:16px;
     padding:12px 18px;border-radius:10px;min-width:150px;text-align:center;
@@ -132,7 +153,6 @@
   }
   .action-buttons-group { display: flex; gap: 10px; }
 
-  /* --- ADDED: Styles for PDF/Print Handout --- */
   .print-stage{position:fixed;left:-10000px;top:-10000px;width:794px;padding:24px;background:#fff}
   .handout{
     font-family: Arial, Helvetica, sans-serif; color:#0f172a; line-height:1.55; font-size:18px;
@@ -172,6 +192,7 @@
     <div class="modal-backdrop" data-close="startModal"></div>
     <div class="modal-card" role="document">
       <button class="icon-btn close" aria-label="Close dialog" data-close="startModal">✕</button>
+      <!-- This button now uses the same style as the main header buttons -->
       <a class="top-button" href="https://ilonafridman.github.io/careteam/careteam.html" target="_blank" rel="noopener" style="position:absolute; right:60px; top:10px; padding:10px 16px;">Your Care Team</a>
       
       <div class="modal-header" aria-describedby="startModalIntro">
@@ -205,7 +226,6 @@
   <div class="modal" id="modal-care-team" role="dialog" aria-modal="true" aria-hidden="true"><div class="modal-backdrop" data-close="modal-care-team"></div><div class="modal-card"><button class="icon-btn close" aria-label="Close dialog" data-close="modal-care-team">✕</button><h2>Your Care Team</h2><p>List roles/contacts here.</p></div></div>
   <div class="modal" id="modal-helpful" role="dialog" aria-modal="true" aria-hidden="true"><div class="modal-backdrop" data-close="modal-helpful"></div><div class="modal-card"><button class="icon-btn close" aria-label="Close dialog" data-close="modal-helpful">✕</button><h2>Helpful Information</h2><p>Portal, maps, transportation, financial counseling, support, etc.</p></div></div>
 
-  <!-- ADDED: Hidden render stage for PDF/print/email -->
   <div id="printStage" class="print-stage" aria-hidden="true"></div>
 
 <script>
@@ -323,7 +343,6 @@ document.getElementById('emailBtn').addEventListener('click', emailSelectedPDF);
 updateActionsEnabled();
 </script>
 
-<!-- ADDED: Deps for client-side PDF -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" crossorigin="anonymous"></script>
 </body>
