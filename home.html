@@ -64,8 +64,23 @@
   .accordion{ display:flex; flex-direction:column; gap:12px; }
   .section{ border:1px solid #d9e3f5; border-radius:16px; background:#f7fbff; overflow:hidden; }
   .section summary{
-    list-style:none; cursor:pointer; padding:12px 16px; font-weight:800; color:#0c2f66;
-    background:#edf4ff; border-bottom:1px solid #d9e3f5; outline:none;
+    list-style:none; cursor:pointer; padding:12px 16px 12px 36px; font-weight:800; color:#0c2f66;
+    background:#edf4ff; border-bottom:1px solid #d9e3f5; outline:none; position:relative;
+  }
+  /* Hide native marker and add custom arrow */
+  .section summary::marker{ content:""; }
+  .section summary::-webkit-details-marker{ display:none; }
+  .section summary::before{
+    content:"";
+    position:absolute; left:14px; top:50%;
+    transform:translateY(-50%);
+    width:0; height:0; border-style:solid;
+    border-width:6px 0 6px 8px;                 /* ▶ */
+    border-color:transparent transparent transparent #0b2a5d;
+    transition:transform .18s ease;
+  }
+  .section[open] summary::before{
+    transform:translateY(-50%) rotate(90deg);   /* ▼ */
   }
   .section[open] summary{ background:#dce9ff }
   .section-content{ max-height:50vh; overflow:auto; padding:8px; }
@@ -199,7 +214,7 @@
       <button class="icon-btn close" aria-label="Close dialog" data-close="startModal">✕</button>
 
       <!-- ONLY CHANGE: add the “Your Care Team” button inside the modal -->
-      <a class="top-button" href="https://IlonaFridman.github.io/careteam/careteam.html" target="_blank" rel="noopener"
+      <a class="top-button" href="https://ilonafridman.github.io/careteam/careteam.html" target="_blank" rel="noopener"
          style="position:absolute; right:60px; top:10px; padding:10px 16px;">Your Care Team</a>
       <!-- END ONLY CHANGE -->
 
@@ -313,7 +328,7 @@ const TOPICS = {
 
 /* eResources links in the order of sections on the page */
 const ER_LINKS = {
-  diagnosis: "https://ilonafridman.github.io/diagnosis/diagnosisinfo.html",
+  diagnosis: "https://ilonafridman.github.io/diagnosis/diagnosisinfo.html", /* FIXED */
   choosing: "https://ilonafridman.github.io/choosingtreatment/choosingtreatmentinfo.html",
   during:   "https://ilonafridman.github.io/treatment/treatmentinfo.html",
   after:    "https://ilonafridman.github.io/afterdiagnosis/afterdiagnosisinfo.html",
