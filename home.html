@@ -6,32 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Care Questions — Home</title>
 <style>
-  :root{
-    --bg:#f6f9fc; --card:#ffffff; --ink:#0f172a; --muted:#475569;
-    --ring:rgba(59,130,246,.35); --shadow:0 10px 25px rgba(2,8,23,.12), 0 2px 6px rgba(2,8,23,.08);
-    --radius:20px; --brand:#1f5f86; --chipbg:#e8f3ff; --primary:#3b82f6;
-  }
+  :root{ --bg:#f6f9fc; --card:#ffffff; --ink:#0f172a; --muted:#475569; --ring:rgba(59,130,246,.35); --shadow:0 10px 25px rgba(2,8,23,.12), 0 2px 6px rgba(2,8,23,.08); --radius:20px; }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{ margin:0; font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
-        font-size:17px; color:var(--ink); background:var(--bg); }
+  body{ margin:0; font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue"; font-size:17px; color:var(--ink); background:var(--bg); }
   .container{max-width:1200px;margin:20px auto;padding:0 16px}
   .header{display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px}
-  .top-button{
-    background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;text-decoration:none;
-    padding:14px 22px;border-radius:14px;border:2px solid #a3c2ff;font-weight:700; box-shadow:var(--shadow);
-  }
+  .top-button{ background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;text-decoration:none; padding:14px 22px;border-radius:14px;border:2px solid #a3c2ff;font-weight:700; box-shadow:var(--shadow); }
   .top-button:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
 
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    padding:12px;min-height:220px;border:1px solid #e5e7eb;
-  }
+  .card{ background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow); display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; padding:12px;min-height:220px;border:1px solid #e5e7eb; }
   .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer;position:relative;overflow:hidden}
   .card-start::before{ content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25; }
   .start-title{font-size:40px;font-weight:800;color:#17324a;position:relative}
+
+  .card-link{ color:inherit; text-decoration:none; width:100% }
+  .thumb{ width:100%; height:160px; border-radius:14px; background:#e9eef5; margin-bottom:12px; overflow:hidden; display:block }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+  .card-title a{ display:inline-block; text-decoration:none; color:inherit; font-weight:800 }
+  .card-title{ font-size:20px; font-weight:800; line-height:1.2; }
 
   @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } .card-start .start-title{font-size:34px}}
   @media (max-width: 640px){ .grid{ grid-template-columns:1fr } .header{justify-content:center}}
@@ -40,22 +34,12 @@
   .modal{ position:fixed; inset:0; display:none; }
   .modal[aria-hidden="false"]{ display:block; }
   .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
-  .modal-card{
-    position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
-    box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
-  }
+  .modal-card{ position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px; box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb; }
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
-  .modal-header{ position:relative; padding-right:160px; }
   .modal-header h2{ margin:4px 0 8px; font-size:28px }
   .lede{ color:var(--muted); margin:0 0 14px; font-size:16px }
-  /* “Your Care Team” button inside modal header */
-  .header-inline-btn{
-    position:absolute; top:0; right:0; transform:translateY(-6px);
-    background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;
-    padding:10px 16px; border-radius:12px; border:2px solid #a3c2ff; font-weight:800; text-decoration:none;
-  }
 
-  .accordion{ display:flex; flex-direction:column; gap:12px; position:relative; }
+  .accordion{ display:flex; flex-direction:column; gap:12px; }
   .section{ border:1px solid #d9e3f5; border-radius:16px; background:#f7fbff; overflow:hidden; }
   .section summary{
     list-style:none; cursor:pointer; padding:12px 16px; font-weight:800; color:#0c2f66;
@@ -64,11 +48,13 @@
   .section summary::before{ content:"▶"; font-weight:900; width:1em; display:inline-block; transform:translateY(-1px); }
   .section[open] summary{ background:#dce9ff }
   .section[open] summary::before{ content:"▼"; }
+
   .section-content{ max-height:50vh; overflow:auto; padding:8px; }
   .section-toolbar{ display:flex; gap:8px; padding:6px 6px 8px 6px; align-items:center; flex-wrap:wrap }
   .mini{ border:1px solid #cbd5e1; background:#fff; border-radius:10px; padding:6px 10px; font-weight:700; cursor:pointer; }
   .eres-btn{ margin-left:auto; border:1px solid #94a3b8; background:#fff; border-radius:12px; padding:8px 14px; font-weight:800; text-decoration:none; color:#0b2a5d; display:inline-flex; align-items:center; line-height:1; }
   .eres-btn:hover{ background:#f1f5f9 }
+  .eres-btn:active{ transform:translateY(1px) }
 
   .q-list{ list-style:none; padding:0; margin:0; }
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
@@ -81,24 +67,6 @@
   .links-pack{ display:flex; flex-wrap:wrap; gap:8px }
   :where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
 
-  /* Accordion scroll area + vertical slider */
-  #accordion{ max-height:56vh; overflow:auto; }
-  .vslider-wrap{
-    position:absolute; top:80px; bottom:86px; right:6px; width:28px;
-    display:none; align-items:center; justify-content:center; pointer-events:none;
-  }
-  .vslider-wrap.visible{ display:flex; }
-  .vslider{
-    pointer-events:auto; appearance:none; -webkit-appearance:none;
-    writing-mode:bt-lr; width:140px; height:20px; transform:rotate(90deg);
-    background:transparent; margin:0;
-  }
-  .vslider::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background:#e2e8f0; }
-  .vslider::-moz-range-track{ height:6px; border-radius:999px; background:#e2e8f0; }
-  .vslider::-webkit-slider-thumb{
-    -webkit-appearance:none; width:22px; height:22px; border-radius:999px; background:var(--primary); box-shadow:var(--shadow); margin-top:-8px;
-  }
-  .vslider::-moz-range-thumb{ width:22px; height:22px; border:none; border-radius:999px; background:var(--primary); }
   /* Dev-only link audit styles */
   .audit{margin-top:24px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
   .audit summary{font-weight:800;padding:12px 16px;cursor:pointer;background:#f3f6fb}
@@ -115,10 +83,12 @@
   </header>
 
   <main class="container grid">
+    <!-- Start Here -->
     <button class="card card-start" id="startHereBtn" aria-haspopup="dialog" aria-controls="startModal">
       <span class="start-title">Start Here</span>
     </button>
 
+    <!-- After Diagnosis -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterDiagnosis.jpg" alt="After diagnosis image">
@@ -130,6 +100,7 @@
       </div>
     </div>
 
+    <!-- Choosing Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image">
@@ -141,6 +112,7 @@
       </div>
     </div>
 
+    <!-- During Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/DuringTreatment.jpg" alt="During treatment image">
@@ -152,6 +124,7 @@
       </div>
     </div>
 
+    <!-- After Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterTreatment.JPG" alt="After treatment image">
@@ -163,6 +136,7 @@
       </div>
     </div>
 
+    <!-- Complementary/Integrative -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/Complementary Therapy.jpg" alt="Complementary therapy image">
@@ -191,7 +165,6 @@
 
       <div class="modal-header" aria-describedby="startModalIntro">
         <h2 id="startModalTitle">Questions to ask your provider</h2>
-        <a class="header-inline-btn" href="#care-team" data-open="modal-care-team" role="button" aria-haspopup="dialog">Your Care Team</a>
         <div id="startModalIntro" class="lede-panel">
           <p>Many patients wonder: What should I ask my provider? How could I move forward?</p>
           <p>Open one or more sections and check the questions you want to bring to your care team. You can Download, Print, or Email a PDF.</p>
@@ -199,10 +172,6 @@
       </div>
 
       <div class="accordion" id="accordion"><!-- injected by JS --></div>
-      <!-- vertical slider holder -->
-      <div class="vslider-wrap" id="vsliderWrap" aria-hidden="true">
-        <input type="range" id="vslider" class="vslider" min="0" max="100" value="0" step="1" aria-label="Scroll questions">
-      </div>
 
       <div class="modal-footer">
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -309,6 +278,7 @@ const TOPICS = {
   }
 };
 
+/* eResources links in the order of sections on the page */
 const ER_LINKS = {
   diagnosis: "https://ilonafridman.github.io/diagnosis/diagnosisinfo.html",
   choosing: "https://ilonafridman.github.io/choosingtreatment/choosingtreatmentinfo.html",
@@ -346,7 +316,7 @@ document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("cli
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click",()=>closeModal(bg.getAttribute("data-close"))));
 document.getElementById("startHereBtn").addEventListener("click",()=>openModal("startModal"));
 
-/* ---------- Build sections ---------- */
+/* ---------- Build sections with Select/Clear + eResources ---------- */
 const container = document.getElementById("accordion");
 function buildSections(){
   container.innerHTML = "";
@@ -389,11 +359,11 @@ function buildSections(){
 
     selectBtn.addEventListener("click", ()=>{
       list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=true);
-      updateActionsEnabled(); refreshSlider();
+      updateActionsEnabled();
     });
     clearBtn.addEventListener("click", ()=>{
       list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=false);
-      updateActionsEnabled(); refreshSlider();
+      updateActionsEnabled();
     });
 
     toolbar.appendChild(selectBtn);
@@ -406,34 +376,9 @@ function buildSections(){
     details.appendChild(summary);
     details.appendChild(wrap);
     container.appendChild(details);
-
-    details.addEventListener("toggle", refreshSlider);
   });
 }
 buildSections();
-
-/* ---------- Vertical slider sync ---------- */
-const vslider = document.getElementById("vslider");
-const vwrap = document.getElementById("vsliderWrap");
-function refreshSlider(){
-  const need = container.scrollHeight > container.clientHeight + 4;
-  vwrap.classList.toggle("visible", need);
-  vwrap.setAttribute("aria-hidden", need ? "false" : "true");
-  if(!need) return;
-  const maxScroll = container.scrollHeight - container.clientHeight;
-  vslider.value = Math.round((container.scrollTop / maxScroll) * 100) || 0;
-}
-vslider.addEventListener("input", ()=>{
-  const maxScroll = container.scrollHeight - container.clientHeight;
-  container.scrollTop = (vslider.value/100) * maxScroll;
-});
-container.addEventListener("scroll", ()=>{
-  const maxScroll = container.scrollHeight - container.clientHeight;
-  if(maxScroll > 0){
-    vslider.value = Math.round((container.scrollTop / maxScroll) * 100);
-  }
-});
-window.addEventListener("resize", refreshSlider);
 
 /* ---------- Action buttons enabled state ---------- */
 const downloadBtn = document.getElementById("downloadPdfBtn");
@@ -442,128 +387,54 @@ const emailBtn = document.getElementById("emailPdfBtn");
 
 function anySelected(){ return !!document.querySelector(".q-list input[type='checkbox']:checked"); }
 function updateActionsEnabled(){ [downloadBtn, printBtn, emailBtn].forEach(b=>b.disabled = !anySelected()); }
-container.addEventListener("change", ()=>{ updateActionsEnabled(); refreshSlider(); });
+container.addEventListener("change", updateActionsEnabled);
 updateActionsEnabled();
 
-/* ---------- Collect selected ---------- */
+/* ---------- Collect selected questions ---------- */
 function collectSelected(){
   return Array.from(document.querySelectorAll(".q-list input[type='checkbox']:checked"))
     .map(cb => cb.nextElementSibling.textContent.trim());
 }
 
-/* ---------- Build Styled PDF (matches your mock) ---------- */
-async function buildStyledPdf(selected){
+/* ---------- Build PDF with jsPDF ---------- */
+async function buildPdf(selected){
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "pt", format: "letter" }); // 612 x 792
-  const W = doc.internal.pageSize.getWidth();
-  const H = doc.internal.pageSize.getHeight();
-  const M = 28;
+  const doc = new jsPDF({ unit: "pt", format: "letter" }); // 612x792
+  const margin = 56, pageWidth = doc.internal.pageSize.getWidth(), pageHeight = doc.internal.pageSize.getHeight();
+  let y = margin;
 
-  // helpers
-  function rrect(x,y,w,h,r,stroke=true,fill=false){
-    doc.setLineJoin("round");
-    doc.roundedRect(x,y,w,h,r,r, stroke ? "S" : "", fill ? "F" : "");
+  function header(){
+    doc.setFont("helvetica","bold"); doc.setFontSize(18);
+    doc.text("Questions for Your Care Team", margin, y); y += 8;
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    doc.text(new Date().toLocaleString(), margin, y); y += 18;
+    doc.setDrawColor(31,95,134); doc.setLineWidth(1.2);
+    doc.line(margin, y, pageWidth - margin, y); y += 18;
   }
-  function chip(text, top){
-    const chipH = 38, chipR = 14;
-    doc.setDrawColor(31,95,134);
-    doc.setFillColor(232,243,255);
-    rrect(W/2 - 180, top, 360, chipH, chipR, true, true);
-    doc.setFont("helvetica","bold"); doc.setTextColor(27,78,115); doc.setFontSize(16);
-    doc.text(text, W/2, top + chipH/2 + 5, { align:"center", baseline:"middle" });
+  function ensure(h){ if(y + h > pageHeight - margin){ doc.addPage(); y = margin; } }
+  function section(t){
+    ensure(30);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(27,78,115);
+    doc.text(t, margin, y); y += 18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(12); doc.setTextColor(0,0,0);
   }
-  function panel(x, y, w, h){
-    doc.setDrawColor(31,95,134);
-    rrect(x,y,w,h,20,true,false);
-  }
-  function bullets(list, x, y, maxW, maxH){
-    const lh = 17;
-    doc.setFont("helvetica","normal"); doc.setFontSize(12); doc.setTextColor(15,23,42);
-    let cy = y;
-    for(const item of list){
-      const lines = doc.splitTextToSize(item, maxW - 22);
+  function bullets(arr){
+    arr.forEach(txt=>{
+      const lines = doc.splitTextToSize(txt, pageWidth - margin*2 - 16);
       lines[0] = "• " + lines[0];
-      for(const line of lines){
-        if(cy + lh > y + maxH) return cy; // stop if overflow; caller can continue on next page
-        doc.text(line, x + 12, cy);
-        cy += lh;
-      }
-      cy += 6;
-    }
-    return cy;
+      ensure(lines.length*18 + 6);
+      lines.forEach(line=>{ doc.text(line, margin + 12, y); y += 18; });
+      y += 6;
+    });
   }
 
-  // PAGE 1
-  // outer frame
-  doc.setDrawColor(31,95,134);
-  rrect(M, M, W - 2*M, H - 2*M, 32,true,false);
+  header();
+  section("Questions you chose");
+  if(selected.length){ bullets(selected); } else { doc.text("(No questions selected)", margin + 12, y); y += 18; }
 
-  // first chip + panel for selected questions
-  chip("Questions that you chose", M + 6);
-  const panel1Y = M + 56;
-  const panel1H = 280; // enough space as in screenshot; we’ll continue to next page if overflow
-  panel(M + 14, panel1Y, W - 2*M - 28, panel1H);
-
-  // second chip + panel for recommendations
-  chip("Recommendations that other patients found helpful", panel1Y + panel1H + 22);
-  const panel2Y = panel1Y + panel1H + 74;
-  const panel2H = H - M - panel2Y - 14;
-  panel(M + 14, panel2Y, W - 2*M - 28, panel2H);
-
-  // Fill questions (panel 1)
-  let cy = bullets(selected.length ? selected : ["(No questions selected)"], M + 14, panel1Y + 24, W - 2*M - 28, panel1H - 48);
-
-  // Fill recommendations (panel 2) with bold lead phrase
-  const recPlain = RECOMMENDATIONS.map(r => r.replace(/<\/?b>/g,""));
-  // draw as bullets, but make first sentence/bold phrase bold
-  let ry = panel2Y + 24, lh = 17;
-  const maxW = W - 2*M - 28;
-  for(const raw of recPlain){
-    // Bold first sentence up to first period or emdash
-    const m = raw.match(/^([^\.—–-]+)(.*)$/);
-    const lead = m ? m[1].trim() : raw;
-    const rest = m ? m[2].trim() : "";
-    const bullet = "• ";
-
-    // lead
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    let leadLines = doc.splitTextToSize(lead, maxW - 22);
-    leadLines[0] = bullet + leadLines[0];
-    for(const line of leadLines){
-      if(ry + lh > panel2Y + panel2H - 24) break;
-      doc.text(line, M + 26, ry); ry += lh;
-    }
-    // rest
-    if(rest){
-      doc.setFont("helvetica","normal");
-      const restLines = doc.splitTextToSize(" " + rest, maxW - 22);
-      for(const line of restLines){
-        if(ry + lh > panel2Y + panel2H - 24) break;
-        doc.text(line, M + 26, ry); ry += lh;
-      }
-    }
-    ry += 6;
-  }
-
-  // PAGE 2 (prompt list look) — optional, only if many selected
-  if(selected.length > 12){
-    doc.addPage();
-    const W2 = doc.internal.pageSize.getWidth(), H2 = doc.internal.pageSize.getHeight();
-    doc.setDrawColor(31,95,134);
-    rrect(M, M, W2 - 2*M, H2 - 2*M, 32,true,false);
-
-    // Banner area like screenshot
-    doc.setFillColor(218,231,242);
-    rrect(M + 12, M + 18, W2 - 2*M - 24, 70, 28, true, true);
-    doc.setFont("helvetica","bold"); doc.setTextColor(27,78,115); doc.setFontSize(14);
-    doc.text("Please let us know what is on your mind now:", M + 28, M + 60);
-
-    // Section block with many items
-    doc.setFillColor(233,238,243);
-    rrect(M + 22, M + 96, W2 - 2*M - 64, H2 - (M + 140), 12, true, true);
-    const startY = M + 120, maxH2 = H2 - (M + 160);
-    bullets(selected, M + 30, startY, W2 - 2*M - 80, maxH2);
-  }
+  section("Recommendations others found helpful");
+  const recs = RECOMMENDATIONS.map(r => r.replace(/<[^>]+>/g,""));
+  bullets(recs);
 
   return doc;
 }
@@ -577,14 +448,14 @@ function docToBlobUrl(doc){
 /* ---------- Download ---------- */
 downloadBtn.addEventListener("click", async ()=>{
   const selected = collectSelected(); if(!selected.length) return;
-  const doc = await buildStyledPdf(selected);
+  const doc = await buildPdf(selected);
   doc.save("care-questions.pdf");
 });
 
 /* ---------- Print ---------- */
 printBtn.addEventListener("click", async ()=>{
   const selected = collectSelected(); if(!selected.length) return;
-  const doc = await buildStyledPdf(selected);
+  const doc = await buildPdf(selected);
   const url = docToBlobUrl(doc);
   const w = window.open(url, "_blank");
   const tick = setInterval(()=>{
@@ -600,10 +471,11 @@ printBtn.addEventListener("click", async ()=>{
 /* ---------- Email / Share ---------- */
 emailBtn.addEventListener("click", async ()=>{
   const selected = collectSelected(); if(!selected.length) return;
-  const doc = await buildStyledPdf(selected);
+  const doc = await buildPdf(selected);
   const blob = doc.output("blob");
   const file = new File([blob], "care-questions.pdf", { type: "application/pdf" });
 
+  // Best path: native share with attachment (mobile Safari/Chrome)
   if(navigator.canShare && navigator.canShare({ files: [file] })){
     try{
       await navigator.share({
@@ -612,28 +484,34 @@ emailBtn.addEventListener("click", async ()=>{
         files: [file]
       });
       return;
-    }catch(e){ if(e && e.name === "AbortError") return; }
+    }catch(err){
+      if(err && err.name === "AbortError") return; // user cancelled
+      // fall through to mailto
+    }
   }
 
+  // Fallback: open email composer with body text + auto download PDF for manual attach
   const body = [
     "Hi,",
     "",
     "Please find my questions below. I will attach the PDF as well.",
     "",
-    ...selected.map((q,i)=>`• ${q}`),
+    ...selected.map((q,i)=>`${i+1}. ${q}`),
     "",
     "Thank you."
   ].join("\n");
   const mailto = `mailto:?subject=${encodeURIComponent("Care Questions")}&body=${encodeURIComponent(body)}`;
-
-  // auto-download so user can attach in their mail client
+  // trigger a download so the user can attach the PDF
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a"); a.href = url; a.download = "care-questions.pdf";
-  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 10000);
+  const a = document.createElement("a");
+  a.href = url; a.download = "care-questions.pdf";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 10000);
+  // open composer
   window.location.href = mailto;
 });
 
-/* ---------- Dev-only: build Link Audit table (unchanged) ---------- */
+/* ---------- Dev-only: Link Audit (remove in prod) ---------- */
 (function buildAudit(){
   const rows = [];
   document.querySelectorAll('.grid .card').forEach(card=>{
@@ -668,7 +546,6 @@ emailBtn.addEventListener("click", async ()=>{
     </tbody>`;
   wrap.appendChild(table);
 })();
-refreshSlider();
 </script>
 </body>
 </html>
