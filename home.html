@@ -6,38 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Care Questions — Home</title>
 <style>
-  :root{
-    --bg:#f6f9fc; --card:#ffffff; --ink:#0f172a; --muted:#475569;
-    --ring:rgba(59,130,246,.35); --shadow:0 10px 25px rgba(2,8,23,.12), 0 2px 6px rgba(2,8,23,.08);
-    --radius:20px;
-  }
+  :root{ --bg:#f6f9fc; --card:#ffffff; --ink:#0f172a; --muted:#475569; --ring:rgba(59,130,246,.35); --shadow:0 10px 25px rgba(2,8,23,.12), 0 2px 6px rgba(2,8,23,.08); --radius:20px; }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{
-    margin:0;
-    font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
-    font-size:17px;
-    color:var(--ink); background:var(--bg);
-  }
+  body{ margin:0; font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue"; font-size:17px; color:var(--ink); background:var(--bg); }
   .container{max-width:1200px;margin:20px auto;padding:0 16px}
   .header{display:flex;gap:16px;justify-content:flex-end;align-items:center;margin-bottom:8px}
-  .top-button{
-    background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;text-decoration:none;
-    padding:14px 22px;border-radius:14px;border:2px solid #a3c2ff;font-weight:700; box-shadow:var(--shadow);
-  }
+  .top-button{ background:linear-gradient(180deg,#e8f0ff,#d5e6ff); color:#0b2a5d;text-decoration:none; padding:14px 22px;border-radius:14px;border:2px solid #a3c2ff;font-weight:700; box-shadow:var(--shadow); }
   .top-button:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
 
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    padding:12px;min-height:220px;border:1px solid #e5e7eb;
-  }
+  .card{ background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow); display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; padding:12px;min-height:220px;border:1px solid #e5e7eb; }
   .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer;position:relative;overflow:hidden}
-  .card-start::before{
-    /* WHY: Decorative bg image; not clickable */
-    content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25;
-  }
+  .card-start::before{ content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25; }
   .start-title{font-size:40px;font-weight:800;color:#17324a;position:relative}
 
   .card-link{ color:inherit; text-decoration:none; width:100% }
@@ -53,33 +34,19 @@
   .modal{ position:fixed; inset:0; display:none; }
   .modal[aria-hidden="false"]{ display:block; }
   .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.45); backdrop-filter: blur(4px); }
-  .modal-card{
-    position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
-    box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb;
-  }
+  .modal-card{ position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px; box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb; }
   .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none;border-radius:999px; width:36px; height:36px; cursor:pointer; }
   .modal-header h2{ margin:4px 0 8px; font-size:28px }
   .lede{ color:var(--muted); margin:0 0 14px; font-size:16px }
 
   .accordion{ display:flex; flex-direction:column; gap:12px; }
   .section{ border:1px solid #d9e3f5; border-radius:16px; background:#f7fbff; overflow:hidden; }
-  .section summary{
-    list-style:none; cursor:pointer; padding:12px 16px; font-weight:800; color:#0c2f66;
-    background:#edf4ff; border-bottom:1px solid #d9e3f5; outline:none;
-  }
+  .section summary{ list-style:none; cursor:pointer; padding:12px 16px; font-weight:800; color:#0c2f66; background:#edf4ff; border-bottom:1px solid #d9e3f5; outline:none; }
   .section[open] summary{ background:#dce9ff }
   .section-content{ max-height:50vh; overflow:auto; padding:8px; }
   .section-toolbar{ display:flex; gap:8px; padding:6px 6px 8px 6px; align-items:center; flex-wrap:wrap }
-  .mini{
-    border:1px solid #cbd5e1; background:#fff; border-radius:10px; padding:6px 10px; font-weight:700; cursor:pointer;
-  }
-  /* eResources pill — matches screenshot style and placement */
-  .eres-btn{
-    margin-left:auto; /* WHY: right-align button within toolbar */
-    border:1px solid #94a3b8; background:#fff; border-radius:12px;
-    padding:8px 14px; font-weight:800; text-decoration:none; color:#0b2a5d;
-    display:inline-flex; align-items:center; line-height:1;
-  }
+  .mini{ border:1px solid #cbd5e1; background:#fff; border-radius:10px; padding:6px 10px; font-weight:700; cursor:pointer; }
+  .eres-btn{ margin-left:auto; border:1px solid #94a3b8; background:#fff; border-radius:12px; padding:8px 14px; font-weight:800; text-decoration:none; color:#0b2a5d; display:inline-flex; align-items:center; line-height:1; }
   .eres-btn:hover{ background:#f1f5f9 }
   .eres-btn:active{ transform:translateY(1px) }
 
@@ -87,18 +54,10 @@
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
   .q-list li:last-child{ border-bottom:none }
 
-  .modal-footer{
-    display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap;
-  }
-  .primary{
-    background:linear-gradient(180deg,#60a5fa,#3b82f6); color:white; border:none; border-radius:12px;
-    padding:12px 18px; font-weight:800; cursor:pointer;
-  }
+  .modal-footer{ display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; }
+  .primary{ background:linear-gradient(180deg,#60a5fa,#3b82f6); color:white; border:none; border-radius:12px; padding:12px 18px; font-weight:800; cursor:pointer; }
   .primary[disabled]{opacity:.5; cursor:not-allowed}
-  .secondary{
-    border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; text-decoration:none;
-    color:#0b2a5d; font-weight:700; background:#f8fafc;
-  }
+  .secondary{ border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; text-decoration:none; color:#0b2a5d; font-weight:700; background:#f8fafc; }
   .links-pack{ display:flex; flex-wrap:wrap; gap:8px }
   :where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
 
@@ -118,12 +77,10 @@
   </header>
 
   <main class="container grid">
-    <!-- Start Here -->
     <button class="card card-start" id="startHereBtn" aria-haspopup="dialog" aria-controls="startModal">
       <span class="start-title">Start Here</span>
     </button>
 
-    <!-- After Diagnosis -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterDiagnosis.jpg" alt="After diagnosis image">
@@ -135,7 +92,6 @@
       </div>
     </div>
 
-    <!-- Choosing Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image">
@@ -147,7 +103,6 @@
       </div>
     </div>
 
-    <!-- During Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/treatment/treatment.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/DuringTreatment.jpg" alt="During treatment image">
@@ -159,7 +114,6 @@
       </div>
     </div>
 
-    <!-- After Treatment -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/AfterTreatment.JPG" alt="After treatment image">
@@ -171,7 +125,6 @@
       </div>
     </div>
 
-    <!-- Complementary/Integrative -->
     <div class="card">
       <a class="thumb" href="https://ilonafridman.github.io/complementary/complementary.html" target="_blank" rel="noopener">
         <img src="https://ilonafridman.github.io/Complementary Therapy.jpg" alt="Complementary therapy image">
@@ -184,7 +137,6 @@
     </div>
   </main>
 
-  <!-- Dev-only: Link Audit (remove in prod) -->
   <section class="container audit">
     <details>
       <summary>🔎 Link Audit (images & targets)</summary>
@@ -202,14 +154,18 @@
         <h2 id="startModalTitle">Questions to ask your provider</h2>
         <div id="startModalIntro" class="lede-panel">
           <p>Many patients wonder: What should I ask my provider? How could I move forward?</p>
-          <p>Open one or more sections and check the questions you want to bring to your care team. You can download chosen questions or explore eResources on your own.</p>
+          <p>Open one or more sections and check the questions you want to bring to your care team. You can generate a PDF, print it, or share it.</p>
         </div>
       </div>
 
       <div class="accordion" id="accordion"><!-- injected by JS --></div>
 
       <div class="modal-footer">
-        <button class="primary" id="printBtn" disabled>Download / Print PDF</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="primary" id="downloadPdfBtn" disabled>Download PDF</button>
+          <button class="primary" id="printPdfBtn" disabled>Print PDF</button>
+          <button class="primary" id="sharePdfBtn" disabled>Share</button>
+        </div>
         <div class="links-pack">
           <a class="secondary" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" target="_blank" rel="noopener">After diagnosis</a>
           <a class="secondary" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" target="_blank" rel="noopener">Choosing treatment</a>
@@ -240,73 +196,60 @@
     </div>
   </div>
 
+<!-- jsPDF (UMD) -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha384-9N4XQ1X6G3Ww0m0c1G1xkY7z8Wl6q8e9zJx8xq1p7VJ2y1qvQpVq0n8pCqj9sV5Q" crossorigin="anonymous"></script>
+
 <script>
 /* ---------- Data ---------- */
 const TOPICS = {
-  diagnosis: {
-    title: "I would like to understand my diagnosis better",
-    questions: [
-      "What type and stage of breast cancer do I have?",
-      "How fast is my cancer growing?",
-      "Do I need any more tests or biopsies to be sure about my diagnosis?",
-      "Do I need to do genetic testing?",
-      "How much time do I have to decide on my treatment?",
-      "Which doctors should I see, and when should I see them?",
-          ]
-  },
-  choosing: {
-    title: "I need to choose a treatment",
-    questions: [
-      "What treatment options do I have?",
-      "Which treatment gives the lowest chance of the cancer coming back?",
-      "If you were in my place, which treatment would you choose?",
-      "What happens if I decide not to have surgery, radiation, or chemotherapy?",
-      "How soon do I need to start treatment? Do I have time to get a second opinion?",
-      "What are my surgery options?",
-      "What problems or risks come with each type of surgery?",
-      "What are the side effects of radiation?",
-      "Will I need chemotherapy?",
-      "Will I need hormone therapy?",
-      "When should I decide about breast reconstruction surgery?"
-    ]
-  },
-  during: {
-    title: "I am going through treatment",
-    questions: [
-      "Can you walk me through the steps involved in my treatment plan?",
-      "What side effects should I expect from my treatment?",
-      "Are there any tools or tips you recommend for coping with common side effects?",
-      "When should I contact my healthcare team between visits?",
-      "What should I do if my personal situation makes it hard to get to treatment?",
-      "Are there counselors or support groups available?",
-      "What integrative therapy services are available to support me during treatment?",
-      "The cost of my treatment is high — what options do I have for financial assistance?"
-    ]
-  },
-  integrative: {
-    title: "I hope to learn about complementary and integrative therapy",
-    questions: [
-      "Can any vitamins, herbs, or lifestyle changes make my treatment less effective or cause side effects?",
-      "How do I know if a supplement or therapy is safe for me?",
-      "Where can I find good information about complementary/non-mainstream therapies for people with cancer?",
-      "What should I eat or drink during treatment to help me stay strong and recover better?",
-      "Where can I find a doctor or specialist who works in integrative medicine?"
-    ]
-  },
-  after: {
-    title: "I completed my treatment. What is next?",
-    questions: [
-      "Which specific tests or screenings will I need during follow-up, and how often?",
-      "Who will coordinate my follow-up care among my healthcare providers?",
-      "What symptoms should prompt me to contact you between scheduled visits?",
-      "Am I at increased risk for any health conditions because of my treatment?",
-      "Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?",
-      "Can you recommend support groups or counseling services for breast cancer survivors?"
-    ]
-  }
+  diagnosis: { title: "I would like to understand my diagnosis better", questions: [
+    "What type and stage of breast cancer do I have?",
+    "How fast is my cancer growing?",
+    "Do I need any more tests or biopsies to be sure about my diagnosis?",
+    "Do I need to do genetic testing?",
+    "How much time do I have to decide on my treatment?",
+    "Which doctors should I see, and when should I see them?",
+  ]},
+  choosing: { title: "I need to choose a treatment", questions: [
+    "What treatment options do I have?",
+    "Which treatment gives the lowest chance of the cancer coming back?",
+    "If you were in my place, which treatment would you choose?",
+    "What happens if I decide not to have surgery, radiation, or chemotherapy?",
+    "How soon do I need to start treatment? Do I have time to get a second opinion?",
+    "What are my surgery options?",
+    "What problems or risks come with each type of surgery?",
+    "What are the side effects of radiation?",
+    "Will I need chemotherapy?",
+    "Will I need hormone therapy?",
+    "When should I decide about breast reconstruction surgery?",
+  ]},
+  during: { title: "I am going through treatment", questions: [
+    "Can you walk me through the steps involved in my treatment plan?",
+    "What side effects should I expect from my treatment?",
+    "Are there any tools or tips you recommend for coping with common side effects?",
+    "When should I contact my healthcare team between visits?",
+    "What should I do if my personal situation makes it hard to get to treatment?",
+    "Are there counselors or support groups available?",
+    "What integrative therapy services are available to support me during treatment?",
+    "The cost of my treatment is high — what options do I have for financial assistance?",
+  ]},
+  integrative: { title: "I hope to learn about complementary and integrative therapy", questions: [
+    "Can any vitamins, herbs, or lifestyle changes make my treatment less effective or cause side effects?",
+    "How do I know if a supplement or therapy is safe for me?",
+    "Where can I find good information about complementary/non-mainstream therapies for people with cancer?",
+    "What should I eat or drink during treatment to help me stay strong and recover better?",
+    "Where can I find a doctor or specialist who works in integrative medicine?",
+  ]},
+  after: { title: "I completed my treatment. What is next?", questions: [
+    "Which specific tests or screenings will I need during follow-up, and how often?",
+    "Who will coordinate my follow-up care among my healthcare providers?",
+    "What symptoms should prompt me to contact you between scheduled visits?",
+    "Am I at increased risk for any health conditions because of my treatment?",
+    "Are there lifestyle changes or behaviors you recommend to help reduce the risk of cancer coming back?",
+    "Can you recommend support groups or counseling services for breast cancer survivors?",
+  ]},
 };
 
-/* eResources links in the order of sections on the page */
 const ER_LINKS = {
   diagnosis: "https://ilonafridman.github.io/diagnosis/diagnosisinfo.html",
   choosing: "https://ilonafridman.github.io/choosingtreatment/choosingtreatmentinfo.html",
@@ -344,14 +287,13 @@ document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("cli
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click",()=>closeModal(bg.getAttribute("data-close"))));
 document.getElementById("startHereBtn").addEventListener("click",()=>openModal("startModal"));
 
-/* ---------- Build sections with Select/Clear + eResources ---------- */
+/* ---------- Build sections ---------- */
 const container = document.getElementById("accordion");
 function buildSections(){
   container.innerHTML = "";
-  Object.entries(TOPICS).forEach(([key, topic], idx)=>{
+  Object.entries(TOPICS).forEach(([key, topic])=>{
     const details = document.createElement("details");
     details.className = "section";
-    details.open = false;
 
     const summary = document.createElement("summary");
     summary.textContent = topic.title;
@@ -368,7 +310,6 @@ function buildSections(){
     const clearBtn = document.createElement("button");
     clearBtn.className = "mini"; clearBtn.type = "button"; clearBtn.textContent = "Clear all";
 
-    /* eResources pill — opens your specific info page */
     const er = document.createElement("a");
     er.className = "eres-btn";
     er.href = ER_LINKS[key] || "#";
@@ -389,16 +330,16 @@ function buildSections(){
 
     selectBtn.addEventListener("click", ()=>{
       list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=true);
-      updatePrintEnabled();
+      updateActionsEnabled();
     });
     clearBtn.addEventListener("click", ()=>{
       list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.checked=false);
-      updatePrintEnabled();
+      updateActionsEnabled();
     });
 
     toolbar.appendChild(selectBtn);
     toolbar.appendChild(clearBtn);
-    toolbar.appendChild(er);        // right-aligned via CSS
+    toolbar.appendChild(er);
 
     wrap.appendChild(toolbar);
     wrap.appendChild(list);
@@ -410,72 +351,164 @@ function buildSections(){
 }
 buildSections();
 
-/* ---------- Enable print when any are selected ---------- */
-const printBtn = document.getElementById("printBtn");
-function updatePrintEnabled(){
-  const any = !!document.querySelector(".q-list input[type='checkbox']:checked");
-  printBtn.disabled = !any;
+/* ---------- Enable actions when any are selected ---------- */
+const downloadBtn = document.getElementById("downloadPdfBtn");
+const printBtn = document.getElementById("printPdfBtn");
+const shareBtn = document.getElementById("sharePdfBtn");
+
+function anySelected(){
+  return !!document.querySelector(".q-list input[type='checkbox']:checked");
 }
-container.addEventListener("change", updatePrintEnabled);
-
-/* ---------- Printable Handout ---------- */
-function buildPrintHTML(selected){
-  const items = selected.map(q=>`<li>${q}</li>`).join("");
-  const recs = RECOMMENDATIONS.map(r=>`<li>${r}</li>`).join("");
-
-  return `<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Questions You Chose</title>
-<style>
-  :root{ --ink:#0f172a; --border:#1f5f86; }
-  *{ box-sizing:border-box }
-  body{
-    font-family: Arial, sans-serif; font-size:18px; line-height:1.55;
-    color:var(--ink); margin:0; padding:28px; background:#fff;
-  }
-  .frame{ border:4px solid var(--border); border-radius:32px; padding:18px; }
-  .h-chip{
-    display:block; text-align:center; font-weight:700; font-size:22px; color:#1b4e73;
-    background:#e8f3ff; border:3px solid var(--border); padding:12px 16px; border-radius:16px;
-    margin:-8px auto 14px; width:fit-content; min-width:300px;
-  }
-  .panel{ border:5px solid var(--border); border-radius:28px; padding:20px; min-height:220px; }
-  ul{ margin:0; padding-left:22px } li{ margin:8px 0 }
-  @media print { .pagebreak { page-break-before: always; } }
-</style>
-</head>
-<body>
-  <div class="frame">
-    <div class="h-chip">Questions that you chose</div>
-    <div class="panel">
-      ${selected.length ? `<ul>${items}</ul>` : "<p>(No questions selected)</p>"}
-    </div>
-
-    <div style="height:18px"></div>
-
-    <div class="h-chip">Recommendations that other patients found helpful</div>
-    <div class="panel">
-      <ul>${recs}</ul>
-    </div>
-  </div>
-  <script>window.addEventListener('load',()=>window.print());<\/script>
-</body>
-</html>`;
+function updateActionsEnabled(){
+  const enabled = anySelected();
+  [downloadBtn, printBtn, shareBtn].forEach(b => b.disabled = !enabled);
 }
+container.addEventListener("change", updateActionsEnabled);
+updateActionsEnabled();
 
-printBtn.addEventListener("click", ()=>{
-  const selected = Array.from(document.querySelectorAll(".q-list input[type='checkbox']:checked"))
+/* ---------- Collect selection ---------- */
+function collectSelected(){
+  return Array.from(document.querySelectorAll(".q-list input[type='checkbox']:checked"))
     .map(cb => cb.nextElementSibling.textContent.trim());
-  if(!selected.length) return;
-  const w = window.open("", "_blank");
-  w.document.open();
-  w.document.write(buildPrintHTML(selected));
-  w.document.close();
+}
+
+/* ---------- Build PDF with jsPDF ---------- */
+async function buildPdf(selected){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "pt", format: "letter" }); // 612x792
+  const margin = 56;
+  const lineHeight = 20;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  let y = margin;
+
+  function addHeader(title){
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.text(title, margin, y);
+    y += 8;
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(new Date().toLocaleString(), margin, y);
+    y += 18;
+    doc.setDrawColor(31,95,134);
+    doc.setLineWidth(1.2);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 18;
+  }
+
+  function ensureSpace(required){
+    if (y + required > pageHeight - margin){
+      doc.addPage();
+      y = margin;
+    }
+  }
+
+  function addSection(title){
+    ensureSpace(30);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(27,78,115);
+    doc.text(title, margin, y);
+    y += 14;
+    doc.setTextColor(0,0,0);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    y += 6;
+  }
+
+  function addBullets(items){
+    const bullet = "• ";
+    items.forEach(txt=>{
+      const wrapped = doc.splitTextToSize(txt, pageWidth - margin*2 - 16);
+      wrapped[0] = bullet + wrapped[0];
+      ensureSpace(wrapped.length * lineHeight + 6);
+      wrapped.forEach((line, i)=>{
+        doc.text(line, margin + 12, y);
+        y += lineHeight;
+      });
+      y += 6;
+    });
+  }
+
+  addHeader("Questions for Your Care Team");
+  addSection("Questions you chose");
+  if (selected.length){
+    addBullets(selected);
+  } else {
+    ensureSpace(lineHeight);
+    doc.text("(No questions selected)", margin + 12, y);
+    y += lineHeight;
+  }
+
+  addSection("Recommendations others found helpful");
+  const recPlain = RECOMMENDATIONS.map(r => r.replace(/<[^>]+>/g,"")); // strip <b>
+  addBullets(recPlain);
+
+  return doc;
+}
+
+/* ---------- Actions ---------- */
+downloadBtn.addEventListener("click", async ()=>{
+  const selected = collectSelected();
+  if (!selected.length) return;
+  const doc = await buildPdf(selected);
+  doc.save("care-questions.pdf"); // downloads
 });
 
-/* ---------- Dev-only: build Link Audit table (remove in prod) ---------- */
+printBtn.addEventListener("click", async ()=>{
+  const selected = collectSelected();
+  if (!selected.length) return;
+  const doc = await buildPdf(selected);
+  const blob = doc.output("blob");
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, "_blank");
+  // WHY: Some browsers need a slight delay before print
+  const timer = setInterval(()=>{
+    if (w && w.document && w.document.readyState === "complete"){
+      clearInterval(timer);
+      w.focus();
+      w.print();
+    }
+  }, 150);
+  // Revoke on tab close to avoid leaks
+  const revoke = () => { URL.revokeObjectURL(url); w && w.removeEventListener("beforeunload", revoke); };
+  w && w.addEventListener("beforeunload", revoke);
+});
+
+shareBtn.addEventListener("click", async ()=>{
+  const selected = collectSelected();
+  if (!selected.length) return;
+  const doc = await buildPdf(selected);
+  const blob = doc.output("blob");
+  const file = new File([blob], "care-questions.pdf", { type: "application/pdf" });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })){
+    try{
+      await navigator.share({
+        title: "Care Questions",
+        text: "Here are the questions I'd like to discuss with my care team.",
+        files: [file]
+      });
+    }catch(e){
+      if (e && e.name !== "AbortError") alert("Share failed. You can try email instead.");
+    }
+    return;
+  }
+
+  // Fallback: email compose with plain text; attachments via mailto are not supported
+  const bodyLines = [
+    "Questions I'd like to discuss:",
+    "",
+    ...selected.map((q,i)=>`${i+1}. ${q}`),
+    "",
+    "(PDF also available to download from the page.)"
+  ];
+  const mailto = `mailto:?subject=${encodeURIComponent("Care Questions")}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+  window.location.href = mailto;
+});
+
+/* ---------- Dev-only: Link Audit (unchanged) ---------- */
 (function buildAudit(){
   const rows = [];
   document.querySelectorAll('.grid .card').forEach(card=>{
@@ -510,7 +543,6 @@ printBtn.addEventListener("click", ()=>{
     </tbody>`;
   wrap.appendChild(table);
 })();
-updatePrintEnabled();
 </script>
 </body>
 </html>
