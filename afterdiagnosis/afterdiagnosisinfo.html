@@ -27,8 +27,8 @@
     }
     .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
 
-    /* Resource tiles (single column like a long list) */
-    .resource-grid{display:grid;grid-template-columns:1fr;gap:24px}
+    /* Resource tiles (3 columns like code 2) */
+    .resource-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:24px}
     .resource{display:block;text-decoration:none;color:inherit}
     .thumb{
       border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;
@@ -38,7 +38,7 @@
     .caption{text-align:center;font-weight:700;margin-top:10px;font-size:18px}
     .divider{height:1px;background:repeating-linear-gradient(to right, #cfd5dd 0 6px, transparent 6px 12px);opacity:.9;margin:22px 0}
 
-    /* RIGHT column (CTA buttons) */
+    /* RIGHT column (CTA buttons from code 2) */
     .side{display:flex;flex-direction:column;gap:28px;align-items:flex-start}
     .cta{
       display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;
@@ -50,19 +50,14 @@
     }
     .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
     .cta:focus-visible{outline:none;box-shadow:var(--ring)}
-    .cta.active{
-      filter:brightness(1.15);
-      background:linear-gradient(180deg,#cfe3f7,#e7f1fb);
-      color:#1f2937; text-shadow:none; outline-width:2px;
-    }
 
-    /* Right image */
-    .pic-wrap{width:100%;max-width:340px}
+    /* Right image (size matches code 2) */
+    .pic-wrap{width:100%;max-width:170px}
     .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#f3f4f6}
     .pic{width:100%;height:100%;object-fit:contain;display:block}
     .pic-cap{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
-     /* Home (same size as other pages) */
+    /* Home (same size as other pages) */
     .home-link{
       position:fixed; inset:14px auto auto 14px; z-index:50;
       display:inline-flex; align-items:center; justify-content:center;
@@ -76,6 +71,7 @@
 
     @media (max-width:760px){
       .layout{grid-template-columns:1fr;gap:28px}
+      .resource-grid{grid-template-columns:1fr}
       .side .cta{width:100%;min-width:unset}
       .pic-wrap{max-width:100%}
     }
@@ -90,7 +86,7 @@
   <main class="container">
     <section class="layout">
       <article class="info-card" aria-label="Helpful information links">
-        <h3 class="section-title">Helpful Information</h3>
+        <h3 class="section-title">Information to Explore</h3>
 
         <div class="resource-grid">
           <a class="resource" target="_blank" rel="noopener noreferrer"
@@ -114,38 +110,18 @@
       </article>
 
       <aside class="side" aria-label="Actions">
-        <a id="cta-questions"  class="cta" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosis.html">Questions to ask</a>
-        <a id="cta-helpful"    class="cta" href="https://ilonafridman.github.io/afterdiagnosis/afterdiagnosisinfo.html">Helpful Information</a>
-        <a id="cta-resources"  class="cta" href="https://ilonafridman.github.io/afterdiagnosis/read-more-resources.html">Resources to explore</a>
+        <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
+        <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Go back to questions</a>
 
         <div class="pic-wrap">
           <a class="pic-link" target="_blank" rel="noopener noreferrer"
-             href="https://ilonafridman.github.io/afterdiagnosis/Patient_with_Computer.png">
-            <img class="pic" src="https://ilonafridman.github.io/afterdiagnosis/Patient_with_Computer.png" alt="Patient at a computer" />
+             href="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg">
+            <img class="pic" src="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg" alt="Patient at a computer" />
           </a>
           <div class="pic-cap">Patient reading trusted information</div>
         </div>
       </aside>
     </section>
   </main>
-
-  <script>
-    // Active CTA highlight
-    (function setActiveCTA(){
-      const href = location.href.toLowerCase();
-      const q = document.getElementById('cta-questions');
-      const h = document.getElementById('cta-helpful');
-      const r = document.getElementById('cta-resources');
-      [q,h,r].forEach(el => { el.classList.remove('active'); el.removeAttribute('aria-current'); });
-
-      if (href.includes('read-more-resources.html')) {
-        r.classList.add('active'); r.setAttribute('aria-current','page');
-      } else if (href.includes('afterdiagnosisinfo.html')) {
-        h.classList.add('active'); h.setAttribute('aria-current','page');
-      } else {
-        q.classList.add('active'); q.setAttribute('aria-current','page');
-      }
-    })();
-  </script>
 </body>
 </html>
