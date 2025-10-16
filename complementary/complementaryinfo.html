@@ -1,10 +1,10 @@
-<!-- File: /complementary/complementaryinfo.html -->
+<!-- File: /public/read-more-resources.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Helpful Information – Integrative Therapy</title>
+  <title>Basics of Breast Cancer</title>
   <style>
     :root{
       --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
@@ -17,6 +17,15 @@
     .container{max-width:1100px;margin:42px auto;padding:0 20px}
     .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
 
+    /* ==== HOME BUTTON – styles ==== */
+.home-link{
+  position:fixed; inset:14px auto auto 14px; z-index:50; display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:10px; background:#fff; border:1px solid var(--line); box-shadow:0 6px 16px rgba(0,0,0,.12); text-decoration:none;
+}
+.home-link:hover{transform:translateY(-1px)}
+.home-link:focus-visible{outline:none;box-shadow:var(--ring)}
+.home-link svg{width:22px;height:22px;fill:#374151}
+/* ==== HOME BUTTON – styles END ==== */
     /* LEFT card */
     .info-card{
       background:var(--panel);
@@ -27,8 +36,8 @@
     }
     .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
 
-    /* Resource tiles (single column like a long list) */
-    .resource-grid{display:grid;grid-template-columns:1fr;gap:24px}
+    /* Resource tiles (now 3 columns) */
+    .resource-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:24px}
     .resource{display:block;text-decoration:none;color:inherit}
     .thumb{
       border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;
@@ -57,12 +66,12 @@
     }
 
     /* Right image */
-    .pic-wrap{width:100%;max-width:340px}
+    .pic-wrap{width:100%;max-width:170px}
     .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#f3f4f6}
     .pic{width:100%;height:100%;object-fit:contain;display:block}
     .pic-cap{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
-     /* Home (same size as other pages) */
+    /* Home (same size as other pages) */
     .home-link{
       position:fixed; inset:14px auto auto 14px; z-index:50;
       display:inline-flex; align-items:center; justify-content:center;
@@ -76,17 +85,20 @@
 
     @media (max-width:760px){
       .layout{grid-template-columns:1fr;gap:28px}
+      .resource-grid{grid-template-columns:1fr} /* Stacks images vertically on small screens */
       .side .cta{width:100%;min-width:unset}
       .pic-wrap{max-width:100%}
     }
   </style>
 </head>
 <body>
-  <!-- Home button -->
+ <!-- ==== HOME BUTTON – element ==== -->
   <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
   </a>
-
+  <!-- Tools: Page PDF, Email, Section PDF -->
+  <div class="util-wrap" role="group" aria-label="Page utilities">
+    
   <main class="container">
     <section class="layout">
       <article class="info-card" aria-label="Helpful information links">
