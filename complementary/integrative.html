@@ -1,1 +1,190 @@
+<!-- File: /pages/cim-patient-table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Complementary & Integrative Medicine — Patient Guide</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0f172a;
+      --muted:#334155;
+      --blue:#2563eb;
+      --blue-ink:#1e3a8a;
+      --gray:#f1f5f9;
+      --border:#cbd5e1;
+      --warn:#ef4444;
+      --radius:14px;
+      --shadow:0 6px 18px rgba(2,6,23,.06);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.55}
+    a{color:var(--blue)}
+    .container{max-width:1100px;margin:0 auto;padding:28px 18px 60px}
+    .title{font-weight:800;color:var(--blue);font-size:clamp(28px,3.4vw,42px);margin:2px 0 14px;letter-spacing:.2px}
+    .section-title{color:var(--blue);font-weight:800;font-size:clamp(18px,2.2vw,24px);margin:22px 0 10px}
+    .lead{max-width:80ch;color:var(--text);margin:6px 0 8px}
+    .encourage{max-width:80ch;color:var(--muted);font-weight:600;margin:2px 0 16px}
+    .callout{border-left:6px solid var(--warn);background:#fff5f5;padding:14px 16px;border-radius:12px;box-shadow:var(--shadow);margin:10px 0 18px}
+    .callout b{color:var(--warn)}
+    .underline{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px}
+    .table-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:auto}
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:760px}
+    caption{text-align:left;font-weight:800;color:var(--blue-ink);padding:16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#f8fbff,#eef4ff)}
+    thead th{position:sticky;top:0;z-index:1;background:#eaf1ff;color:#0f172a;font-weight:800;text-align:left;padding:14px;border-bottom:1px solid var(--border)}
+    tbody td{vertical-align:top;padding:14px;border-bottom:1px solid var(--border)}
+    tbody tr:nth-child(even){background:var(--gray)}
+    .col-side{width:18ch}.col-approach{width:32%}.col-helps{width:28%}.col-interactions{width:28%}
+    ul{margin:0 0 0 18px;padding:0} li{margin:2px 0}
+    .resources{margin-top:16px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:var(--shadow)}
+    .resources h3{margin:0 0 6px;color:var(--blue-ink);font-size:18px}
+    .resources ul{margin-left:18px}
+    .note{margin-top:16px;color:#7f1d1d;background:#fff5f5;border-top:1px solid #fecaca;padding:10px 12px;font-weight:700;letter-spacing:.15px;border-radius:8px}
+    /* Mobile cards */
+    @media (max-width: 760px){
+      .table-wrap{border:0;border-radius:0;box-shadow:none}
+      table{display:none}
+      .cards{display:grid;gap:14px}
+      .card{border:1px solid var(--border);border-radius:12px;background:#fff;padding:12px 12px;box-shadow:var(--shadow)}
+      .kv{display:grid;grid-template-columns: 160px 1fr;gap:8px 10px}
+      .k{font-weight:800;color:var(--muted)}
+      .v{color:#0f172a}
+      .card h3{margin:0 0 6px;font-size:18px;color:var(--blue-ink)}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Complementary and Integrative Medicine</h1>
 
+    <h2 class="section-title">What is Complementary and Integrative Treatment</h2>
+    <p class="lead">
+      Complementary and integrative treatments include a wide range of therapies such as acupuncture, meditation, herbal remedies,
+      yoga, massage, and nutrition-based practices. To help you navigate complementary and integrative treatment, we assembled
+      some therapies from evidence-based sources of information in the table below.
+    </p>
+    <p class="encourage">
+      Exploring complementary and integrative therapies can be a valuable part of your healthcare journey. We encourage you to
+      explore them and talk with your healthcare team—we’re here to support you and answer any questions.
+    </p>
+    <p class="callout">
+      <b>Important:</b> Always check with your doctor before starting any new therapy or supplement,
+      as <span class="underline">some may reduce the effectiveness of your treatment or cause harmful side effects</span>.
+    </p>
+
+    <h2 class="section-title">Recommended Complementary and Integrative Treatment</h2>
+
+    <div class="table-wrap" role="region" aria-label="Complementary approaches by side effect">
+      <table aria-describedby="t-caption">
+        <caption id="t-caption">Complementary approaches that may help with common treatment side effects</caption>
+        <thead>
+          <tr>
+            <th class="col-side">Side Effect</th>
+            <th class="col-approach">Complementary Medicine Approach</th>
+            <th class="col-helps">How It Helps</th>
+            <th class="col-interactions">Possible interactions with your cancer-directed treatment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fatigue</td>
+            <td><ul><li>Yoga</li><li>Tai Chi</li><li>Massage Therapy</li></ul></td>
+            <td>Increases energy and reduces stress.</td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>Pain</td>
+            <td><ul><li>Acupuncture</li><li>Acupressure</li><li>Massage</li><li>Meditation</li><li>Physical Therapy</li></ul></td>
+            <td>Reduces pain perception; promotes relaxation.</td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>Nausea and Vomiting</td>
+            <td><ul><li>Ginger Supplements</li><li>Acupressure</li></ul></td>
+            <td>Helps settle the stomach and reduce nausea.</td>
+            <td>Ginger may interact with pain killers and others.</td>
+          </tr>
+          <tr>
+            <td>Anxiety and Stress</td>
+            <td><ul><li>Acupressure</li><li>Meditation</li><li>Deep Breathing</li><li>Music Therapy</li></ul></td>
+            <td>Lowers stress; boosts mood.</td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>Insomnia (Trouble Sleeping)</td>
+            <td><ul><li>Guided Imagery</li><li>Herbal Teas (e.g., chamomile)</li></ul></td>
+            <td>Promotes relaxation and better sleep.</td>
+            <td>Herbal tea may interact with hormone therapy.</td>
+          </tr>
+          <tr>
+            <td>Digestive Issues</td>
+            <td><ul><li>Probiotics</li><li>Peppermint Oil</li><li>Dietary Adjustments</li></ul></td>
+            <td>Eases bloating, diarrhea, and constipation.</td>
+            <td>Probiotics may interact with antibiotics.</td>
+          </tr>
+          <tr>
+            <td>Mouth Sores</td>
+            <td><ul><li>Honey</li><li>Aloe Vera Rinses</li></ul></td>
+            <td>Reduces pain and inflammation.</td>
+            <td>Immunosuppressant use may impact some drug absorption; Honey and <em>Aloe</em> may interact with some drugs.</td>
+          </tr>
+          <tr>
+            <td>Neuropathy (Nerve Pain)</td>
+            <td><ul><li>Acupuncture</li><li>Physical Therapy</li><li>Essential Oils</li></ul></td>
+            <td>Relieves pain and improves nerve function.</td>
+            <td>Essential oils can be toxic if ingested.</td>
+          </tr>
+          <tr>
+            <td>Skin Issues</td>
+            <td><ul><li>Calendula or Aloe Vera Cream</li></ul></td>
+            <td>Soothes irritation; reduces dryness.</td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>Hair loss</td>
+            <td><ul><li>Cool capping</li></ul></td>
+            <td>Reduces effect of chemotherapy on hair loss (not complete prevention).</td>
+            <td>NA</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Mobile cards -->
+      <div class="cards" aria-hidden="true">
+        <article class="card"><h3>Fatigue</h3><div class="kv"><div class="k">Approach</div><div class="v">Yoga; Tai Chi; Massage Therapy</div><div class="k">How it helps</div><div class="v">Increases energy and reduces stress.</div><div class="k">Interactions</div><div class="v">NA</div></div></article>
+        <article class="card"><h3>Pain</h3><div class="kv"><div class="k">Approach</div><div class="v">Acupuncture; Acupressure; Massage; Meditation; Physical Therapy</div><div class="k">How it helps</div><div class="v">Reduces pain perception; promotes relaxation.</div><div class="k">Interactions</div><div class="v">NA</div></div></article>
+        <article class="card"><h3>Nausea and Vomiting</h3><div class="kv"><div class="k">Approach</div><div class="v">Ginger Supplements; Acupressure</div><div class="k">How it helps</div><div class="v">Helps settle the stomach and reduce nausea.</div><div class="k">Interactions</div><div class="v">Ginger may interact with pain killers and others.</div></div></article>
+        <article class="card"><h3>Anxiety and Stress</h3><div class="kv"><div class="k">Approach</div><div class="v">Acupressure; Meditation; Deep Breathing; Music Therapy</div><div class="k">How it helps</div><div class="v">Lowers stress; boosts mood.</div><div class="k">Interactions</div><div class="v">NA</div></div></article>
+        <article class="card"><h3>Insomnia (Trouble Sleeping)</h3><div class="kv"><div class="k">Approach</div><div class="v">Guided Imagery; Herbal Teas (e.g., chamomile)</div><div class="k">How it helps</div><div class="v">Promotes relaxation and better sleep.</div><div class="k">Interactions</div><div class="v">Herbal tea may interact with hormone therapy.</div></div></article>
+        <article class="card"><h3>Digestive Issues</h3><div class="kv"><div class="k">Approach</div><div class="v">Probiotics; Peppermint Oil; Dietary Adjustments</div><div class="k">How it helps</div><div class="v">Eases bloating, diarrhea, and constipation.</div><div class="k">Interactions</div><div class="v">Probiotics may interact with antibiotics.</div></div></article>
+        <article class="card"><h3>Mouth Sores</h3><div class="kv"><div class="k">Approach</div><div class="v">Honey; Aloe Vera Rinses</div><div class="k">How it helps</div><div class="v">Reduces pain and inflammation.</div><div class="k">Interactions</div><div class="v">Immunosuppressant use may impact some drug absorption; Honey and Aloe may interact with some drugs.</div></div></article>
+        <article class="card"><h3>Neuropathy (Nerve Pain)</h3><div class="kv"><div class="k">Approach</div><div class="v">Acupuncture; Physical Therapy; Essential Oils</div><div class="k">How it helps</div><div class="v">Relieves pain and improves nerve function.</div><div class="k">Interactions</div><div class="v">Essential oils can be toxic if ingested.</div></div></article>
+        <article class="card"><h3>Skin Issues</h3><div class="kv"><div class="k">Approach</div><div class="v">Calendula or Aloe Vera Cream</div><div class="k">How it helps</div><div class="v">Soothes irritation; reduces dryness.</div><div class="k">Interactions</div><div class="v">NA</div></div></article>
+        <article class="card"><h3>Hair loss</h3><div class="kv"><div class="k">Approach</div><div class="v">Cool capping</div><div class="k">How it helps</div><div class="v">Reduces effect of chemotherapy on hair loss (not complete prevention).</div><div class="k">Interactions</div><div class="v">NA</div></div></article>
+      </div>
+    </div>
+
+    <div class="resources" aria-labelledby="resources-title">
+      <h3 id="resources-title">Resources</h3>
+      <ul>
+        <li>
+          Scientific guide to complementary medicine:
+          <a href="https://www.nccih.nih.gov/health/atoz#linkC" target="_blank" rel="noopener">NCCIH — Health A to Z</a>
+        </li>
+        <li>
+          Dawczak-Dębicka A, Kufel-Grabowska J, Bartoszkiewicz M, Perdyan A, Jassem J.
+          Complementary and Alternative Therapies in Oncology.
+          <em>Int J Environ Res Public Health.</em> 2022 Apr 21;19(9):5071.
+          doi: 10.3390/ijerph19095071. PMID: 35564468; PMCID: PMC9104744.
+        </li>
+      </ul>
+    </div>
+
+    <p class="note">
+      Discuss any information you find with your healthcare providers to ensure it is relevant to your specific situation.
+    </p>
+  </div>
+</body>
+</html>
