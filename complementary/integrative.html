@@ -32,38 +32,49 @@
   a{color:var(--blue);text-decoration:none}
   a:hover{text-decoration:underline}
 
-  /* SOLUTION 1: two-column layout (fix overlap) */
+  /* Two-column layout */
   .container{
     max-width:1100px;
     margin:0 auto;
     padding:28px 16px 64px;
-    display:grid;                          /* grid instead of static */
-    grid-template-columns: 1fr 340px;      /* main + right rail */
+    display:grid;
+    grid-template-columns: 1fr 340px;  /* main | right rail */
     gap:24px;
     align-items:start;
   }
+
+  /* Title sits alone in row 1 across both columns */
+  .title{
+    grid-column: 1 / -1;
+    grid-row: 1;
+    font-weight:900;color:var(--text);
+    font-size:clamp(26px,3.6vw,36px);
+    margin:6px 0 16px;letter-spacing:-.2px;
+  }
+
+  /* Main content + sidebar share row 2 */
+  .content-with-rail{
+    grid-column: 1;
+    grid-row: 2;
+    margin-right:0;
+  }
+
   .right-rail{
-    position:sticky;                       /* in-flow + sticky */
+    grid-column: 2;
+    grid-row: 2;
+    position:sticky;
     top:16px;
     width:auto;
     display:flex;
     flex-direction:column;
     gap:14px;
   }
-  .content-with-rail{                      /* no fake margin push */
-    margin-right:0;
-  }
+
   @media (max-width:1050px){
     .container{display:block}
     .right-rail{position:static;margin:8px 0 18px}
   }
 
-  /* Head */
-  .title{
-    font-weight:900;color:var(--text);
-    font-size:clamp(26px,3.6vw,36px);
-    margin:6px 0 16px;letter-spacing:-.2px;
-  }
   .section-title{
     color:var(--text);font-weight:800;
     font-size:clamp(18px,2.2vw,22px);
@@ -130,16 +141,7 @@
   .resources ul{padding-left:20px;margin:8px 0}
   .resources li{margin:4px 0;color:var(--text)}
 
-  /* Small button (unused by right rail) */
-  .btn{
-    display:inline-block;background:var(--blue);color:#ffffff;
-    padding:12px 24px;border-radius:var(--radius);font-weight:700;
-    text-decoration:none;box-shadow:var(--shadow);transition:background .2s;
-    border:none;cursor:pointer;font-size:16px;
-  }
-  .btn:hover{background:var(--blue-dark);text-decoration:none}
-
-  /* Right-rail CTA buttons (match screenshot) */
+  /* Right-rail buttons */
   .cta{
     display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:18px;
     padding:14px 18px;border-radius:10px;text-align:center;
@@ -159,9 +161,9 @@
     <!-- Right sidebar buttons -->
     <aside class="right-rail" aria-label="Quick links">
       <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
-      <a class="cta" href="https://ilonafridman.github.io/complementary/complementary.html" >Go back to questions</a>
+      <a class="cta" href="https://ilonafridman.github.io/complementary/complementary.html">Go back to questions</a>
       <a class="cta" href="https://ilonafridman.github.io/complementary/complementaryinfo.html">Online sources to explore</a>
-     <a class="cta" href="https://ilonafridman.github.io/complementary/complementaryresources.html"> Find integrative care providers</a>
+      <a class="cta" href="https://ilonafridman.github.io/complementary/complementaryresources.html">Find integrative care providers</a>
     </aside>
 
     <!-- Main content -->
@@ -183,7 +185,7 @@
 
       <h2 class="section-title">Recommended Complementary and Integrative Treatment</h2>
 
-      <!-- INFOGRAPHIC GRID (unchanged) -->
+      <!-- INFOGRAPHIC GRID -->
       <section class="grid" aria-label="Infographic: complementary approaches by side effect">
         <!-- 1 Fatigue -->
         <article class="card">
@@ -440,23 +442,20 @@
       </section>
 
       <!-- RESOURCES -->
-      <section class="resources">
-        <h3>Original Resources</h3>
-        <section class="resources" aria-labelledby="resources-heading">
-          <h3 id="resources-heading">Original Resources</h3>
-          <ul>
-            <li>
-              <a href="https://www.nccih.nih.gov/health/atoz#linkC" target="_blank" rel="noopener noreferrer">
-                Scientific guide to complementary medicine from the National Center for Complementary and Integrative Therapy
-              </a>
-            </li>
-            <li>
-              <a href="https://pubmed.ncbi.nlm.nih.gov/35564468/" target="_blank" rel="noopener noreferrer">
-                Dawczak-Dębicka A, Kufel-Grabowska J, Bartoszkiewicz M, Perdyan A, Jassem J. Complementary and Alternative Therapies in Oncology. Int J Environ Res Public Health. 2022 Apr 21;19(9):5071. doi: 10.3390/ijerph19095071. PMID: 35564468; PMCID: PMC9104744.
-              </a>
-            </li>
-          </ul>
-        </section>
+      <section class="resources" aria-labelledby="resources-heading">
+        <h3 id="resources-heading">Original Resources</h3>
+        <ul>
+          <li>
+            <a href="https://www.nccih.nih.gov/health/atoz#linkC" target="_blank" rel="noopener noreferrer">
+              Scientific guide to complementary medicine from the National Center for Complementary and Integrative Therapy
+            </a>
+          </li>
+          <li>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/35564468/" target="_blank" rel="noopener noreferrer">
+              Dawczak-Dębicka A, Kufel-Grabowska J, Bartoszkiewicz M, Perdyan A, Jassem J. Complementary and Alternative Therapies in Oncology. Int J Environ Res Public Health. 2022 Apr 21;19(9):5071. doi: 10.3390/ijerph19095071. PMID: 35564468; PMCID: PMC9104744.
+            </a>
+          </li>
+        </ul>
         <p class="callout">
           <b>Note:</b> Discuss any information you find with your healthcare providers to ensure it is relevant to your specific situation.
         </p>
