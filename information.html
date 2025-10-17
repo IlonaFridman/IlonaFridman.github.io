@@ -1,154 +1,324 @@
-<!-- File: /public/information.html -->
+<!-- File: /public/all-resources.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tips for Navigating Your Journey - Care Pathway</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All Resources – Breast Cancer Journey</title>
+  <meta name="description" content="A single page that consolidates helpful breast cancer resources by section: Diagnosis, Choosing Treatment, During Treatment, After Diagnosis, and Complementary/Integrative Care." />
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #111827;
-      --border: #111111;
-      --primary-600: #4e90c7;
-      --primary-700: #3e7fb6;
-      --pill-shadow: rgba(0,0,0,0.15);
-      --maxw: 1200px;
+    :root{
+      --bg:#ffffff; --ink:#111827; --muted:#6b7280; --line:#d1d5db;
+      --panel:#ffffff; --panel-border:#c9ced6;
+      --cta0:#6ea2cf; --cta1:#588fbe; --cta-outline:#c7d9ea; --ring:0 0 0 3px rgba(59,130,246,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+
+    .container{max-width:1100px;margin:42px auto;padding:0 20px}
+    .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
+
+    /* ==== HOME BUTTON – styles ==== */
+    .home-link{
+      position:fixed; inset:14px auto auto 14px; z-index:50; display:inline-flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:10px; background:#fff; border:1px solid var(--line); box-shadow:0 6px 16px rgba(0,0,0,.12); text-decoration:none;
+    }
+    .home-link:hover{transform:translateY(-1px)}
+    .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
+    .home-link svg{width:22px;height:22px;fill:#374151}
+
+    /* GROUP DIVIDERS */
+    .group{margin-top:34px; padding-top:18px; border-top:6px double var(--panel-border)}
+    .group:first-of-type{border-top:none; margin-top:0; padding-top:0}
+    .group-title{margin:0 0 12px 0; font-weight:900; font-size:18px; color:#374151; letter-spacing:.02em}
+    .group-sub{margin:0 0 12px 0; color:var(--muted); font-size:14px}
+
+    /* LEFT card */
+    .info-card{
+      background:var(--panel);
+      border:2px solid var(--panel-border);
+      border-radius:8px;
+      padding:22px;
+      box-shadow:0 1px 0 rgba(0,0,0,.04);
+    }
+    .section-title{font-weight:800;margin:0 0 14px 0;font-size:22px}
+    .section-sub{margin:0 0 18px 0;color:var(--muted);font-size:16px}
+    .resource-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:24px}
+    .resource{display:block;text-decoration:none;color:inherit}
+    .thumb{
+      border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f3f4f6;
+      aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .caption{text-align:center;font-weight:700;margin-top:10px;font-size:18px}
+    .divider{height:1px;background:repeating-linear-gradient(to right, #cfd5dd 0 6px, transparent 6px 12px);opacity:.9;margin:22px 0}
+
+    /* RIGHT column (CTA buttons) */
+    .side{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+    .cta{
+      display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:20px;
+      padding:18px 28px;border-radius:16px;min-width:280px;
+      background:linear-gradient(180deg,var(--cta0),var(--cta1));
+      box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
+      border:3px solid #fff;outline:1px solid var(--cta-outline);text-shadow:0 1px 0 rgba(0,0,0,.2);
+      transition:transform .06s ease,filter .15s ease;
+    }
+    .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .cta:focus-visible{outline:none;box-shadow:var(--ring)}
+    .cta.active{
+      filter:brightness(1.15);
+      background:linear-gradient(180deg,#cfe3f7,#e7f1fb);
+      color:#1f2937; text-shadow:none; outline-width:2px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
+    /* Right: small nav */
+    .nav-card{
+      width:100%; background:#fff; border:2px solid var(--panel-border); border-radius:12px; padding:16px;
     }
+    .nav-title{margin:0 0 8px 0;font-weight:800;font-size:18px}
+    .nav{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+    .nav a{display:block;text-decoration:none;color:#1f2937;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:600}
+    .nav a:hover{transform:translateY(-1px)}
 
-    .container { max-width: var(--maxw); margin: 0 auto; padding: clamp(16px, 2vw, 32px); }
+    /* Right image */
+    .pic-wrap{width:100%;max-width:220px}
+    .pic-link{display:block;border:2px solid var(--panel-border);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#f3f4f6}
+    .pic{width:100%;height:100%;object-fit:contain;display:block}
+    .pic-cap{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
 
-    /* Top navigation */
-    .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px); }
-    .topbar-left { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .pill { display: inline-block; text-decoration: none; border: 0; border-radius: 9999px; padding: 12px 22px; font-weight: 700; font-size: 18px; color: #fff; cursor: pointer; background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700)); box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--pill-shadow); transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease; }
-    .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
-    .pill:hover { filter: brightness(1.05); }
-    .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
-    
-    /* Style for the active/current page link */
-    .pill.active {
-      background: #e0e7ff;
-      color: #3730a3;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-      transform: translateY(1px);
+    @media (max-width:760px){
+      .layout{grid-template-columns:1fr;gap:28px}
+      .resource-grid{grid-template-columns:1fr}
+      .side .cta{width:100%;min-width:unset}
+      .pic-wrap{max-width:100%}
+      .group{margin-top:28px; padding-top:14px}
     }
-
-    .lang-toggle { background: #ffffff; color: #111827; border: 2px solid #7fb5dd; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
-
-    /* Styles for this content page */
-    .page-title {
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: #1f2937;
-    }
-    .info-card {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: clamp(1.5rem, 4vw, 3rem);
-    }
-    .info-card h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-top: 2.5rem;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #d1d5db;
-    }
-    .info-card h2:first-of-type {
-      margin-top: 0;
-    }
-    .info-card ul {
-      list-style-type: disc;
-      padding-left: 20px;
-      margin: 0;
-    }
-    .info-card li {
-      margin-bottom: 1rem;
-      font-size: 1.125rem;
-    }
-    .info-card li strong {
-      color: #111827;
-    }
-
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
-    @media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
   </style>
 </head>
 <body>
-  <header class="container">
-    <div class="topbar" role="navigation" aria-label="Primary">
-      <div class="topbar-left">
-        <a class="pill" href="https://ilonafridman.github.io/careteam.html" aria-label="Your Care Team">Your Care Team</a>
-        <a class="pill active" href="https://ilonafridman.github.io/information.html" aria-label="Helpful Information" aria-current="page">Helpful Information</a>
-        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials.html" aria-label="Clinical Trials">Clinical Trials</a>
-      </div>
-      <div>
-        <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
-      </div>
-    </div>
-  </header>
+  <!-- ==== HOME BUTTON – element ==== -->
+  <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
+  </a>
 
   <main class="container">
-    <h1 class="page-title">Tips for Navigating Your Journey</h1>
+    <section class="layout">
+      <div>
+        <!-- GROUP 1: daignosisinfo.html -->
+        <div class="group">
+          <h4 class="group-title">Group: daignosisinfo.html</h4>
+          <p class="group-sub">Resources pulled from this shared file.</p>
 
-    <article class="info-card">
-      
-      <section aria-labelledby="info-load-heading">
-        <h2 id="info-load-heading">How to Deal with an Overwhelming Information Load</h2>
-        <ul>
-          <li><strong>Consider bringing a friend or loved one:</strong> Having someone with you can help you remember all the important information shared during your appointment.</li>
-          <li><strong>Prepare in advance:</strong> Learning about your specific condition from trusted sources beforehand can help you make the most of your appointment time.</li>
-          <li><strong>We welcome your questions:</strong> It's common to find conflicting information. We are here to help you sort through it and understand what applies to you. Don't hesitate to ask to clarify anything you're unsure about.</li>
-        </ul>
-      </section>
+          <!-- 1) DIAGNOSIS -->
+          <article id="diagnosis" class="info-card" aria-label="Helpful information links - Diagnosis">
+            <h3 class="section-title">Diagnosis – Information to Explore</h3>
+            <p class="section-sub">Pulled from your diagnosis resources page.</p>
+            <div class="resource-grid">
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.hackensackmeridianhealth.org/en/services/cancer-care/breast-cancer">
+                <div class="thumb">
+                  <img alt="Hackensack Meridian Health Information about Breast Cancer" src="https://ilonafridman.github.io/diagnosis/HMH_info.jpg" />
+                </div>
+                <div class="caption">Hackensack Meridian Health Information about Breast Cancer</div>
+              </a>
 
-      <section aria-labelledby="expert-opinions-heading">
-        <h2 id="expert-opinions-heading">How to Get Expert Opinions from Your Healthcare Team</h2>
-        <ul>
-          <li><strong>A team of experts is available to you:</strong> Different members of your healthcare team have different areas of expertise. Don't hesitate to ask doctors, nurses, social workers, patient advocates, integrative care specialists and others, <a href="https://ilonafridman.github.io/careteam.html">learn more here</a>.</li>
-          <li><strong>Your questions are important:</strong> Write down your questions for your nurse and doctor. Sharing them at the beginning of the appointment will help ensure they're all addressed.</li>
-          <li><strong>Stay connected between visits:</strong> Remember, you can reach your healthcare team between appointments through MyChart, by phone, or sometimes even by email. Don't hesitate to reach out when questions arise.</li>
-        </ul>
-      </section>
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.org/cancer/types/breast-cancer/about.html">
+                <div class="thumb">
+                  <img alt="Breast Cancer Basics  (ACS)" src="https://ilonafridman.github.io/diagnosis/Terms_ACS.jpg" />
+                </div>
+                <div class="caption">Breast Cancer Basics from Amercian Cancer Society</div>
+              </a>
 
-      <section aria-labelledby="gathering-info-heading">
-        <h2 id="gathering-info-heading">As You Gather Information, Consider:</h2>
-        <p>As you research therapies, medicines, supplements, or procedures, it's important to evaluate their potential benefits and risks. Here's what to consider:</p>
-        <ul>
-          <li><strong>Relevance:</strong> Does this information apply to my specific situation and symptoms?</li>
-          <li><strong>Proven Benefits:</strong> How many people have actually benefited, and is this information from a reliable source (not just testimonials)? Look for numbers and scientific studies.</li>
-          <li><strong>Scientific Backing:</strong> Is this treatment supported by research in reputable medical journals like those found on PubMed? Ask a librarian for help if needed.</li>
-          <li><strong>Credible Source:</strong> Is the author a qualified expert with verifiable credentials?</li>
-          <li><strong>Realistic Claims:</strong> Be wary of promises of quick, easy miracles. Effective treatments rarely sound too good to be true.</li>
-        </ul>
-      </section>
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.org/cancer/understanding-cancer/glossary.html">
+                <div class="thumb">
+                  <img alt="Medical Terminology (ACS Glossary)" src="https://ilonafridman.github.io/diagnosis/Terminology.jpg" />
+                </div>
+                <div class="caption">Medical Terminology from American Cancer Society</div>
+              </a>
+            </div>
+            <div class="divider" role="presentation"></div>
+          </article>
+        </div>
 
-      <section aria-labelledby="emotional-support-heading">
-        <h2 id="emotional-support-heading">Emotional Support is a Critical Part of Your Care</h2>
-        <ul>
-          <li><strong>Connect with others:</strong> Joining a support group, especially one affiliated with a healthcare center, can be incredibly helpful. Sharing experiences with others facing similar challenges can provide valuable support and insights. Consider joining one early in your journey.</li>
-          <li><strong>Seek emotional support:</strong> Don't hesitate to reach out to social workers or patient advocates. They can connect you with resources that offer emotional support and guidance during this time. They're there to help.</li>
-        </ul>
-      </section>
+        <!-- GROUP 2: choosingtreatmentinfo.html -->
+        <div class="group">
+          <h4 class="group-title">Group: choosingtreatmentinfo.html</h4>
+          <p class="group-sub">Resources pulled from this shared file.</p>
 
-    </article>
+          <!-- 2) CHOOSING TREATMENT -->
+          <article id="choosing-treatment" class="info-card" aria-label="Helpful information links - Choosing Treatment">
+            <h3 class="section-title">Choosing Treatment – Information to Explore</h3>
+            <p class="section-sub">Pulled from your choosing treatment resources page.</p>
+            <div class="resource-grid">
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.gov/types/breast/patient/breast-treatment-pdq#_185">
+                <div class="thumb">
+                  <img alt="treatments from NCI" src="https://ilonafridman.github.io/choosingtreatment/NCI.jpg" />
+                </div>
+                <div class="caption">About types of treatment from National Cancer Institute</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.org/cancer/diagnosis-staging/tests/biopsy-and-cytology-tests/understanding-your-pathology-report/breast-pathology/breast-cancer-pathology.html">
+                <div class="thumb">
+                  <img alt="patology reports from ACS" src="https://ilonafridman.github.io/choosingtreatment/Pat.jpg" />
+                </div>
+                <div class="caption">How to understand pathology reports from American Cancer Society</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.youtube.com/watch?v=ovvSRK-tqaw">
+                <div class="thumb">
+                  <img alt="story about patient" src="https://ilonafridman.github.io/choosingtreatment/video.jpg" />
+                </div>
+                <div class="caption">A patient nurse shares her experience in this video</div>
+              </a>
+            </div>
+            <div class="divider" role="presentation"></div>
+          </article>
+        </div>
+
+        <!-- GROUP 3: treatmentinfo.html -->
+        <div class="group">
+          <h4 class="group-title">Group: treatmentinfo.html</h4>
+          <p class="group-sub">Resources pulled from this shared file.</p>
+
+          <!-- 3) DURING TREATMENT -->
+          <article id="treatment" class="info-card" aria-label="Helpful information links - During Treatment">
+            <h3 class="section-title">During Treatment – Information to Explore</h3>
+            <p class="section-sub">Pulled from your treatment resources page.</p>
+            <div class="resource-grid">
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.org/cancer/managing-cancer/side-effects.html">
+                <div class="thumb">
+                  <img alt="treatments side effects from ACS" src="https://ilonafridman.github.io/treatment/ACS_treatment.jpg"/>
+                </div>
+                <div class="caption">Managing Cancer-Related Side Effects from American Cancer Society</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancersupportcommunity.org/managing-side-effects">
+                <div class="thumb">
+                  <img alt="treatment side effects CSC" src="https://ilonafridman.github.io/treatment/CSC_treatment.jpg" />
+                </div>
+                <div class="caption">Navigating Cancer from Cacer Support Community</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.mdanderson.org/podcast.html">
+                <div class="thumb">
+                  <img alt="podcast" src="https://ilonafridman.github.io/treatment/podcast.jpg" />
+                </div>
+                <div class="caption">CancerWise Podcast from MD Anderson Cancer Center</div>
+              </a>
+            </div>
+            <div class="divider" role="presentation"></div>
+          </article>
+        </div>
+
+        <!-- GROUP 4: afterdiagnosisinfo.html -->
+        <div class="group">
+          <h4 class="group-title">Group: afterdiagnosisinfo.html</h4>
+          <p class="group-sub">Resources pulled from this shared file.</p>
+
+          <!-- 4) AFTER DIAGNOSIS / AFTER TREATMENT -->
+          <article id="after-diagnosis" class="info-card" aria-label="Helpful information links - After Diagnosis">
+            <h3 class="section-title">After Diagnosis – Information to Explore</h3>
+            <p class="section-sub">Pulled from your after treatment resources page.</p>
+            <div class="resource-grid">
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.gov/publications/patient-education/life-after-treatment.pdf">
+                <div class="thumb">
+                  <img alt="Life After Treatment (NCI)" src="https://ilonafridman.github.io/afterdiagnosis/NCI_AfterTreatment.png" />
+                </div>
+                <div class="caption">Life After Treatment from National Cancer Institute</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.hackensackmeridianhealth.org/en/services/cancer-care/survivorship">
+                <div class="thumb">
+                  <img alt="Survivorship Services (HMH)" src="https://ilonafridman.github.io/afterdiagnosis/HMH_Survivorship.jpg" />
+                </div>
+                <div class="caption">Survivorship Services at Hackensack Meridian Health</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://events.hackensackmeridianhealth.org/c/calendar/ab003a8d-d5fc-4178-9f67-18a42708bab9">
+                <div class="thumb">
+                  <img alt="Calendar" src="https://ilonafridman.github.io/afterdiagnosis/events.jpg" />
+                </div>
+                <div class="caption">Calendar of Events for Cancer Survivors at Hackensack Meridian Health</div>
+              </a>
+            </div>
+            <div class="divider" role="presentation"></div>
+          </article>
+        </div>
+
+        <!-- GROUP 5: complementaryinfo.html -->
+        <div class="group">
+          <h4 class="group-title">Group: complementaryinfo.html</h4>
+          <p class="group-sub">Resources pulled from this shared file.</p>
+
+          <!-- 5) COMPLEMENTARY / INTEGRATIVE -->
+          <article id="complementary" class="info-card" aria-label="Helpful information links - Complementary/Integrative">
+            <h3 class="section-title">Complementary & Integrative – Helpful Information</h3>
+            <p class="section-sub">Pulled from your complementary/integrative resources page.</p>
+            <div class="resource-grid">
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.cancer.org/cancer/supportive-care/integrative-medicine.html">
+                <div class="thumb">
+                  <img alt="Understanding Integrative (Holistic) Medicine (ACS)" src="https://ilonafridman.github.io/complementary/Integrative.jpg" />
+                </div>
+                <div class="caption">Understanding Integrative (Holistic) Medicine from American Cancer Society</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://www.nccih.nih.gov/health/herbsataglance">
+                <div class="thumb">
+                  <img alt="Herbs at a Glance (NCCIH)" src="https://ilonafridman.github.io/complementary/Herbs.jpg" />
+                </div>
+                <div class="caption">Herbs at a Glance from National Center for Complementary and Integrative Health</div>
+              </a>
+
+              <a class="resource" target="_blank" rel="noopener noreferrer"
+                 href="https://imconsortium.org/page/member-listing">
+                <div class="thumb">
+                  <img alt="Member Listing (IM Consortium)" src="https://ilonafridman.github.io/complementary/Map.jpg" />
+                </div>
+                <div class="caption">A Directory of Integrative Therapy Centers Organized by Country and by States.</div>
+              </a>
+            </div>
+            <div class="divider" role="presentation"></div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="side" aria-label="Actions">
+        <a class="cta" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
+        <a class="cta" href="https://ilonafridman.github.io/diagnosis/diagnosis.html">Go back to questions</a>
+
+        <div class="nav-card" aria-label="On this page">
+          <h4 class="nav-title">Jump to group</h4>
+          <ul class="nav">
+            <li><a href="#diagnosis">Diagnosis (daignosisinfo.html)</a></li>
+            <li><a href="#choosing-treatment">Choosing Treatment (choosingtreatmentinfo.html)</a></li>
+            <li><a href="#treatment">During Treatment (treatmentinfo.html)</a></li>
+            <li><a href="#after-diagnosis">After Diagnosis (afterdiagnosisinfo.html)</a></li>
+            <li><a href="#complementary">Complementary (complementaryinfo.html)</a></li>
+          </ul>
+        </div>
+
+        <div class="pic-wrap">
+          <a class="pic-link" target="_blank" rel="noopener noreferrer"
+            href="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg">
+            <img class="pic" src="https://ilonafridman.github.io/diagnosis/Patient%20with%20Computer.jpg" alt="Patient at a computer" />
+          </a>
+          <div class="pic-cap">Patient reading trusted information</div>
+        </div>
+      </aside>
+    </section>
   </main>
 </body>
 </html>
