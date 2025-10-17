@@ -1,3 +1,4 @@
+<!-- filepath: pages/complementary-integrative.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,32 @@
   }
   a{color:var(--blue);text-decoration:none}
   a:hover{text-decoration:underline}
-  .container{max-width:1100px;margin:0 auto;padding:28px 16px 64px; position:relative;}
+
+  /* SOLUTION 1: two-column layout (fix overlap) */
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 16px 64px;
+    display:grid;                          /* grid instead of static */
+    grid-template-columns: 1fr 340px;      /* main + right rail */
+    gap:24px;
+    align-items:start;
+  }
+  .right-rail{
+    position:sticky;                       /* in-flow + sticky */
+    top:16px;
+    width:auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .content-with-rail{                      /* no fake margin push */
+    margin-right:0;
+  }
+  @media (max-width:1050px){
+    .container{display:block}
+    .right-rail{position:static;margin:8px 0 18px}
+  }
 
   /* Head */
   .title{
@@ -104,59 +130,33 @@
   .resources ul{padding-left:20px;margin:8px 0}
   .resources li{margin:4px 0;color:var(--text)}
 
-  /* Existing small button */
+  /* Small button (unused by right rail) */
   .btn{
-    display:inline-block;
-    background:var(--blue);
-    color:#ffffff;
-    padding:12px 24px;
-    border-radius:var(--radius);
-    font-weight:700;
-    text-decoration:none;
-    box-shadow:var(--shadow);
-    transition:background .2s;
-    border:none;
-    cursor:pointer;
-    font-size:16px;
+    display:inline-block;background:var(--blue);color:#ffffff;
+    padding:12px 24px;border-radius:var(--radius);font-weight:700;
+    text-decoration:none;box-shadow:var(--shadow);transition:background .2s;
+    border:none;cursor:pointer;font-size:16px;
   }
-  .btn:hover{ background:var(--blue-dark); text-decoration:none; }
+  .btn:hover{background:var(--blue-dark);text-decoration:none}
 
-  /* === Right rail (added) === */
-  .right-rail{
-    position:absolute; right:16px; top:72px; width:340px;
-    display:flex; flex-direction:column; gap:14px;
-  }
-  .content-with-rail{ margin-right:372px; } /* keep left content clear of the rail */
-
+  /* Right-rail CTA buttons (match screenshot) */
   .cta{
-    display:inline-block; text-decoration:none; color:#fff; font-weight:700; font-size:18px;
-    padding:14px 18px; border-radius:10px; text-align:center;
+    display:inline-block;text-decoration:none;color:#fff;font-weight:700;font-size:18px;
+    padding:14px 18px;border-radius:10px;text-align:center;
     background:linear-gradient(180deg,#6ea2cf,#588fbe);
     box-shadow:0 4px 0 0 rgba(0,0,0,.12) inset,0 8px 24px rgba(0,0,0,.18);
-    border:3px solid #fff; outline:1px solid #c7d9ea; text-shadow:0 1px 0 rgba(0,0,0,.2);
-    transition:transform .06s ease, filter .15s ease;
+    border:3px solid #fff;outline:1px solid #c7d9ea;text-shadow:0 1px 0 rgba(0,0,0,.2);
+    transition:transform .06s ease,filter .15s ease;
   }
-  .cta:hover{ filter:brightness(1.05); transform:translateY(-1px); }
-  .cta:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(59,130,246,.35); }
-
-  @media (max-width: 1050px){
-    .right-rail{ position:static; width:auto; }
-    .content-with-rail{ margin-right:0; }
-  }
-
-  /* Print */
-  @media print{
-    .container{padding:0}
-    .card{page-break-inside:avoid}
-    a{text-decoration:none}
-  }
+  .cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .cta:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(59,130,246,.35)}
 </style>
 </head>
 <body>
   <div class="container">
     <h1 class="title">Complementary and Integrative Medicine</h1>
 
-    <!-- RIGHT SIDE BUTTONS (new tab) -->
+    <!-- Right sidebar buttons -->
     <aside class="right-rail" aria-label="Quick links">
       <a class="cta" href="https://ilonafridman.github.io/home.html" target="_blank" rel="noopener noreferrer">Go back to the beginning</a>
       <a class="cta" href="https://ilonafridman.github.io/complementary/complementaryinfo.html" target="_blank" rel="noopener noreferrer">Online sources to explore</a>
@@ -164,17 +164,18 @@
       <a class="cta" href="https://ilonafridman.github.io/complementary/complementaryresources.html" target="_blank" rel="noopener noreferrer">Find integrative care providers</a>
     </aside>
 
-    <!-- ORIGINAL CONTENT wrapped only to add right margin -->
+    <!-- Main content -->
     <div class="content-with-rail">
       <h2 class="section-title">What is Complementary and Integrative Treatment</h2>
       <p class="lead">
         Exploring complementary and integrative therapies can be a valuable part of your healthcare journey.
         We encourage you to explore them and talk with your healthcare team—we're here to support you and answer any questions.
-        <p>
+      </p>
+      <p>
         To help you navigate complementary and integrative treatment, we assembled some therapies from
         evidence-based sources of information in the infographic below.
       </p>
-      
+
       <p class="callout">
         <b>Important:</b> Always check with your doctor before starting any new therapy or supplement,
         as <span class="underline">some may reduce the effectiveness of your treatment or cause harmful side effects</span>.
@@ -182,7 +183,7 @@
 
       <h2 class="section-title">Recommended Complementary and Integrative Treatment</h2>
 
-      <!-- INFOGRAPHIC GRID -->
+      <!-- INFOGRAPHIC GRID (unchanged) -->
       <section class="grid" aria-label="Infographic: complementary approaches by side effect">
         <!-- 1 Fatigue -->
         <article class="card">
@@ -460,7 +461,7 @@
           <b>Note:</b> Discuss any information you find with your healthcare providers to ensure it is relevant to your specific situation.
         </p>
       </section>
-    </div> <!-- /content-with-rail -->
+    </div><!-- /content-with-rail -->
   </div>
 </body>
 </html>
