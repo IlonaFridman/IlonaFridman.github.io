@@ -1,244 +1,163 @@
-<!-- File: /public/careteam.html -->
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Care Team - Care Pathway</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #111827;
-      --border: #e5e7eb;
-      --primary-600: #4e90c7;
-      --primary-700: #3e7fb6;
-      --pill-shadow: rgba(0,0,0,0.15);
-      --maxw: 1200px;
-      --section-title-color: #3b82f6;
-    }
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import healthcareHero from "@/assets/healthcare-hero.png";
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
+const Index = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b border-border py-6 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-start">
+          <div className="flex-1">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+              Healthcare Team: Plan your care together
+            </h1>
+            <p className="text-muted-foreground mb-1">Who should participate in my care?</p>
+            <h2 className="text-2xl md:text-3xl font-semibold text-primary">
+              Cancer Care Team and Copying Services
+            </h2>
+          </div>
+          <Button 
+            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6 py-6 text-base font-medium shadow-md"
+          >
+            To the beginning
+          </Button>
+        </div>
+      </header>
 
-    .container { max-width: var(--maxw); margin: 0 auto; padding: clamp(16px, 2vw, 32px); }
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+        <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 items-start">
+          {/* Left Column */}
+          <div className="space-y-8">
+            <section>
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                Doctors who develop treatment plan
+              </h3>
+              <ul className="space-y-2 text-foreground">
+                <li>Surgeons perform partial or complete breast removal</li>
+                <li>Radiation Oncologists perform radiation therapy</li>
+                <li>Medical oncologists oversee chemotherapy and hormone therapy</li>
+              </ul>
+            </section>
 
-    /* Top navigation */
-    .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px); }
-    .topbar-left { display: flex; gap: 12px; flex-wrap: wrap; }
+            <section>
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                Other experts to consult
+              </h3>
+              <ul className="space-y-2 text-foreground">
+                <li>Plastic Surgeon helps restore the breast's shape after surgery</li>
+                <li>Genetic Counselor organizes genetic testing</li>
+                <li>Reproduction Specialists works with you about having children after cancer treatment</li>
+              </ul>
+            </section>
 
-    .pill { display: inline-block; text-decoration: none; border: 0; border-radius: 9999px; padding: 12px 22px; font-weight: 700; font-size: 18px; color: #fff; cursor: pointer; background-image: linear-gradient(180deg, var(--primary-600), var(--primary-700)); box-shadow: 0 2px 0 var(--primary-700), 0 4px 10px var(--pill-shadow); transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease; }
-    .pill:focus-visible { outline: 3px solid #1e40af; outline-offset: 2px; }
-    .pill:hover { filter: brightness(1.05); }
-    .pill:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--primary-700); }
-    .pill.active { background: #e0e7ff; color: #3730a3; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); transform: translateY(1px); }
+            {/* Team Info Card */}
+            <Card className="p-6 bg-card border-border shadow-sm">
+              <h4 className="text-lg font-bold text-foreground mb-4">Meet part of the team</h4>
+              <ul className="space-y-2 text-sm text-foreground">
+                <li>Jillian Laura Cohen, MD – Network Medical Director</li>
+                <li>Judson D. Chaney, ND</li>
+                <li>Lisa M. Sussman, PsyD</li>
+                <li>Hitomi Asano, LAC</li>
+                <li>Muftiya Issa, LAC</li>
+                <li>Mary K. Brighton, MS, RDN</li>
+                <li>Marissa A. Winters, RD</li>
+              </ul>
 
-    .lang-toggle { background: #ffffff; color: #111827; border: 2px solid #7fb5dd; border-radius: 14px; padding: 10px 16px; font-weight: 700; font-size: 16px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+              <div className="mt-6 pt-6 border-t border-border">
+                <h4 className="text-lg font-bold text-foreground mb-3">Locations & phone</h4>
+                <div className="space-y-4 text-sm">
+                  <div>
+                    <p className="font-semibold text-foreground">HMH – Integrative Health & Medicine – Red Bank</p>
+                    <p className="text-muted-foreground">1 Riverview Plaza, Floor 2, Red Bank, NJ 07701</p>
+                    <p className="font-semibold text-foreground mt-1">Phone: 732-263-7999</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">HMH – Integrative Health & Medicine – Neptune</p>
+                    <p className="text-muted-foreground">HOPE Tower at Jersey Shore University Medical Center</p>
+                    <p className="text-muted-foreground">19 Davis Avenue, First Floor, Neptune, NJ 07753</p>
+                    <p className="font-semibold text-foreground mt-1">Phone: 732-263-7999</p>
+                  </div>
+                  <p className="font-semibold text-foreground">HMH main line: 844-HMH-WELL</p>
+                </div>
+              </div>
+            </Card>
+          </div>
 
-    /* Page-specific styles for Care Team */
-    .page-header { text-align: center; margin-bottom: 3rem; }
-    .page-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin: 0; }
-    .page-subtitle { font-size: clamp(1.1rem, 2vw, 1.25rem); color: #4b5563; margin: 0.5rem 0 0 0; }
+          {/* Center - Hero Image */}
+          <div className="flex justify-center items-start md:sticky md:top-8">
+            <div className="w-64 md:w-80 flex-shrink-0">
+              <img 
+                src={healthcareHero} 
+                alt="Healthcare support illustration" 
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
 
-    .team-section { margin-bottom: 3.5rem; }
-    .section-heading {
-      font-size: clamp(1.5rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: var(--section-title-color);
-      text-align: center;
-      margin: 0 0 2rem 0;
-    }
+          {/* Right Column */}
+          <div className="space-y-6">
+            <section>
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                Healthcare professionals who support your care:
+              </h3>
+              <ul className="space-y-2 text-foreground">
+                <li>Advanced Nurse Practitioner</li>
+                <li>Nurse Practitioner</li>
+                <li>Nurse Navigator</li>
+                <li>Research Nurse</li>
+              </ul>
+            </section>
 
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
+            <section>
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                Cancer Care and Copying
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="font-semibold text-foreground">Support groups in HMH Hospital System</p>
+                  <p className="text-foreground">EMPOWER Virtual Community – Lizzie Martinez, Oncology Nurse Breast Navigator</p>
+                  <p className="text-foreground mt-2">
+                    732-836-4679,{" "}
+                    <a href="mailto:Elizabeth.Martinez@hmhn.org" className="text-primary hover:underline">
+                      Elizabeth.Martinez@hmhn.org
+                    </a>
+                  </p>
+                </div>
 
-    .member-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      background: #f9fafb;
-    }
-    .member-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .member-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0;
-    }
-    .find-button {
-      display: inline-block;
-      text-decoration: none;
-      background: linear-gradient(180deg, #dbeafe, #bfdbfe);
-      color: #1e3a8a;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 6px 18px;
-      border: 1px solid #93c5fd;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      flex-shrink: 0;
-    }
-    .find-button:hover { background: linear-gradient(180deg, #e0e7ff, #c7d2fe); }
+                <div>
+                  <p className="font-semibold text-foreground">Nutritionist:</p>
+                  <p className="text-foreground">Kanisha Parikh 551-996-2875</p>
+                </div>
 
-    .member-duties {
-      list-style-type: none;
-      padding-left: 0;
-      margin: 0;
-      font-size: 1rem;
-      color: #374151;
-    }
-    .member-duties li {
-      position: relative;
-      padding-left: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-    .member-duties li::before {
-      content: '–';
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #6b7280;
-    }
+                <div>
+                  <p className="font-semibold text-foreground">Social work services:</p>
+                  <p className="text-foreground">
+                    Jane Watson, LCSW 551-996-2599,{" "}
+                    <a href="mailto:Jane.Watson@hmhn.org" className="text-primary hover:underline">
+                      Jane.Watson@hmhn.org
+                    </a>
+                  </p>
+                </div>
 
-    @media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
-  </style>
-</head>
-<body>
-  <header class="container">
-    <div class="topbar" role="navigation" aria-label="Primary">
-      <div class="topbar-left">
-        <a class="pill active" href="https://ilonafridman.github.io/careteam.html" aria-label="Your Care Team" aria-current="page">Your Care Team</a>
-        <a class="pill" href="https://ilonafridman.github.io/information.html" aria-label="Helpful Information">Helpful Information</a>
-        <a class="pill" href="https://ilonafridman.github.io/clinicaltrials.html" aria-label="Clinical Trials">Clinical Trials</a>
-      </div>
-      <div>
-        <button class="lang-toggle" type="button" aria-label="Toggle language">En/Sp</button>
-      </div>
+                <div>
+                  <p className="font-semibold text-foreground">Financial services:</p>
+                  <p className="text-foreground">Kathryn Koch, LSW</p>
+                  <p className="text-foreground">
+                    551-996-5861,{" "}
+                    <a href="mailto:Kathryn.Koch@hmhn.org" className="text-primary hover:underline">
+                      Kathryn.Koch@hmhn.org
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
     </div>
-  </header>
+  );
+};
 
-  <main class="container">
-    <div class="page-header">
-      <h1 class="page-title">Healthcare Team: Plan your care together</h1>
-      <p class="page-subtitle">Who should participate in my care?</p>
-    </div>
-
-    <!-- Main Treatment Team -->
-    <section class="team-section" aria-labelledby="main-team-heading">
-      <h2 id="main-team-heading" class="section-heading">Main Treatment Team</h2>
-      <div class="team-grid">
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Oncologists</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Diagnosis and tests</li><li>Chemotherapy</li><li>Hormone therapy</li><li>Other therapy</li><li>Follow-ups</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Breast Surgeons</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Biopsy</li><li>Lumpectomy</li><li>Mastectomy</li><li>Lymph node removal</li><li>Addressing surgical complications</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Radiation Oncologists</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Delivery of radiation</li><li>Monitoring side effects</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Support of the Main Treatment Team -->
-    <section class="team-section" aria-labelledby="support-team-heading">
-      <h2 id="support-team-heading" class="section-heading">Support of the Main Treatment Team</h2>
-      <div class="team-grid">
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Advanced Care Practitioners and Nurses</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Comprehensive assessment</li><li>Administer treatment</li><li>Manage side effects</li><li>Educate patients</li><li>Manage Emergencies</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Administrators, receptionists</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Schedule appointments</li><li>Check In patients</li><li>Organize documents</li><li>Coordinate services</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Technicians</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Perform scans</li><li>Process samples</li><li>Run tests</li><li>Deliver radiation</li><li>Ensure safety</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Consider Consultations -->
-    <section class="team-section" aria-labelledby="experts-heading">
-      <h2 id="experts-heading" class="section-heading">Consider Consultations with the Following Experts</h2>
-      <div class="team-grid">
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Plastic Surgeon</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Consults on breast reconstructions</li><li>Implement the reconstruction</li><li>Addresses side effects</li><li>Administer follow up care</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Integrative Care Specialists</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Physical therapy</li><li>Dieting, Nutrition</li><li>Acupuncture</li><li>Integrative cancer care</li><li>Nonpharmacologic pain management</li><li>Others</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Genetic counselors</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Assesses hereditary cancer risks</li><li>Perform testing</li><li>Provide related counseling</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Additional Support -->
-    <section class="team-section" aria-labelledby="additional-support-heading">
-      <h2 id="additional-support-heading" class="section-heading">Reach for Additional Support</h2>
-      <div class="team-grid">
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Patient Advocates</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Emotional support</li><li>Patient education</li><li>Resolving issues</li><li>Identifying connections</li><li>Patient advocacy</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Patient Navigators</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Coordinate care</li><li>Identifying relevant experts</li><li>Help patients move efficiently through the complex medical system</li>
-          </ul>
-        </div>
-        <div class="member-card">
-          <div class="member-header"><h3 class="member-title">Social workers</h3><a href="#" class="find-button">Find</a></div>
-          <ul class="member-duties">
-            <li>Connect patients to financial assistance</li><li>Housing</li><li>Food security</li><li>Transportation services</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
-</body>
-</html>
+export default Index;
