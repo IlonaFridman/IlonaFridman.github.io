@@ -60,7 +60,8 @@
     text-align:left;position:relative;transition:background-color .15s,transform .06s;
     font-size:22px;
   }
-  .acc-header::before{content:"\2794";position:absolute;left:14px;font-size:20px;color:#000;opacity:.8;transform:rotate(180deg)}
+  .acc-header::before{ ...mask chevron..., transform:translateY(-50%) rotate(-90deg) }
+.acc-header[aria-expanded="true"]::before{ transform:translateY(-50%) rotate(0deg) }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
   .acc-header .cat-icon{width:26px;height:26px;flex:0 0 26px;}
@@ -133,8 +134,10 @@
   <section class="layout">
     <div>
       <!-- ADD: slide heading -->
-     <h1 class="slide-title">Questions to Ask after Being Diagnosed</h1>
+        <h1 class="slide-title">Questions to ask about Integrative (Holistic) Therapy</h1>
       <h2 class="slide-title">Choose 3–5 questions for each healthcare professional listed below.</h2>
+      <p>Click on one or more sections and explore the questions you want to bring to your care team. You can also download chosen questions or explore information by choosing option "Online sources to explore".</p>
+
 
      
       <div class="toolbar" role="group" aria-label="Expand or collapse all">
