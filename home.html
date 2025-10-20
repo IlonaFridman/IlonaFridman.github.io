@@ -147,21 +147,25 @@
   }
   .secondary:hover{filter:brightness(1.05);transform:translateY(-1px)}
 
-  .links-pack{
+ .links-pack{
   display:flex;
-  flex-wrap:nowrap;        /* keep on one line */
-  align-items:stretch;     /* equal height */
+  flex-wrap:wrap;          /* allow next line */
   gap:8px;
-  overflow-x:auto;         /* scroll if they don't fit */
+  align-items:stretch;
+}
+.links-pack > h2{
+  flex:0 0 100%;           /* header on its own line */
+  margin:0 0 6px 0;        /* small space above buttons */
 }
 
+/* smaller, equal-height buttons */
 .secondary{
-  display:inline-flex;     /* enable vertical centering */
-  align-items:center;
-  min-height:56px;         /* consistent height for all buttons */
-  white-space:nowrap;      /* prevent text wrapping */
-  flex:0 0 auto;           /* don't shrink */
-  line-height:1;           /* avoid height drift */
+  display:inline-flex;     
+  align-items:center;      
+  height:28px;             /* ~half height */
+  padding:0 10px;          /* tighter padding so height holds */
+  white-space:nowrap;      
+  line-height:1;           
 }
 
   /* --- REMOVED: Unused .cta styles --- */
