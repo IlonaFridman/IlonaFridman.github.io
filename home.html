@@ -147,8 +147,22 @@
   }
   .secondary:hover{filter:brightness(1.05);transform:translateY(-1px)}
 
-  .links-pack{ display:flex; flex-wrap:wrap; gap:8px; margin-left: auto; }
-  :where(button,a,input,summary):focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+  .links-pack{
+  display:flex;
+  flex-wrap:nowrap;        /* keep on one line */
+  align-items:stretch;     /* equal height */
+  gap:8px;
+  overflow-x:auto;         /* scroll if they don't fit */
+}
+
+.secondary{
+  display:inline-flex;     /* enable vertical centering */
+  align-items:center;
+  min-height:56px;         /* consistent height for all buttons */
+  white-space:nowrap;      /* prevent text wrapping */
+  flex:0 0 auto;           /* don't shrink */
+  line-height:1;           /* avoid height drift */
+}
 
   /* --- REMOVED: Unused .cta styles --- */
 
