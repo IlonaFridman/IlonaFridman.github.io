@@ -1,3 +1,4 @@
+<!-- /pages/healthcare-team.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,8 +11,8 @@
     --ink:#0f172a;
     --muted:#475569;
     --line:#d1d5db;
-    --cta0:#6ea2cf;   /* light blue */
-    --cta1:#588fbe;   /* darker blue */
+    --cta0:#6ea2cf;
+    --cta1:#588fbe;
     --shadow:0 12px 28px rgba(2,8,23,.10), 0 4px 10px rgba(2,8,23,.08);
     --radius:16px;
   }
@@ -23,7 +24,7 @@
   }
   a{color:#2563eb;text-decoration:underline}
 
-  /* Home button that matches the screenshot */
+  /* Home icon */
   .home-icon{
     position:fixed;left:16px;top:16px;z-index:1000;
     width:52px;height:52px;border-radius:18px;
@@ -39,16 +40,17 @@
   .eyebrow{color:var(--muted);font-size:14px;margin-top:6px}
   .subtitle{font-size:20px;color:#3b82f6;margin-top:8px}
 
-  /* Blue "go to beginning" like a chip button (top-right) */
+  /* Top-right chip -> now routes home */
   .top-cta{
     position:fixed;right:16px;top:16px;z-index:999;
     display:inline-flex;align-items:center;gap:8px;
     padding:10px 14px;border-radius:999px;border:1px solid #c7d9ea;
     background:linear-gradient(0deg,var(--cta0),var(--cta1));
     color:#fff;text-decoration:none;font-weight:700;box-shadow:var(--shadow);
+    white-space:nowrap;
   }
 
-  /* Two-column layout with dotted divider (like screenshot) */
+  /* Two-column layout with dotted divider */
   .grid{
     display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;position:relative;
   }
@@ -62,14 +64,13 @@
   .bullet{margin:0;padding-left:22px}
   .bullet li{margin:6px 0}
   .list-tight{margin:0;padding-left:0;list-style:none}
-  .list-tight li{margin:2px 0}
+  .list-tight li{margin:4px 0}
   .hr{height:1px;background:var(--line);margin:16px 0}
 
-  /* Center image overlapping the divider */
+  /* Optional center figure (kept in case you add an image later) */
   .figure{
     position:absolute;left:50%;transform:translateX(-50%);
-    top:210px; /* adjust as needed */
-    z-index:0;pointer-events:none;
+    top:210px;z-index:0;pointer-events:none;
   }
   .figure img{
     width:210px;max-width:34vw;height:auto;border-radius:14px;
@@ -109,70 +110,77 @@
 </head>
 <body>
 <a class="home-icon" href="https://ilonafridman.github.io/home.html" aria-label="Home">
-  <!-- house icon -->
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>
 </a>
-<a class="top-cta" href="#top">Go back to the beginning</a>
+
+<!-- Go back button now takes users to the home page (requested) -->
+<a class="top-cta" href="https://ilonafridman.github.io/home.html" aria-label="Go back to the beginning (Home)">Go back to the beginning</a>
 
 <a id="top"></a>
 <div class="container">
   <header>
-    <h1>Healthcare Team: Plan your care together</h1>
+    <h1>Healthcare Team: Plan Your Care Together</h1>
     <div class="eyebrow">Who should participate in my care?</div>
-    <div class="subtitle">Cancer Care and Copying Services</div>
+    <div class="subtitle">Cancer Care and Coping Services</div>
   </header>
 
- 
-
-    <!-- LEFT: DOCTORS + PROFESSIONALS -->
+  <div class="grid">
+    <!-- LEFT -->
     <main class="section" aria-label="Doctors and related roles">
-      <h2>Doctors who develop treatment plan</h2>
+      <h2>Doctors who develop the treatment plan</h2>
       <ul class="bullet">
-        <li><strong>Surgeons</strong> perform lumpectomy or mastectomy.</li>
+        <li><strong>Surgeons</strong> perform lumpectomies or mastectomies.</li>
         <li><strong>Radiation oncologists</strong> provide radiation therapy.</li>
         <li><strong>Medical oncologists</strong> manage chemotherapy and hormone therapy.</li>
       </ul>
 
-      <h2>Other experts to consult</h2>
+      <h2>Other specialists to consult</h2>
       <ul class="bullet">
         <li><strong>Plastic surgeons</strong> help restore breast shape after surgery.</li>
         <li><strong>Genetic counselors</strong> coordinate genetic testing.</li>
-        <li><strong>Reproductive specialists</strong> (fertility experts) can discuss options for having children after cancer treatment.</li>
+        <li><strong>Reproductive specialists</strong> (fertility experts) discuss options for having children after cancer treatment.</li>
       </ul>
 
-      <h2>Healthcare professionals who support your care:</h2>
-      <p><strong>Advance nurse practitioners (ANP)</strong> organize medical management, including prescribing, managing side effects, ordering tests, performing procedures.</p>
-      <p><strong>Nurse navigators</strong> organizes care and support, including scheduling appointments, removing barriers (financial, transport), provides patient education, identifies services for emotional support.</p>
-      <p><strong>Research nurses</strong> oversee clinical trial integrity, patient screening, managing study protocols, data collection, monitoring for trial-specific side effects.</p>
+      <h2>Healthcare professionals who support your care</h2>
+      <ul class="bullet">
+        <li><strong>Advanced nurse practitioners (ANPs)</strong> organize medical management, including prescribing, managing side effects, ordering tests, and performing procedures.</li>
+        <li><strong>Nurse navigators</strong> organize care and support, including scheduling appointments; removing barriers (financial, transportation); providing patient education; and identifying services for emotional support.</li>
+        <li><strong>Research nurses</strong> oversee clinical trial integrity; screen patients; manage study protocols; collect data; and monitor for trial-specific side effects.</li>
+      </ul>
     </main>
 
-    <!-- RIGHT: SUPPORTING STUFF -->
-    <aside class="section" aria-label="Cancer Care and Copying">
-      <h2>Cancer Care and Copying</h2>
+    <!-- RIGHT -->
+    <aside class="section" aria-label="Cancer Care and Coping">
+      <h2>Cancer Care and Coping</h2>
 
-      <h3>Support groups in HMH Hospital System</h3>
+      <h3>Support groups in the HMH Health System</h3>
       <ul class="list-tight">
-        <li>EMPOWER Virtual Community — Lizzie Martinez, Oncology Nurse Breast Navigator<br/>
-          732-836-4679, <a href="mailto:Elizabeth.Martinez@hmhn.org">Elizabeth.Martinez@hmhn.org</a></li>
+        <li>
+          EMPOWER Virtual Community — Lizzie Martinez, Oncology Nurse Breast Navigator<br/>
+          <span aria-label="phone">732-836-4679</span>,
+          <a href="mailto:Elizabeth.Martinez@hmhn.org">Elizabeth.Martinez@hmhn.org</a>
+        </li>
       </ul>
 
-      <h3>Nutritionist:</h3>
-      <ul class="list-tight"><li>Kanisha Parikh 551-996-2875</li></ul>
-
-      <h3>Social work services:</h3>
+      <h3>Nutritionist</h3>
       <ul class="list-tight">
-        <li>Jane Watson, LCSW 551-996-2599,
+        <li>Kanisha Parikh — <span aria-label="phone">551-996-2875</span></li>
+      </ul>
+
+      <h3>Social work services</h3>
+      <ul class="list-tight">
+        <li>Jane Watson, LCSW — <span aria-label="phone">551-996-2599</span>,
           <a href="mailto:Jane.Watson@hmhn.org">Jane.Watson@hmhn.org</a></li>
       </ul>
 
-      <h3>Financial services:</h3>
+      <h3>Financial services</h3>
       <ul class="list-tight">
-        <li>Kathryn Koch, LSW 551-996-5861,
+        <li>Kathryn Koch, LSW — <span aria-label="phone">551-996-5861</span>,
           <a href="mailto:Kathryn.Koch@hmhn.org">Kathryn.Koch@hmhn.org</a></li>
       </ul>
 
-      <h3>Integrative Care Services:</h3>
-      <p><strong>HMH main line:</strong> 844-HMH-WELL</p>
+      <h3>Integrative Care Services</h3>
+      <p><strong>HMH Main Line:</strong> 844-HMH-WELL</p>
 
       <p><strong>HMH – Integrative Health &amp; Medicine – Red Bank</strong><br/>
          1 Riverview Plaza, Floor 2, Red Bank, NJ 07701<br/>
@@ -184,15 +192,15 @@
          Phone: 732-263-7999</p>
 
       <div class="actions">
-         <button class="btn" type="button" onclick="window.print()">Download PDF</button>
-        <button class="btn" type="button" onclick="window.print()">Print PDF</button>
+        <button class="btn" type="button" onclick="window.print()">Save/Print PDF</button>
+        <button class="btn" type="button" onclick="window.print()">Print</button>
       </div>
     </aside>
   </div>
 </div>
 
 <script>
-  // Smooth scroll for internal links
+  // Smooth-scroll kept for future in-page anchors.
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', e=>{
       const id=a.getAttribute('href').slice(1);
