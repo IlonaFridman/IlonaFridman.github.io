@@ -10,13 +10,10 @@
     --ink:#0f172a;
     --muted:#475569;
     --line:#d1d5db;
-    --panel:#f3f4f6;
-    --panel-hover:#e5e7eb;
-    --cta0:#6ea2cf;
-    --cta1:#588fbe;
-    --ring:0 0 0 3px rgba(59,130,246,.35);
+    --cta0:#6ea2cf;   /* light blue */
+    --cta1:#588fbe;   /* darker blue */
     --shadow:0 12px 28px rgba(2,8,23,.10), 0 4px 10px rgba(2,8,23,.08);
-    --radius:14px;
+    --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -25,154 +22,192 @@
     font:18px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
   }
   a{color:#2563eb;text-decoration:underline}
-  .container{max-width:1100px;margin:44px auto;padding:0 20px}
-  .layout{display:grid;grid-template-columns:1fr 380px;gap:42px;align-items:start}
-  h1{
-    font-size:34px;margin:0 0 4px 0;letter-spacing:.2px
-  }
-  .eyebrow{
-    margin-top:4px;color:var(--muted);font-size:14px
-  }
-  .subtitle{
-    font-size:22px;color:#3b82f6;margin:6px 0 24px 0
-  }
 
-  /* RIGHT SIDEBAR (like screenshot 2) */
-  .sidebar{display:flex;flex-direction:column;gap:16px}
-  .btn{
+  /* Home button that matches the screenshot */
+  .home-icon{
+    position:fixed;left:16px;top:16px;z-index:1000;
+    width:52px;height:52px;border-radius:18px;
     display:inline-flex;align-items:center;justify-content:center;
-    padding:14px 18px;border-radius:14px;border:1px solid #c7d9ea;
-    background:linear-gradient(0deg,var(--cta0),var(--cta1));
-    color:#fff;text-decoration:none;box-shadow:var(--shadow);
-    font-weight:600;
+    background:#fff;border:1px solid #d6dee7;box-shadow:0 16px 26px rgba(2,8,23,.14);
+    text-decoration:none;
   }
-  .btn.secondary{
-    background:#fff;color:var(--ink);border-color:#e5e7eb;
-  }
-  .card-img{
-    border-radius:12px;border:1px solid var(--line);
-    overflow:hidden;box-shadow:var(--shadow);background:#fafafa;
-  }
-  .card-img .ph{
-    display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
-  }
-  .actions{
-    display:grid;gap:10px;
-  }
-  .muted{color:var(--muted);font-size:14px}
+  .home-icon svg{width:26px;height:26px;fill:#2b3a4c}
 
-  /* LEFT COLUMN CONTENT STYLES */
-  .section h2{margin:20px 0 6px 0;font-size:18px}
-  .section h3{margin:18px 0 6px 0;font-size:17px}
+  .container{max-width:1120px;margin:32px auto 64px;padding:0 20px}
+  header{margin:16px 0 12px 0;text-align:center}
+  h1{margin:0;font-size:32px}
+  .eyebrow{color:var(--muted);font-size:14px;margin-top:6px}
+  .subtitle{font-size:20px;color:#3b82f6;margin-top:8px}
+
+  /* Blue "go to beginning" like a chip button (top-right) */
+  .top-cta{
+    position:fixed;right:16px;top:16px;z-index:999;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 14px;border-radius:999px;border:1px solid #c7d9ea;
+    background:linear-gradient(0deg,var(--cta0),var(--cta1));
+    color:#fff;text-decoration:none;font-weight:700;box-shadow:var(--shadow);
+  }
+
+  /* Two-column layout with dotted divider (like screenshot) */
+  .grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;position:relative;
+  }
+  .grid::before{
+    content:"";position:absolute;left:50%;top:0;bottom:0;transform:translateX(-50%);
+    border-left:2px dotted var(--line);
+  }
+
+  .section h2{margin:18px 0 8px 0;font-size:18px}
+  .section h3{margin:16px 0 6px 0;font-size:17px}
   .bullet{margin:0;padding-left:22px}
   .bullet li{margin:6px 0}
-  .list-tight{margin:0}
+  .list-tight{margin:0;padding-left:0;list-style:none}
   .list-tight li{margin:2px 0}
   .hr{height:1px;background:var(--line);margin:16px 0}
 
-  /* Page "go to beginning" chip (top-right like screenshot 1) */
-  .chip{
-    position:fixed; top:16px; right:16px; z-index:50;
-    padding:10px 14px; border-radius:16px;
-    color:#fff; background:linear-gradient(0deg,var(--cta0),var(--cta1));
-    box-shadow:var(--shadow); text-decoration:none; font-weight:600;
+  /* Center image overlapping the divider */
+  .figure{
+    position:absolute;left:50%;transform:translateX(-50%);
+    top:210px; /* adjust as needed */
+    z-index:0;pointer-events:none;
+  }
+  .figure img{
+    width:210px;max-width:34vw;height:auto;border-radius:14px;
+    border:1px solid var(--line);box-shadow:var(--shadow);background:#fafafa;
+    opacity:0.98;
   }
 
-  /* Responsive */
+  .actions{
+    display:flex;flex-wrap:wrap;gap:10px;margin-top:18px
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 16px;border-radius:12px;border:1px solid #c7d9ea;
+    background:#fff;color:var(--ink);text-decoration:none;box-shadow:var(--shadow);
+    font-weight:600;
+  }
+  .btn.primary{
+    background:linear-gradient(0deg,var(--cta0),var(--cta1));
+    color:#fff;border-color:#c7d9ea;
+  }
+
   @media (max-width:980px){
-    .layout{grid-template-columns:1fr}
-    .chip{position:static; display:inline-flex; margin-bottom:14px}
+    .top-cta{position:static;display:inline-flex;margin:12px 0}
+    .home-icon{position:static;margin:12px 0}
+    header{text-align:left}
+    .grid{grid-template-columns:1fr}
+    .grid::before{display:none}
+    .figure{position:static;transform:none;margin:10px 0;opacity:1}
+  }
+
+  @media print{
+    .home-icon,.top-cta,.actions{display:none!important}
+    a{text-decoration:none;color:inherit}
+    body{font-size:14px}
   }
 </style>
 </head>
 <body>
-      <header>
-      <h1>Healthcare Team: Plan your care together</h1>
-      <div class="eyebrow">Who should participate in my care?</div>
-    </header>
+<a class="home-icon" href="https://ilonafridman.github.io/home.html" aria-label="Home">
+  <!-- house icon -->
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>
+</a>
+<a class="top-cta" href="#top">Go back to the beginning</a>
 
-    <div class="layout">
-      <!-- LEFT COLUMN -->
-      <main>
-        <section class="section">
-          <h2>Cancer Care and Coping Services</h2>
+<a id="top"></a>
+<div class="container">
+  <header>
+    <h1>Healthcare Team: Plan your care together</h1>
+    <div class="eyebrow">Who should participate in my care?</div>
+    <div class="subtitle">Cancer Care and Copying Services</div>
+  </header>
 
-          <h3>Support groups in HMH Hospital System</h3>
-          <ul class="list-tight">
-            <li>EMPOWER Virtual Community — Lizzie Martinez, Oncology Nurse Breast Navigator<br/>
-              732-836-4679, <a href="mailto:Elizabeth.Martinez@hmhn.org">Elizabeth.Martinez@hmhn.org</a></li>
-          </ul>
-
-          <h3>Nutritionist</h3>
-          <ul class="list-tight"><li>Kanisha Parikh: 551-996-2875</li></ul>
-
-          <h3>Social work services</h3>
-          <ul class="list-tight">
-            <li>Jane Watson, LCSW: 551-996-2599,
-              <a href="mailto:Jane.Watson@hmhn.org">Jane.Watson@hmhn.org</a></li>
-          </ul>
-
-          <h3>Financial services</h3>
-          <ul class="list-tight">
-            <li>Kathryn Koch, LSW: 551-996-5861,
-              <a href="mailto:Kathryn.Koch@hmhn.org">Kathryn.Koch@hmhn.org</a></li>
-          </ul>
-
-          <div class="hr"></div>
-
-          <h2>Integrative Care Services</h2>
-          <p><strong>HMH main line:</strong> <a href="tel:184446494355">844-HMH-WELL</a></p>
-
-          <p><strong>HMH – Integrative Health Medicine – Red Bank</strong><br/>
-             1 Riverview Plaza, Floor 2, Red Bank, NJ 07701<br/>
-             Phone: 732-263-7999</p>
-
-          <p><strong>HMH – Integrative Health &amp; Medicine – Neptune</strong><br/>
-             HOPE Tower at Jersey Shore University Medical Center<br/>
-             19 Davis Avenue, First Floor, Neptune, NJ 07753<br/>
-             Phone: 732-263-7999</p>
-        </section>
-      </main>
-
-      <!-- RIGHT SIDEBAR -->
-     <aside class="sidebar" aria-label="Key contacts and roles">
-    <a class="btn" href="https://ilonafridman.github.io/home.html">Go back to the beginning</a>
-</aside>
-
-        <div class="card-img" aria-hidden="true">
-          <img class="ph" alt="" src="https://ilonafridman.github.io/Pinkwoman.jpg" />
-        </div>
-
-        <section class="section">
-          <h2>Doctors who develop treatment plan</h2>
-          <ul class="bullet">
-            <li><strong>Surgeons </strong> perform partial or complete breast removal.</li>
-            <li><strong>Radiation Oncologists</strong> perform radiation therapy.</li>
-            <li><strong>Medical oncologists</strong> oversee chemotherapy and hormone therapy.</li>
-          </ul>
-
-          <h2>Consider consulting other experts</h2>
-          <ul class="bullet">
-            <li><strong>Plastic Surgeons</strong> help restore the breast’s shape after surgery.</li>
-            <li><strong>Genetic Counselors</strong> organize genetic testing.</li>
-            <li><strong>Reproduction Specialists</strong> work with you about having children after cancer treatment.</li>
-          </ul>
-
-          <h2>Healthcare professionals who support your care</h2>
-          <ul class="bullet">
-            <li>Advanced Nurse Practitioner</li>
-            <li>Nurse Practitioner</li>
-            <li>Nurse Navigator</li>
-            <li>Research Nurse</li>
-          </ul>
-        </section>
-
-        <div class="actions">
-          <a class="btn secondary" href="#" aria-disabled="true">Download PDF</a>
-          <a class="btn secondary" href="#" aria-disabled="true">Print</a>
-        </div>
-      </aside>
+  <div class="grid">
+    <!-- CENTER IMAGE OVER DIVIDER -->
+    <div class="figure" aria-hidden="true">
+      <img src="https://ilonafridman.github.io/Pinkwoman.jpg" alt="">
     </div>
+
+    <!-- LEFT: DOCTORS + PROFESSIONALS -->
+    <main class="section" aria-label="Doctors and related roles">
+      <h2>Doctors who develop treatment plan</h2>
+      <ul class="bullet">
+        <li><strong>Surgeons</strong> perform lumpectomy or mastectomy.</li>
+        <li><strong>Radiation oncologists</strong> provide radiation therapy.</li>
+        <li><strong>Medical oncologists</strong> manage chemotherapy and hormone therapy.</li>
+      </ul>
+
+      <h2>Other experts to consult</h2>
+      <ul class="bullet">
+        <li><strong>Plastic surgeons</strong> help restore breast shape after surgery.</li>
+        <li><strong>Genetic counselors</strong> coordinate genetic testing.</li>
+        <li><strong>Reproductive specialists</strong> (fertility experts) can discuss options for having children after cancer treatment.</li>
+      </ul>
+
+      <h2>Healthcare professionals who support your care:</h2>
+      <p><strong>Advance nurse practitioners (ANP)</strong> organize medical management, including prescribing, managing side effects, ordering tests, performing procedures.</p>
+      <p><strong>Nurse navigators</strong> organizes care and support, including scheduling appointments, removing barriers (financial, transport), provides patient education, identifies services for emotional support.</p>
+      <p><strong>Research nurses</strong> oversee clinical trial integrity, patient screening, managing study protocols, data collection, monitoring for trial-specific side effects.</p>
+    </main>
+
+    <!-- RIGHT: SUPPORTING STUFF -->
+    <aside class="section" aria-label="Cancer Care and Copying">
+      <h2>Cancer Care and Copying</h2>
+
+      <h3>Support groups in HMH Hospital System</h3>
+      <ul class="list-tight">
+        <li>EMPOWER Virtual Community — Lizzie Martinez, Oncology Nurse Breast Navigator<br/>
+          732-836-4679, <a href="mailto:Elizabeth.Martinez@hmhn.org">Elizabeth.Martinez@hmhn.org</a></li>
+      </ul>
+
+      <h3>Nutritionist:</h3>
+      <ul class="list-tight"><li>Kanisha Parikh 551-996-2875</li></ul>
+
+      <h3>Social work services:</h3>
+      <ul class="list-tight">
+        <li>Jane Watson, LCSW 551-996-2599,
+          <a href="mailto:Jane.Watson@hmhn.org">Jane.Watson@hmhn.org</a></li>
+      </ul>
+
+      <h3>Financial services:</h3>
+      <ul class="list-tight">
+        <li>Kathryn Koch, LSW 551-996-5861,
+          <a href="mailto:Kathryn.Koch@hmhn.org">Kathryn.Koch@hmhn.org</a></li>
+      </ul>
+
+      <h3>Integrative Care Services:</h3>
+      <p><strong>HMH main line:</strong> 844-HMH-WELL</p>
+
+      <p><strong>HMH – Integrative Health &amp; Medicine – Red Bank</strong><br/>
+         1 Riverview Plaza, Floor 2, Red Bank, NJ 07701<br/>
+         Phone: 732-263-7999</p>
+
+      <p><strong>HMH – Integrative Health &amp; Medicine – Neptune</strong><br/>
+         HOPE Tower at Jersey Shore University Medical Center<br/>
+         19 Davis Avenue, First Floor, Neptune, NJ 07753<br/>
+         Phone: 732-263-7999</p>
+
+      <div class="actions">
+        <a class="btn primary" href="#top">Go back to the beginning</a>
+        <a class="btn" href="https://ilonafridman.github.io/home.html">Home</a>
+        <button class="btn" type="button" onclick="window.print()">Download PDF</button>
+        <button class="btn" type="button" onclick="window.print()">Print PDF</button>
+      </div>
+    </aside>
   </div>
+</div>
+
+<script>
+  // Smooth scroll for internal links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id=a.getAttribute('href').slice(1);
+      if(id){
+        e.preventDefault();
+        document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+</script>
 </body>
 </html>
