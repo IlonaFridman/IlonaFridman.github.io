@@ -22,10 +22,8 @@
 .home-link:hover{transform:translateY(-1px)}
 .home-link:focus-visible{outline:none;box-shadow:var(--ring)}
 .home-link svg{width:22px;height:22px;fill:#374151}
-  /* ==== HOME BUTTON – styles END ==== */
-
-  /* Slide heading */
-   h1.slide-title {
+/* ==== HOME BUTTON – styles END ==== */
+    h1.slide-title {
         font-size: clamp(2rem, 2.2vw + 1.2rem, 2.75rem);
         line-height: 1.2;
         margin: 0 0 0.5rem;
@@ -48,8 +46,14 @@
   }
   .tool-btn:hover{background:#eef1f5;transform:translateY(-1px)}
   .tool-btn:focus-visible{outline:none;box-shadow:var(--ring)}
-  .tool-btn[disabled] { opacity: 0.6; cursor: not-allowed; }
-  .tool-btn[disabled]:hover { transform: none; background-color: #f5f6f8; }
+  .tool-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .tool-btn[disabled]:hover {
+    transform: none;
+    background-color: #f5f6f8;
+  }
 
   /* LEFT (Accordion) */
   .stack{display:flex;flex-direction:column;gap:14px;min-width:300px}
@@ -60,8 +64,20 @@
     text-align:left;position:relative;transition:background-color .15s,transform .06s;
     font-size:22px;
   }
-  .acc-header::before{content:"\2794";position:absolute;left:14px;font-size:20px;color:#000;opacity:.8;transform:rotate(180deg)}
-  .acc-header::before{ ...mask chevron..., transform:translateY(-50%) rotate(-90deg) }
+ .acc-header::before{
+  content:"▸";                 /* right-pointing caret */
+  position:absolute;
+  left:14px; top:50%;
+  transform:translateY(-50%);
+  font-size:35px;
+  color:#4b5563;               /* dark gray, darker than panel */
+  opacity:.95;
+}
+
+/* Open: arrow faces down */
+.acc-header[aria-expanded="true"]::before{
+  content:"▾";                 /* down-pointing caret */
+}
   .acc-header[aria-expanded="true"]::before{ transform:translateY(-50%) rotate(0deg) }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
@@ -91,7 +107,12 @@
   .cta[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(0.35)}
 
   /* Style for tool buttons in the side panel */
-  .side .tool-btn { width: 100%; font-size: 18px; padding: 14px 18px; text-align: center; }
+  .side .tool-btn {
+    width: 100%;
+    font-size: 18px;
+    padding: 14px 18px;
+    text-align: center;
+  }
 
   .pic-wrap{width:100%;max-width:340px;margin-top:6px}
   .pic{width:100%;height:auto;border:2px solid #c9ced6;border-radius:10px;display:block}
@@ -99,9 +120,9 @@
   .hint{font-size:14px;color:#374151}
 
   /* Hidden handout container for PDF/print/email rendering */
-  .print-stage{position:fixed;left:-10000px;top:-10000px;width:794px; padding:24px;background:#fff}
+  .print-stage{position:fixed;left:-10000px;top:-10000px;width:794px; /* ~A4 width at 96dpi */ padding:24px;background:#fff}
 
-  /* Handout outline styling */
+  /* Handout outline styling (matches your screenshot) */
   .handout{
     font-family: Arial, Helvetica, sans-serif; color:#0f172a; line-height:1.55; font-size:18px;
   }
@@ -124,7 +145,7 @@
 </style>
 </head>
 <body>
-  <!-- ==== HOME BUTTON – element ==== -->
+   <!-- ==== HOME BUTTON – element ==== -->
   <a class="home-link" href="https://ilonafridman.github.io/home.html" aria-label="Go to Home">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.1 2.5 10.1a1 1 0 0 0-.4.8v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-5h4v5a1 1 0 0 0 1 1h5.9a1 1 0 0 0 1-1v-9a1 1 0 0 0-.4-.8L12 3.1z"/></svg>
   </a>
@@ -134,10 +155,12 @@
 <main class="container" aria-label="Slide-like layout">
   <section class="layout">
     <div>
-      <!-- ADD: slide heading -->
-        <h1 class="slide-title">Questions to ask about Integrative (Holistic) Therapy</h1>
+
+       <!-- ADD: slide heading -->
+            <h1 class="slide-title">Questions to ask about integrative therapy</h1>
       <h2 class="slide-title">Choose 3–5 questions for each healthcare professional listed below.</h2>
-      <p>Click on one or more sections and explore the questions you want to bring to your care team. You can also download chosen questions or explore information by choosing option "Online sources to explore".</p>
+        <p>Select one or more sections and explore the questions you want to bring to your care team. You can also download your selected questions or select ‘Online sources to explore’ to find more information.</p>
+     
 
 
      
@@ -166,7 +189,7 @@
       <button id="printBtn"       class="tool-btn" type="button" disabled>Print</button>
     
     
-      <p class="hint">Tip: check any number of questions you want to include in the handout.</p>
+    <p class="hint">Tip: Check any number of questions you’d like to include in the handout</p>
     </aside>
   </section>
 </main>

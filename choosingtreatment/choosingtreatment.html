@@ -64,7 +64,21 @@
     text-align:left;position:relative;transition:background-color .15s,transform .06s;
     font-size:22px;
   }
-  .acc-header::before{content:"\2794";position:absolute;left:14px;font-size:20px;color:#000;opacity:.8;transform:rotate(180deg)}
+ .acc-header::before{
+  content:"▸";                 /* right-pointing caret */
+  position:absolute;
+  left:14px; top:50%;
+  transform:translateY(-50%);
+  font-size:35px;
+  color:#4b5563;               /* dark gray, darker than panel */
+  opacity:.95;
+}
+
+/* Open: arrow faces down */
+.acc-header[aria-expanded="true"]::before{
+  content:"▾";                 /* down-pointing caret */
+}
+  .acc-header[aria-expanded="true"]::before{ transform:translateY(-50%) rotate(0deg) }
   .acc-header:hover{background:var(--panel-hover);transform:translateY(-1px)}
   .acc-header:focus-visible{outline:none;box-shadow:var(--ring)}
   .acc-header .cat-icon{width:26px;height:26px;flex:0 0 26px;}
@@ -143,7 +157,7 @@
     <div>
        <h1 class="slide-title">Questions to explore when choosing treatment</h1>
         <h2 class="slide-title">Choose 3–5 questions for each healthcare professional listed below.</h2>
-      <p>Click on one or more sections and explore the questions you want to bring to your care team. You can also download chosen questions or explore information by choosing option "Online sources to explore".</p>
+      <p>Select one or more sections and explore the questions you want to bring to your care team. You can also download your selected questions or select ‘Online sources to explore’ to find more information.</p>
      
       <div class="toolbar" role="group" aria-label="Expand or collapse all">
         <button id="expandAllBtn"  class="tool-btn" type="button">Expand all</button>
@@ -167,7 +181,7 @@
       <button id="printBtn"       class="tool-btn" type="button" disabled>Print</button>
    
     
-      <p class="hint">Tip: check any number of questions you want to include in the handout.</p>
+     <p class="hint">Tip: Check any number of questions you’d like to include in the handout</p>
     </aside>
   </section>
 </main>
