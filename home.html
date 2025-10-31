@@ -43,19 +43,16 @@
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
     padding:12px;min-height:220px;border:1px solid #e5e7eb;
   }
-  .card-start{background:#dff0fa;border:2px solid #b6e0fb;cursor:pointer;position:relative;overflow:hidden}
-  .card-start::before{
-    content:"";position:absolute;inset:0;background:url("https://ilonafridman.github.io/Starthere.jpg") center/cover no-repeat;opacity:.25;
-  }
-  .start-title{font-size:40px;font-weight:800;color:#17324a;position:relative}
+  /* removed old .card-start and .start-title */
 
   .card-link{ color:inherit; text-decoration:none; width:100% }
   .thumb{ width:100%; height:160px; border-radius:14px; background:#e9eef5; margin-bottom:12px; overflow:hidden; display:block }
   .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
   .card-title a{ display:inline-block; text-decoration:none; color:inherit; font-weight:800 }
   .card-title{ font-size:20px; font-weight:800; line-height:1.2; }
+  .card-desc{ font-size:15px; color:var(--muted); margin-top:6px; line-height:1.35; } /* subtle subtitle */
 
-  @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } .card-start .start-title{font-size:34px}}
+  @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } }
   @media (max-width: 640px){ .grid{ grid-template-columns:1fr } .header{justify-content:center}}
 
   /* Modal */
@@ -95,25 +92,18 @@
   .section-content{ max-height: 35vh; overflow-y: auto; padding: 8px; }
   .section-toolbar{ display:flex; gap:8px; padding:6px 6px 8px 6px; align-items:center; flex-wrap:wrap }
   
-  /* This is the style for "Select all" and now the action buttons */
   .mini{
     border:1px solid #cbd5e1; 
     background:#fff; 
-    color: #374151; /* Added explicit text color for consistency */
+    color:#374151;
     border-radius:10px; 
-    padding:8px 12px; /* Slightly increased padding for better look */
+    padding:8px 12px;
     font-weight:700; 
     cursor:pointer;
     transition: background-color .15s ease;
   }
-  .mini:hover {
-    background-color: #f9fafb;
-  }
-  .mini:disabled {
-    background-color: #f3f4f6;
-    color: #9ca3af;
-    cursor: not-allowed;
-  }
+  .mini:hover { background-color:#f9fafb; }
+  .mini:disabled { background-color:#f3f4f6; color:#9ca3af; cursor:not-allowed; }
 
   .eres-btn{
     margin-left:auto;
@@ -149,26 +139,22 @@
 
  .links-pack{
   display:flex;
-  flex-wrap:wrap;          /* allow next line */
+  flex-wrap:wrap;
   gap:8px;
   align-items:stretch;
 }
 .links-pack > h2{
-  flex:0 0 100%;           /* header on its own line */
-  margin:0 0 8px 0;        /* small space above buttons */
+  flex:0 0 100%;
+  margin:0 0 8px 0;
 }
-
-/* smaller, equal-height buttons */
 .secondary{
   display:inline-flex;     
   align-items:center;      
-  height:28px;             /* ~half height */
-  padding:0 10px;          /* tighter padding so height holds */
+  height:28px;
+  padding:0 10px;
   white-space:nowrap;      
   line-height:1;           
 }
-
-  /* --- REMOVED: Unused .cta styles --- */
 
   .action-buttons-group { display: flex; gap: 10px; }
 
@@ -197,8 +183,17 @@
   </header>
 
   <main class="container grid">
-    <!-- Cards... (no changes here) -->
-    <button class="card card-start" id="startHereBtn" aria-haspopup="dialog" aria-controls="startModal"><span class="start-title">Start Here</span></button>
+    <!-- NEW: Start Here as a normal card -->
+    <div class="card">
+      <a class="thumb" href="#" data-open="startModal" aria-haspopup="dialog" aria-controls="startModal">
+        <img src="https://ilonafridman.github.io/Starthere.jpg" alt="People jogging with the word Start on the track">
+      </a>
+      <div class="card-title">
+        <a href="#" data-open="startModal" aria-haspopup="dialog" aria-controls="startModal">Start Here</a>
+      </div>
+      <p class="card-desc">A short list of questions to start a conversation with your doctor.</p>
+    </div>
+
     <div class="card"><a class="thumb" href="https://ilonafridman.github.io/diagnosis/diagnosis.html" ><img src="https://ilonafridman.github.io/AfterDiagnosis.jpg" alt="After diagnosis image"></a><div class="card-title"><a href="https://ilonafridman.github.io/diagnosis/diagnosis.html" >Questions to ask after being diagnosed</a></div></div>
     <div class="card"><a class="thumb" href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" ><img src="https://ilonafridman.github.io/ChoosingTreatment.jpg" alt="Choosing treatment image"></a><div class="card-title"><a href="https://ilonafridman.github.io/choosingtreatment/choosingtreatment.html" >Questions to explore when choosing treatment</a></div></div>
     <div class="card"><a class="thumb" href="https://ilonafridman.github.io/treatment/treatment.html" ><img src="https://ilonafridman.github.io/DuringTreatment.jpg" alt="During treatment image"></a><div class="card-title"><a href="https://ilonafridman.github.io/treatment/treatment.html" >Questions to ask during treatment</a></div></div>
@@ -210,15 +205,13 @@
   <div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startModalTitle" aria-hidden="true">
     <div class="modal-backdrop" data-close="startModal"></div>
     <div class="modal-card" role="document">
-   <button class="icon-btn close" aria-label="Close dialog" data-close="startModal">✕</button>
-      
+      <button class="icon-btn close" aria-label="Close dialog" data-close="startModal">✕</button>
       <div class="modal-header" aria-describedby="startModalIntro">
         <h2 id="startModalTitle">Questions to ask your provider</h2>
         <div id="startModalIntro" class="lede-panel">
           <p>Many patients wonder, 'What should I ask my provider? How can I move forward?'</p>          
           <p>Open any section and check the questions you want to bring to your care team. You can download your selected questions or explore online resources on your own.</p>
-        <h3 id="startModalTitle">Choose 3–5 questions for your next appointment</h3>
- 
+          <h3 id="startModalTitle">Choose 3–5 questions for your next appointment</h3>
         </div>
       </div>
 
@@ -226,12 +219,9 @@
 
       <div class="modal-footer">
         <div class="action-buttons-group">
-          <!-- MODIFIED: Changed class from "cta cta-light" to "mini" -->
-           <h3 id="startModalTitle">Choose at least one question to download a PDF handout</h3>
-         
+          <h3 id="startModalTitle">Choose at least one question to download a PDF handout</h3>
           <button id="downloadPdfBtn" class="mini" type="button" disabled>Download PDF</button>
           <button id="printBtn"       class="mini" type="button" disabled>Print</button>
-          
         </div>
         <div class="links-pack">
           <h2 id="startModalTitle">More questions to explore</h2>
@@ -240,13 +230,11 @@
           <a class="secondary" href="https://ilonafridman.github.io/treatment/treatment.html" >During treatment</a>
           <a class="secondary" href="https://ilonafridman.github.io/aftertreatment/aftertreatment.html" >After treatment</a>
           <a class="secondary" href="https://ilonafridman.github.io/complementary/complementary.html" >About integrative therapy</a>
-          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Other modals (no changes) -->
- 
   <div id="printStage" class="print-stage" aria-hidden="true"></div>
 
 <script>
@@ -268,7 +256,7 @@ function escClose(e){ if(e.key === "Escape"){ document.querySelectorAll(".modal[
 document.querySelectorAll("[data-open]").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();openModal(btn.getAttribute("data-open"));}));
 document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("click",()=>closeModal(btn.getAttribute("data-close"))));
 document.querySelectorAll(".modal-backdrop").forEach(bg=>bg.addEventListener("click",()=>closeModal(bg.getAttribute("data-close"))));
-document.getElementById("startHereBtn").addEventListener("click",()=>openModal("startModal"));
+// removed: old #startHereBtn listener
 
 /* ---------- Build sections with Select/Clear + eResources ---------- */
 const container = document.getElementById("accordion");
@@ -303,7 +291,7 @@ function updateActionsEnabled(){
   const any = getSelectedQuestions().length > 0;
   document.getElementById('downloadPdfBtn').disabled = !any;
   document.getElementById('printBtn').disabled = !any;
-  document.getElementById('emailBtn').disabled = !any;
+  document.getElementById('emailBtn')?.setAttribute('disabled', !any ? 'true' : 'false');
 }
 container.addEventListener("change", updateActionsEnabled);
 
@@ -358,7 +346,7 @@ async function emailSelectedPDF(){
 // Add event listeners to the new buttons
 document.getElementById('downloadPdfBtn').addEventListener('click', downloadSelectedAsPDF);
 document.getElementById('printBtn').addEventListener('click', printSelected);
-document.getElementById('emailBtn').addEventListener('click', emailSelectedPDF);
+document.getElementById('emailBtn')?.addEventListener('click', emailSelectedPDF);
 
 // Initial check
 updateActionsEnabled();
