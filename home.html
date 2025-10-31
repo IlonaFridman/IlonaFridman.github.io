@@ -83,4 +83,37 @@
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
   .q-list li:last-child{ border-bottom:none }
 
-  .modal-footer{ display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap
+  .modal-footer{ display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; padding-bottom:8px; }
+  .secondary{
+    background: linear-gradient(180deg, #6ea2cf, #588fbe); color:#fff; text-shadow:0 1px 0 rgba(0,0,0,.2);
+    border:2px solid #fff; outline:1px solid #c7d9ea; border-radius:12px; text-decoration:none; font-weight:700;
+    transition:transform .06s ease,filter .15s ease;
+  }
+
+  /* WRAP-FRIENDLY buttons in the modal footer */
+  .links-pack{ display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start }
+  .links-pack > h2{ flex:0 0 100%; margin:0 0 8px 0 }
+  .links-pack .secondary{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 12px;         /* no fixed height */
+    line-height:1.2;
+    white-space:normal;       /* allow wrapping inside button if needed */
+    flex:0 1 auto;            /* wrap nicely without overlap */
+    border-radius:12px;
+  }
+
+  /* Print stage + handout */
+  .print-stage{position:fixed;left:-10000px;top:-10000px;width:794px;padding:24px;background:#fff}
+  .handout{ font-family: Arial, Helvetica, sans-serif; color:#0f172a; line-height:1.55; font-size:18px; }
+  .handout .frame{ border:6px solid #6aa1cc; border-radius:36px; padding:16px; }
+  .handout .chip{ display:block;text-align:center;font-weight:700;font-size:22px;color:#1b4e73; background:#e8f3ff;border:4px solid #6aa1cc;border-radius:16px;padding:10px 14px;margin:8px auto 14px; width:fit-content; min-width:340px; }
+  .handout .panel{ border:6px solid #6aa1cc;border-radius:28px;padding:16px;min-height:160px; }
+  .handout h4{ margin:0 0 8px; font-size:18px }
+  .handout ul{margin:0;padding-left:22px}
+  .handout li{margin:8px 0}
+</style>
+</head>
+<body>
+  <header class="container header">
+    <a class="top-button" href="https://ilonafridman.github.io/careteam.html">Your Care Te
