@@ -64,8 +64,6 @@
     list-style:none; cursor:pointer; padding:12px 16px 12px 36px; font-weight:800; color:#0c2f66;
     background:#edf4ff; border-bottom:1px solid #d9e3f5; outline:none; position:relative;
   }
-  .section summary::marker{ content:""; }
-  .section summary::-webkit-details-marker{ display:none; }
   .section summary::before{
     content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
     width:0; height:0; border-style:solid; border-width:6px 0 6px 8px; border-color:transparent transparent transparent #0b2a5d;
@@ -80,7 +78,6 @@
   .mini:hover { background-color:#f9fafb; }
   .eres-btn{ margin-left:auto; border:1px solid #94a3b8; background:#fff; border-radius:12px; padding:8px 14px; font-weight:800; text-decoration:none; color:#0b2a5d; display:inline-flex; align-items:center; line-height:1; }
   .eres-btn:hover{ background:#f1f5f9 }
-  .eres-btn:active{ transform:translateY(1px) }
 
   .q-list{ list-style:none; padding:0; margin:0; }
   .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
@@ -92,10 +89,6 @@
     border:2px solid #fff; outline:1px solid #c7d9ea; border-radius:12px; padding:10px 14px; text-decoration:none; font-weight:700;
     transition:transform .06s ease,filter .15s ease;
   }
-  .secondary:hover{filter:brightness(1.05);transform:translateY(-1px)}
-  .links-pack{ display:flex; flex-wrap:wrap; gap:8px; align-items:stretch }
-  .links-pack > h2{ flex:0 0 100%; margin:0 0 8px 0 }
-  .secondary{ display:inline-flex; align-items:center; height:28px; padding:0 10px; white-space:nowrap; line-height:1 }
 
   /* Print stage + handout */
   .print-stage{position:fixed;left:-10000px;top:-10000px;width:794px;padding:24px;background:#fff}
@@ -252,8 +245,7 @@ buildSections();
 function getSelectedByTopic(){
   const grouped = {};
   document.querySelectorAll(".q-list input[type='checkbox']:checked").forEach(cb=>{
-    const parts = cb.id.split('-'); // ["q", "<key>", "<idx>"]
-    const key = parts[1];
+    const key = cb.id.split('-')[1];
     const text = cb.nextElementSibling.textContent.trim();
     if(!grouped[key]) grouped[key] = [];
     grouped[key].push(text);
@@ -261,9 +253,8 @@ function getSelectedByTopic(){
   return grouped;
 }
 
-/* ---------- Handout HTML (with instructions + grouped categories) ---------- */
+/* ---------- Handout HTML (instructions + grouped categories) ---------- */
 function handoutHTML(grouped){
-  // Instruction block (always shown)
   const instructions = `
     <div class="panel">
       <p>Here are the questions you choose to ask your doctors.</p>
@@ -274,18 +265,16 @@ function handoutHTML(grouped){
       </ul>
     </div>`;
 
-  // Questions (only categories with selections)
   const keys = Object.keys(grouped);
   let questionsHTML = '';
   if (keys.length === 0){
     questionsHTML = `<div class="panel"><p>(Chosen questions appear here.)</p></div>`;
   } else {
-    const blocks = keys.map(key=>{
+    questionsHTML = keys.map(key=>{
       const title = TOPICS[key]?.title || key;
       const items = grouped[key].map(q=>`<li>${q}</li>`).join('');
       return `<div class="panel"><h4>${title}</h4><ul>${items}</ul></div>`;
     }).join('<div style="height:14px"></div>');
-    questionsHTML = blocks;
   }
 
   const recs  = RECOMMENDATIONS.map(r => `<li>${r}</li>`).join('');
@@ -311,29 +300,44 @@ function buildHandoutStage(){
   return stage.firstElementChild;
 }
 
-/* ---------- Download / Print / Email (always available) ---------- */
-async function downloadSelectedAsPDF(){
+/* ---------- PDF helpers (multi-page with margins) ---------- */
+async function createHandoutPDF(){
   const node = buildHandoutStage();
   const canvas = await html2canvas(node, { backgroundColor:'#ffffff', scale:Math.min(2, window.devicePixelRatio||1.5) });
-  const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress:true });
-  const pageW = pdf.internal.pageSize.getWidth();
-  const imgW = pageW;
-  const pageH = pdf.internal.pageSize.getHeight();
-  const pxPerMm = canvas.width / imgW;
-  const pageHPx = pageH * pxPerMm;
 
-  // Slice across multiple pages cleanly
+  const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress:true });
+
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  const margin = 10;                         // mm
+  const contentW = pageW - margin*2;         // mm
+  const pxPerMm = canvas.width / contentW;   // canvas px per mm at our target width
+  const pageContentHPx = (pageH - margin*2) * pxPerMm;
+
   let y = 0;
   while (y < canvas.height){
+    const sliceH = Math.min(pageContentHPx, canvas.height - y);
     const c = document.createElement('canvas');
     c.width = canvas.width;
-    c.height = Math.min(pageHPx, canvas.height - y);
-    c.getContext('2d').drawImage(canvas, 0, y, canvas.width, c.height, 0, 0, canvas.width, c.height);
+    c.height = sliceH;
+
+    // draw the slice from the full canvas
+    const ctx = c.getContext('2d');
+    ctx.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
     const data = c.toDataURL('image/png');
+    const sliceHmm = sliceH / pxPerMm;       // keep aspect, no vertical stretching
     if (y) pdf.addPage();
-    pdf.addImage(data, 'PNG', 0, 0, imgW, pageH);
-    y += pageHPx;
+    pdf.addImage(data, 'PNG', margin, margin, contentW, sliceHmm);
+    y += sliceH;
   }
+  return pdf;
+}
+
+/* ---------- Actions (always available) ---------- */
+async function downloadSelectedAsPDF(){
+  const pdf = await createHandoutPDF();
   pdf.save('questions-handout.pdf');
 }
 
@@ -343,34 +347,21 @@ function printSelected(){
 }
 
 async function emailSelectedPDF(){
-  const node = buildHandoutStage();
-  const canvas = await html2canvas(node, { backgroundColor:'#ffffff', scale:Math.min(2, window.devicePixelRatio||1.5) });
-  const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress:true });
-  const pageW = pdf.internal.pageSize.getWidth();
-  const imgW = pageW;
-  const pageH = pdf.internal.pageSize.getHeight();
-  const pxPerMm = canvas.width / imgW;
-  const pageHPx = pageH * pxPerMm;
-
-  let y=0;
-  while (y < canvas.height){
-    const c = document.createElement('canvas'); c.width = canvas.width; c.height = Math.min(pageHPx, canvas.height - y);
-    c.getContext('2d').drawImage(canvas,0,y,canvas.width,c.height,0,0,canvas.width,c.height);
-    const slice = c.toDataURL('image/png'); if (y) pdf.addPage(); pdf.addImage(slice,'PNG',0,0,imgW,pageH); y += pageHPx;
-  }
-
+  const pdf = await createHandoutPDF();
   const blob = pdf.output('blob');
   const file = new File([blob], 'questions-handout.pdf', {type:'application/pdf'});
   if (navigator.canShare && navigator.canShare({ files:[file] })){
     await navigator.share({ files:[file], title:'Questions Handout', text:'Please see attached questions handout.' }).catch(()=>{});
     return;
   }
-  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'questions-handout.pdf'; a.click(); URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'questions-handout.pdf'; a.click();
+  URL.revokeObjectURL(url);
   const body = encodeURIComponent('Attached is my Questions Handout (PDF). If the attachment did not appear, I just downloaded it—please see the downloaded file.');
   window.location.href = `mailto:?subject=${encodeURIComponent('Questions Handout')}&body=${body}`;
 }
 
-/* Buttons (always enabled) */
+/* Buttons */
 document.getElementById('downloadPdfBtn').addEventListener('click', downloadSelectedAsPDF);
 document.getElementById('printBtn').addEventListener('click', printSelected);
 document.getElementById('emailBtn')?.addEventListener('click', emailSelectedPDF);
