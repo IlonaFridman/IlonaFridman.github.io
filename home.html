@@ -82,7 +82,7 @@
         border-radius:12px; padding:12px 16px; border:1px solid transparent; cursor:pointer;
       }
       .btn-primary{ background:linear-gradient(180deg,var(--brand),var(--brand-strong)); color:#fff; box-shadow:var(--shadow) }
-      .btn-secondary{ background:#f1f5f9; color:#0b2a5d; border-color:#c7d9ea }
+      .btn-secondary{ background:#f1f59; color:#0b2a5d; border-color:#c7d9ea }
 
       .intro-media{
         width:100%; height:100%;
@@ -119,7 +119,7 @@
       .links-pack>h2{ flex:0 0 100%; margin:0 0 8px 0 }
       .links-pack .secondary{ display:inline-flex; align-items:center; padding:8px 12px; line-height:1.2; white-space:normal; flex:0 1 auto; border-radius:12px }
 
-      /* Print/handout + FAB kept from previous step */
+      /* Print/handout + FAB */
       .print-stage{ position:fixed; left:-10000px; top:-10000px; width:794px; padding:24px; background:#fff }
       .handout{ font-family:Arial, Helvetica, sans-serif; color:#0f172a; line-height:1.55; font-size:18px }
       .handout .frame{ border:6px solid #6aa1cc; border-radius:36px; padding:16px }
@@ -141,13 +141,43 @@
     </header>
 
     <!-- BLOCKING Instructions Window -->
-    <!-- CHANGED: aria-hidden starts as true to avoid flash; JS decides whether to show it -->
     <div class="modal intro-window" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true">
       <div class="modal-backdrop" aria-hidden="true"></div>
       <div class="modal-card" role="document">
         <button class="icon-btn close" aria-label="Close instructions window" data-intro-close>✕</button>
 
-       
+        <div class="intro-layout">
+          <div class="intro-copy">
+            <h1 id="introTitle">The guide for your cancer journey</h1>
+            <p>
+              Finding out you have cancer can feel confusing and scary. It might seem like you're getting lots of puzzle pieces of
+              information and it's hard to see the whole picture.
+            </p>
+            <p><strong>You don’t have to figure it all out at once!</strong></p>
+            <p>We’ve broken things down into several steps that outline your journey. For each step, you'll find:</p>
+            <ul>
+              <li>Questions to help you talk to your doctors and nurses.</li>
+              <li>Good websites with safe and helpful information.</li>
+            </ul>
+            <p><strong>You're in control.</strong> Explore the section that feels right for you, or select "Start Here" to see a shorter list of questions.</p>
+
+            <div class="intro-actions" role="group" aria-label="Instructions actions">
+              <button class="btn btn-primary" type="button" data-intro-close>Explore here</button>
+              <a class="btn btn-secondary" href="#" data-open="startModal" aria-haspopup="dialog" aria-controls="startModal">Open “Start here”</a>
+            </div>
+          </div>
+
+          <figure class="intro-media" aria-label="Breast cancer information booklets">
+            <img
+              src="https://IlonaFridman.github.io/BreastBooklets.png"
+              alt="A set of breast cancer information booklets laid out together."
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
 
     <!-- Cards -->
     <main class="container grid" aria-label="Topics">
@@ -257,12 +287,15 @@
     <!-- Modal handlers -->
     <script>
       (function () {
-        const INTRO_KEY = 'cq_intro_seen_v1';
+        // WHY sessionStorage? Show intro once per browser session; show again only after user leaves/ends session.
+        const INTRO_KEY = 'cq_intro_seen_session_v1';
+        const storage = window.sessionStorage;
+
         const hasSeenIntro = () => {
-          try { return localStorage.getItem(INTRO_KEY) === '1'; } catch { return false; }
+          try { return storage.getItem(INTRO_KEY) === '1'; } catch { return false; }
         };
         const markIntroSeen = () => {
-          try { localStorage.setItem(INTRO_KEY, '1'); } catch {}
+          try { storage.setItem(INTRO_KEY, '1'); } catch {}
         };
 
         let focusTrapHandler = null;
@@ -311,9 +344,8 @@
           if (!el) return;
           el.setAttribute('aria-hidden', 'true');
 
-          // Mark intro as seen whenever it is closed in any way
           if (id === 'introModal') {
-            markIntroSeen();
+            markIntroSeen(); // ensure we never show it again this session
           }
 
           releaseFocusTrap();
@@ -338,7 +370,6 @@
           const openBtn = e.target.closest('[data-open="startModal"]');
           if (openBtn) {
             e.preventDefault();
-            // If the user proceeds to Start Here, consider the intro "seen"
             markIntroSeen();
             closeModal('introModal');
             openModal('startModal');
@@ -369,21 +400,37 @@
 
         document.addEventListener('keydown', escClose);
 
-        // On load: only auto-open intro if not seen before
-        window.addEventListener('DOMContentLoaded', () => {
+        // Mark as seen when navigating within same origin (prevents re-open when returning from other pages)
+        function isSameOrigin(href) {
+          try { return new URL(href, location.href).origin === location.origin; } catch { return false; }
+        }
+        document.addEventListener('click', (e) => {
+          const a = e.target.closest('a[href]');
+          if (!a) return;
+          if (isSameOrigin(a.getAttribute('href') || a.href)) {
+            markIntroSeen();
+          }
+        });
+
+        // On first view this session: open intro once, then mark seen immediately.
+        function handleInitialShow() {
           const intro = document.getElementById('introModal');
           if (!hasSeenIntro()) {
             openModal('introModal');
+            markIntroSeen(); // if user navigates away without closing, it won't pop again this session
           } else {
-            // ensure hidden & body scroll enabled
             if (intro) intro.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
           }
-        });
+        }
+
+        // Run on normal load AND on BFCache restore (back/forward)
+        window.addEventListener('DOMContentLoaded', handleInitialShow);
+        window.addEventListener('pageshow', handleInitialShow);
       })();
     </script>
 
-    <!-- Start Here: data + rendering + handout actions (RESTORED) -->
+    <!-- Start Here: data + rendering + handout actions -->
     <script>
       // ---------- Data ----------
       const TOPICS = {
@@ -593,7 +640,7 @@
         return stage.firstElementChild;
       }
 
-      // ---------- PDF (block-by-block like home) ----------
+      // ---------- PDF ----------
       async function createHandoutPDF() {
         const root = buildHandoutStage(); // .handout
         const frame = root.querySelector(".frame");
