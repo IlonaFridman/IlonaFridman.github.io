@@ -302,24 +302,42 @@
     singleOpen = true;
   }
 
-  // ----- Selection helpers -----
+  // ----- Selection helpers (unchanged for button enablement) -----
   function getSelectedQuestions(){
     return Array.from(document.querySelectorAll('.q-list input[type="checkbox"]:checked'))
       .map(cb => cb.nextElementSibling.textContent.trim());
   }
+
   function updateActionsEnabled(){
     const count = getSelectedQuestions().length;
     const any = count > 0;
     document.getElementById('downloadPdfBtn').disabled = !any;
     document.getElementById('printBtn').disabled = !any;
     const emailBtn = document.getElementById('emailBtn');
-    if (emailBtn) emailBtn.disabled = !any; // mirror home page's optional button
+    if (emailBtn) emailBtn.disabled = !any;
     const hint = document.getElementById('selHint');
     if (hint) hint.textContent = any ? `${count} question${count>1?'s':''} selected.` : 'No questions selected yet.';
   }
 
-  // ===== Handout (MATCH HOME PAGE) =====
-  function handoutHTML(selected){
+  // ===== NEW: Group selections by category (keeps site categories in handout) =====
+  function getSelectedByCategory(){
+    const grouped = new Map(); // key: idx => { title, items:[] }
+    document.querySelectorAll('.q-list input[type="checkbox"]:checked').forEach(cb => {
+      const parts = cb.id.split('-'); // q-<idx>-<i>
+      const idx = parseInt(parts[1], 10);
+      const title = DATA[idx]?.title || `Section ${idx+1}`;
+      const text = cb.nextElementSibling.textContent.trim();
+      if (!grouped.has(idx)) grouped.set(idx, { title, items: [] });
+      grouped.get(idx).items.push(text);
+    });
+    // preserve display order by DATA index
+    return Array.from(grouped.entries())
+                .sort((a,b)=>a[0]-b[0])
+                .map(([,val])=>val);
+  }
+
+  // ===== Handout (MATCH HOME PAGE; now supports grouped-by-category) =====
+  function handoutHTML(selectedOrGrouped){
     const instructions = `
       <div class="panel">
         <p>Here are the questions you choose to ask your doctors.</p>
@@ -330,9 +348,16 @@
         </ul>
       </div>`;
 
-    const questionsHTML = selected.length
-      ? `<div class="panel"><ul>${selected.map(q=>`<li>${q}</li>`).join('')}</ul></div>`
-      : `<div class="panel"><p>(Chosen questions appear here.)</p></div>`;
+    // Backward-compat: if a flat array of strings was passed, wrap as a single panel
+    let questionsHTML = '';
+    if (Array.isArray(selectedOrGrouped) && selectedOrGrouped.length && typeof selectedOrGrouped[0] === 'string') {
+      questionsHTML = `<div class="panel"><ul>${selectedOrGrouped.map(q=>`<li>${q}</li>`).join('')}</ul></div>`;
+    } else {
+      const groups = Array.isArray(selectedOrGrouped) ? selectedOrGrouped : [];
+      questionsHTML = groups.length
+        ? groups.map(g => `<div class="panel"><h4>${g.title}</h4><ul>${g.items.map(q=>`<li>${q}</li>`).join('')}</ul></div>`).join('<div style="height:14px"></div>')
+        : `<div class="panel"><p>(Chosen questions appear here.)</p></div>`;
+    }
 
     const recs = RECOMMENDATIONS.map(r => `<li>${r}</li>`).join('');
 
@@ -350,19 +375,20 @@
       </div>`;
   }
 
-  // Build hidden DOM for rendering/printing
-  function buildHandoutStage(selected){
+  // Build hidden DOM for rendering/printing (now uses grouped categories)
+  function buildHandoutStage(){
     const stage = document.getElementById('printStage');
-    stage.innerHTML = handoutHTML(selected);
+    const grouped = getSelectedByCategory();
+    stage.innerHTML = handoutHTML(grouped);
     return stage.firstElementChild; // .handout
   }
 
   // ===== PDF (block-by-block pagination; EXACT AS HOME PAGE) =====
   async function createHandoutPDF(){
-    const selected = getSelectedQuestions();
-    if(!selected.length) return null;
+    const any = getSelectedQuestions().length > 0; // keep button-state logic unchanged
+    if(!any) return null;
 
-    const root = buildHandoutStage(selected);           // .handout
+    const root = buildHandoutStage();           // .handout
     const frame = root.querySelector('.frame');
 
     const pdf = new window.jspdf.jsPDF({ unit:'mm', format:'a4', compress:true });
@@ -425,29 +451,30 @@
     return pdf;
   }
 
-  // ----- Download as PDF (uses block pagination) -----
+  // ----- Download as PDF -----
   async function downloadSelectedAsPDF(){
     const pdf = await createHandoutPDF();
     if (!pdf) return;
     pdf.save('questions-handout.pdf');
   }
 
-  // ----- Print (same outline) -----
+  // ----- Print (same outline; now grouped by category) -----
   function printSelected(){
-    const selected = getSelectedQuestions();
-    if(!selected.length) return;
+    const selectedCount = getSelectedQuestions().length;
+    if(!selectedCount) return;
+    const grouped = getSelectedByCategory();
     const html = `
       <!doctype html><html><head><meta charset="utf-8">
       <title>Questions Handout</title>
       <style>${document.querySelector('style').innerHTML}</style>
       </head><body onload="window.print()">
-        <div style="padding:24px;max-width:850px;margin:0 auto">${handoutHTML(selected)}</div>
+        <div style="padding:24px;max-width:850px;margin:0 auto">${handoutHTML(grouped)}</div>
       </body></html>`;
     const w = window.open('', '_blank');
     w.document.open(); w.document.write(html); w.document.close();
   }
 
-  // ----- Email (attach PDF if Web Share API is supported; otherwise fallback) -----
+  // ----- Email (unchanged behavior; uses PDF builder) -----
   async function emailSelectedPDF(){
     const pdf = await createHandoutPDF();
     if (!pdf) return;
