@@ -141,7 +141,8 @@
     </header>
 
     <!-- BLOCKING Instructions Window -->
-    <div class="modal intro-window" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="false">
+    <!-- CHANGED: aria-hidden starts as true to avoid flash; JS decides whether to show it -->
+    <div class="modal intro-window" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true">
       <div class="modal-backdrop" aria-hidden="true"></div>
       <div class="modal-card" role="document">
         <button class="icon-btn close" aria-label="Close instructions window" data-intro-close>✕</button>
@@ -284,9 +285,17 @@
 
     <div id="printStage" class="print-stage" aria-hidden="true"></div>
 
-    <!-- Modal handlers (already added previously) -->
+    <!-- Modal handlers -->
     <script>
       (function () {
+        const INTRO_KEY = 'cq_intro_seen_v1';
+        const hasSeenIntro = () => {
+          try { return localStorage.getItem(INTRO_KEY) === '1'; } catch { return false; }
+        };
+        const markIntroSeen = () => {
+          try { localStorage.setItem(INTRO_KEY, '1'); } catch {}
+        };
+
         let focusTrapHandler = null;
 
         function trapFocus(root) {
@@ -332,6 +341,12 @@
           const el = document.getElementById(id);
           if (!el) return;
           el.setAttribute('aria-hidden', 'true');
+
+          // Mark intro as seen whenever it is closed in any way
+          if (id === 'introModal') {
+            markIntroSeen();
+          }
+
           releaseFocusTrap();
           const anyOpen = document.querySelector('.modal[aria-hidden="false"]');
           if (!anyOpen) document.body.classList.remove('modal-open');
@@ -339,29 +354,39 @@
 
         function escClose(e) {
           if (e.key === 'Escape') {
-            document.querySelectorAll('.modal[aria-hidden="false"]').forEach(m => m.setAttribute('aria-hidden', 'true'));
+            const openModals = Array.from(document.querySelectorAll('.modal[aria-hidden="false"]'));
+            if (openModals.some(m => m.id === 'introModal')) {
+              markIntroSeen();
+            }
+            openModals.forEach(m => m.setAttribute('aria-hidden', 'true'));
             releaseFocusTrap();
             document.body.classList.remove('modal-open');
           }
         }
 
+        // Open Start Here
         document.addEventListener('click', (e) => {
           const openBtn = e.target.closest('[data-open="startModal"]');
           if (openBtn) {
             e.preventDefault();
+            // If the user proceeds to Start Here, consider the intro "seen"
+            markIntroSeen();
             closeModal('introModal');
             openModal('startModal');
           }
         });
 
+        // Close Intro via dedicated buttons
         document.addEventListener('click', (e) => {
           const closeIntro = e.target.closest('[data-intro-close]');
           if (closeIntro) {
             e.preventDefault();
+            markIntroSeen();
             closeModal('introModal');
           }
         });
 
+        // Generic close for other modals
         document.addEventListener('click', (e) => {
           const btn = e.target.closest('[data-close]');
           if (btn) {
@@ -375,13 +400,15 @@
 
         document.addEventListener('keydown', escClose);
 
+        // On load: only auto-open intro if not seen before
         window.addEventListener('DOMContentLoaded', () => {
           const intro = document.getElementById('introModal');
-          if (intro && intro.getAttribute('aria-hidden') !== 'false') {
+          if (!hasSeenIntro()) {
             openModal('introModal');
-          } else if (intro) {
-            document.body.classList.add('modal-open');
-            trapFocus(intro);
+          } else {
+            // ensure hidden & body scroll enabled
+            if (intro) intro.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
           }
         });
       })();
