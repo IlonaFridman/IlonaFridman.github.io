@@ -27,6 +27,7 @@
       .close{
         position:absolute; right:10px; top:10px; width:36px; height:36px; border-radius:999px; border:none;
         background:#efefef; cursor:pointer; line-height:36px; text-align:center; font-size:18px;
+        text-decoration:none; color:inherit; display:inline-grid; place-items:center;
       }
       .close:focus-visible{ outline:3px solid var(--ring); outline-offset:3px }
       .layout{ display:grid; gap:16px; grid-template-columns:1fr; }
@@ -49,13 +50,16 @@
         overflow:hidden; box-shadow:0 2px 10px rgba(2,8,23,.06)
       }
       .media img{ width:100%; height:100%; object-fit:cover; display:block }
+      noscript{
+        display:block; margin:12px 0; color:#b91c1c; font-weight:700;
+      }
     </style>
   </head>
   <body>
     <main class="wrap" role="main">
       <section class="card" aria-labelledby="introTitle">
         <!-- Back to home -->
-        <a class="close" href="home.html" aria-label="Back to home">✕</a>
+        <a class="close" href="home.html" aria-label="Back to home" data-mark-seen>✕</a>
 
         <div class="layout">
           <div>
@@ -77,9 +81,16 @@
             <p><strong>You're in control.</strong> Explore the section that feels right for you, or select “Start Here” to see a shorter list of questions.</p>
 
             <div class="actions" role="group" aria-label="Instruction actions">
-              <a class="btn btn-primary" href="home.html">Explore here</a>
-              <a class="btn btn-secondary" href="home.html#start">Open “Start here”</a>
+              <!-- Explore home (no modal) -->
+              <a class="btn btn-primary" href="home.html" data-mark-seen>Explore here</a>
+
+              <!-- Deep-link to open Start modal on home -->
+              <a class="btn btn-secondary" href="home.html#start" data-mark-seen>Open “Start here”</a>
             </div>
+
+            <noscript>
+              Tip: JavaScript is off. “Start here” will still work via the #start link, but your home page won’t remember that you’ve already seen these instructions.
+            </noscript>
           </div>
 
           <figure class="media" aria-label="Breast cancer information booklets">
@@ -93,5 +104,26 @@
         </div>
       </section>
     </main>
+
+    <!-- Mark instructions as seen on navigation so home.html won't show the intro modal again this session -->
+    <script>
+      (function () {
+        const INTRO_KEY = 'cq_intro_seen_session_v1';
+        function markSeen(){ try{ sessionStorage.setItem(INTRO_KEY,'1'); }catch(e){} }
+
+        // Mark when clicking any link with data-mark-seen (✕, Explore, Start)
+        document.addEventListener('click', function(e){
+          const a = e.target.closest('a[data-mark-seen]');
+          if (a) { markSeen(); }
+        });
+
+        // Also mark on keyboard activation (Enter/Space) for accessibility, if needed
+        document.addEventListener('keydown', function(e){
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          const a = document.activeElement;
+          if (a && a.matches('a[data-mark-seen]')) { markSeen(); }
+        });
+      })();
+    </script>
   </body>
 </html>
