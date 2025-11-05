@@ -15,13 +15,23 @@
       }
       *{ box-sizing:border-box }
       html,body{ height:100% }
-      body{ margin:0; font-family:Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
-            font-size:17px; color:var(--ink); background:var(--bg) }
+      body{
+        margin:0;
+        font-family:Arial, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue";
+        font-size:17px; color:var(--ink); background:var(--bg)
+      }
       body.modal-open{ overflow:hidden }
 
       .container{ max-width:1200px; margin:20px auto; padding:0 16px }
       .header{ display:flex; gap:16px; justify-content:flex-end; align-items:center; margin-bottom:8px }
+
+      /* Top buttons share identical styles */
       .top-button{
+        appearance:none;
+        font-family:inherit;
+        cursor:pointer;
+
+        display:inline-flex; align-items:center; justify-content:center;
         background:linear-gradient(180deg,#6ea2cf,#588fbe); color:#fff; text-shadow:0 1px 0 rgba(0,0,0,.2);
         border:3px solid #fff; outline:1px solid #c7d9ea; text-decoration:none; padding:14px 22px; border-radius:14px; font-weight:700;
         box-shadow:var(--shadow); transition:transform .06s ease, filter .15s ease;
@@ -40,20 +50,18 @@
       @media (max-width:900px){ .grid{ grid-template-columns:1fr 1fr } }
       @media (max-width:640px){ .grid{ grid-template-columns:1fr } .header{ justify-content:center } }
 
-      /* Modal base */
+      /* Modals */
       .modal{ position:fixed; inset:0; display:none; z-index:999 }
       .modal[aria-hidden="false"]{ display:block }
       .modal-backdrop{ position:absolute; inset:0; background:rgba(15,23,42,.55); backdrop-filter:blur(4px) }
       .icon-btn.close{ position:absolute; right:10px; top:10px; background:#efefef; border:none; border-radius:999px; width:36px; height:36px; cursor:pointer }
 
-      /* Instructions window (blocking) */
       .intro-window .modal-card{
         position:relative; max-width:980px; margin:7vh auto; background:var(--card);
         border-radius:22px; box-shadow:var(--shadow); padding:20px; border:1px solid #e5e7eb;
         max-height:84vh; overflow:auto;
       }
 
-      /* Side-by-side layout */
       .intro-layout{ display:grid; gap:16px; grid-template-columns:1fr; align-items:start }
       @media (min-width:768px){ .intro-layout{ grid-template-columns:1.3fr 1fr } }
       .intro-copy h1{ margin:2px 0 10px; font-size:28px; line-height:1.2 }
@@ -71,7 +79,6 @@
       .intro-media{ width:100%; height:100%; min-height:220px; background:#f7fafc; border:1px solid #e5e7eb; border-radius:16px; overflow:hidden; box-shadow:0 2px 10px rgba(2,8,23,.06) }
       .intro-media img{ width:100%; height:100%; object-fit:cover; display:block }
 
-      /* Start modal */
       .start-modal .modal-card{
         position:relative; max-width:960px; margin:6vh auto; background:var(--card); border-radius:22px;
         box-shadow:var(--shadow); padding:24px 22px 16px; border:1px solid #e5e7eb; max-height:85vh; overflow-y:auto;
@@ -93,13 +100,14 @@
       .q-list{ list-style:none; padding:0; margin:0 }
       .q-list li{ display:flex; gap:10px; padding:10px 8px; border-bottom:1px solid #eaeef5; line-height:1.35 }
       .q-list li:last-child{ border-bottom:none }
+
       .modal-footer{ display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; padding-bottom:8px }
       .secondary{ background:linear-gradient(180deg,#6ea2cf,#588fbe); color:#fff; text-shadow:0 1px 0 rgba(0,0,0,.2); border:2px solid #fff; outline:1px solid #c7d9ea; border-radius:12px; text-decoration:none; font-weight:700; transition:transform .06s ease, filter .15s ease }
       .links-pack{ display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start }
       .links-pack>h2{ flex:0 0 100%; margin:0 0 8px 0 }
       .links-pack .secondary{ display:inline-flex; align-items:center; padding:8px 12px; line-height:1.2; white-space:normal; flex:0 1 auto; border-radius:12px }
 
-      /* Print/handout + FAB */
+      /* Print/handout (no FAB now) */
       .print-stage{ position:fixed; left:-10000px; top:-10000px; width:794px; padding:24px; background:#fff }
       .handout{ font-family:Arial, Helvetica, sans-serif; color:#0f172a; line-height:1.55; font-size:18px }
       .handout .frame{ border:6px solid #6aa1cc; border-radius:36px; padding:16px }
@@ -108,20 +116,19 @@
       .handout h4{ margin:0 0 8px; font-size:18px }
       .handout ul{ margin:0; padding-left:22px }
       .handout li{ margin:8px 0 }
-      .fab{ position:fixed; right:18px; bottom:18px; z-index:998; display:inline-flex; align-items:center; gap:8px; padding:12px 16px; font-weight:800; border-radius:999px; border:1px solid #c7d9ea; background:#e8efff; color:#0b2a5d; box-shadow:var(--shadow); cursor:pointer }
-      .fab:focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
-      @media (max-width:480px){ .fab{ right:12px; bottom:12px; padding:10px 14px } }
     </style>
   </head>
 
   <body>
     <header class="container header">
-      <!-- Keep your original absolute links if you prefer; relative shown for same-origin behavior -->
       <a class="top-button" href="./careteam.html">Your Care Team</a>
       <a class="top-button" href="./information.html">Helpful Information Online</a>
+      <button id="backToInstructionsTop" class="top-button" type="button" aria-haspopup="dialog" aria-controls="introModal">
+        Back to instructions
+      </button>
     </header>
 
-    <!-- BLOCKING Instructions Window -->
+    <!-- Instructions Modal -->
     <div class="modal intro-window" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true">
       <div class="modal-backdrop" data-intro-close aria-hidden="true"></div>
       <div class="modal-card" role="document">
@@ -144,6 +151,7 @@
 
             <div class="intro-actions" role="group" aria-label="Instructions actions">
               <button class="btn btn-primary" type="button" data-intro-close>Explore here</button>
+              <!-- THIS launches the Start Here modal -->
               <a class="btn btn-secondary" href="#" data-open="startModal" aria-haspopup="dialog" aria-controls="startModal">Open “Start here”</a>
             </div>
           </div>
@@ -218,11 +226,6 @@
       </div>
     </main>
 
-    <!-- FAB: Back to instructions -->
-    <button id="backToInstructions" class="fab" type="button" aria-haspopup="dialog" aria-controls="introModal">
-      ⟲ Back to instructions
-    </button>
-
     <!-- Start Here Modal -->
     <div class="modal start-modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startModalHeading" aria-hidden="true">
       <div class="modal-backdrop" data-close="startModal" aria-hidden="true"></div>
@@ -268,11 +271,8 @@
     <!-- Modal handlers -->
     <script>
       (function () {
-        // Show Instructions once per browser session, unless deep-linked to Start.
         const INTRO_KEY = 'cq_intro_seen_session_v1';
         const storage = window.sessionStorage;
-
-        const hasSeenIntro = () => { try { return storage.getItem(INTRO_KEY) === '1'; } catch { return false; } };
         const markIntroSeen = () => { try { storage.setItem(INTRO_KEY, '1'); } catch {} };
 
         let focusTrapHandler = null;
@@ -335,14 +335,13 @@
           }
         }
 
-        // Open Start Here
+        /* === IMPORTANT: Start Here click -> close intro, open start === */
         document.addEventListener('click', (e) => {
           const openBtn = e.target.closest('[data-open="startModal"]');
           if (openBtn) {
             e.preventDefault();
-            markIntroSeen();
-            closeModal('introModal');
-            openModal('startModal');
+            closeModal('introModal');   // ensure instructions closes
+            openModal('startModal');    // then open Start Here
           }
         });
 
@@ -351,7 +350,6 @@
           const closeIntro = e.target.closest('[data-intro-close]');
           if (closeIntro) {
             e.preventDefault();
-            markIntroSeen();
             closeModal('introModal');
           }
         });
@@ -365,44 +363,16 @@
           }
         });
 
-        // Back to instructions FAB
-        const back = document.getElementById('backToInstructions');
-        if (back) back.addEventListener('click', () => { closeModal('startModal'); openModal('introModal'); });
+        // Back to instructions (header button)
+        const backTop = document.getElementById('backToInstructionsTop');
+        if (backTop) backTop.addEventListener('click', () => { closeModal('startModal'); openModal('introModal'); });
 
         document.addEventListener('keydown', escClose);
 
-        // Mark as seen when navigating within same origin
-        function isSameOrigin(href) {
-          try { return new URL(href, location.href).origin === location.origin; } catch { return false; }
-        }
-        document.addEventListener('click', (e) => {
-          const a = e.target.closest('a[href]');
-          if (!a) return;
-          if (isSameOrigin(a.getAttribute('href') || a.href)) markIntroSeen();
-        });
-
-        function wantsStartFromURL() {
-          const h = (location.hash || '').toLowerCase();
-          if (h === '#start') return true;
-          const q = new URLSearchParams(location.search);
-          return q.has('start') && q.get('start') !== '0';
-        }
-
-        // Initial show logic: if deep-linked to Start, open it and remove the hash/query; otherwise show intro once per session.
-        function handleInitialShow() {
-          // Optional: allow deep link to Start modal; otherwise keep everything closed
-  if (wantsStartFromURL()) {
-    if (history.replaceState) history.replaceState(null, '', location.pathname);
-    openModal('startModal');
-  } else {
-    // Ensure both modals are closed on first paint
-    document.getElementById('introModal')?.setAttribute('aria-hidden','true');
-    document.getElementById('startModal')?.setAttribute('aria-hidden','true');
-    document.body.classList.remove('modal-open');
-  }
-}
-window.addEventListener('DOMContentLoaded', initOnLoad);
-        window.addEventListener('pageshow', handleInitialShow);
+        // Start state: keep both modals closed
+        document.getElementById('introModal')?.setAttribute('aria-hidden','true');
+        document.getElementById('startModal')?.setAttribute('aria-hidden','true');
+        document.body.classList.remove('modal-open');
       })();
     </script>
 
